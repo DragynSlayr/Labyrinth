@@ -369,7 +369,8 @@ export class Driver
       love.graphics.push "all"
       if Driver.game_state == Game_State.playing or UI.current_screen == Screen_State.none
         love.graphics.setShader Driver.shader
-      setColor 75, 163, 255, 255
+      --setColor 75, 163, 255, 255
+      setColor 121, 128, 134, 255
       love.graphics.rectangle "fill", 0, 0, Screen_Size.width, Screen_Size.height
       if Driver.game_state == Game_State.playing or UI.current_screen == Screen_State.none
         love.graphics.setShader!

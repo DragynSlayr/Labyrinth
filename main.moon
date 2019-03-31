@@ -27,7 +27,7 @@ love.draw = () ->
   love.graphics.push "all"
   setColor 0, 0, 0, 255
   love.graphics.rectangle "fill", 0, 0, Screen_Size.width, Screen_Size.height
-  setColor 75, 163, 255, 255
+  setColor 121, 128, 134, 255
   love.graphics.rectangle "fill", (Screen_Size.width - size) / 2, 0, size, Screen_Size.height
   setColor 255, 255, 255, 255
   text = size / Screen_Size.width
