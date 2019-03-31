@@ -1,6 +1,6 @@
 export class RoomDoor extends BackgroundObject
   new: (x, y, target) =>
-    sprite = Sprite "background/healingField.tga", 32, 32, 2, 4
+    sprite = Sprite "background/roomDoor.tga", 32, 32, 1, 2
     super x, y, sprite
     @target = target
     @active = false
@@ -11,8 +11,14 @@ export class RoomDoor extends BackgroundObject
     for k, p in pairs Driver.objects[EntityTypes.player]
       target = p\getHitBox!
       door = @getHitBox!
-      if target\contains door
+      if door\contains target
         Levels\moveToRoom @target
+
+  getHitBox: =>
+    width = @sprite.scaled_width
+    height = @sprite.scaled_height
+    rect = Rectangle @position.x - (width / 2), @position.y - (height / 2), width, height
+    return rect
 
   open: =>
     @active = true

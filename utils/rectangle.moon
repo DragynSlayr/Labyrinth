@@ -6,7 +6,7 @@ export class Rectangle
     @height = height
     @center = Point x + (width / 2), y + (height / 2)
     @corners = {(Point x, y), (Point x + width, y), (Point x + width, y + height), (Point x, y + height)}
-    @radius = math.max @width, @height
+    @radius = (math.max @width, @height) / 2
 
   contains: (obj) =>
     switch obj.__class.__name
