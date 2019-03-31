@@ -15,6 +15,15 @@ class RoomList
     @min_y = 0
     @max_y = 0
 
+  getRandomRoom: =>
+    rooms = {}
+    for k, r in pairs @rooms
+      r\countAdjacent!
+      for i = 0, (4 - r.numAdjacent)
+        table.insert rooms, r
+    num = math.random #rooms
+    return rooms[num]
+
   spotAvailable: (x, y) =>
     for k, room in pairs @rooms
       if room.x == x and room.y == y
@@ -93,7 +102,7 @@ class RoomList
     cell_width = 250 / (x_span + 1)
     cell_height = 250 / (y_span + 1)
     love.graphics.setColor 0, 0, 0, 0.5
-    love.graphics.rectangle "fill", start_x - 10, 70, 265, 265
+    love.graphics.rectangle "fill", start_x - 12.5, start_y - 252.5, 265, 265
     love.graphics.translate start_x, start_y
     love.graphics.scale 1, -1
     for i, room in pairs @rooms
@@ -109,18 +118,16 @@ export class Level
   new: =>
     @rooms = RoomList!
     @current_room = @rooms.start
-    @min_rooms = 20
-    @num_rooms = 1
+    @min_rooms = 10
+    @num_rooms = 0
 
   generate: =>
     count = 1
     while count < @min_rooms
-      num = math.random #@rooms.rooms
-      room = @rooms.rooms[num]
-      if room.numAdjacent ~= 4
-        if @rooms\addRoom room
-          count += 1
-          print ("Room " .. count .. " generated")
+      room =  @rooms\getRandomRoom!
+      if @rooms\addRoom room
+        count += 1
+        print ("Room " .. count .. " generated")
     @num_rooms = count
     @rooms\linkRooms!
     @current_room\openDoors!
