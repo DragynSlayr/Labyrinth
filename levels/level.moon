@@ -129,10 +129,9 @@ export class Level
     return -- send to room
 
   update: (dt) =>
-    return
+    @current_room\update dt
 
   moveToRoom: (room) =>
-    MainPlayer.position = Vector Screen_Size.half_width, Screen_Size.half_height
     @current_room\closeDoors!
     @current_room = room
     @current_room\openDoors!

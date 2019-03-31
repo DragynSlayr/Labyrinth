@@ -10,6 +10,8 @@ export class LevelHandler
 
   moveToRoom: (room) =>
     @level\moveToRoom room
+    room\closeDoors!
+    room.timer = 0
 
   entityKilled: (entity) =>
     if not @level return

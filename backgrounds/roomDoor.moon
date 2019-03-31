@@ -4,6 +4,7 @@ export class RoomDoor extends BackgroundObject
     super x, y, sprite
     @target = target
     @active = false
+    @exitLocation = nil
 
   update: (dt) =>
     super dt
@@ -12,6 +13,8 @@ export class RoomDoor extends BackgroundObject
       target = p\getHitBox!
       door = @getHitBox!
       if door\contains target
+        x, y = unpack @exitLocation
+        MainPlayer.position = Vector x, y
         Levels\moveToRoom @target
 
   getHitBox: =>
