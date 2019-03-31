@@ -27,8 +27,14 @@ export class Room
         door.exitLocation = @doorLocations[idx]
         table.insert @doors, door
         Driver\addObject door, EntityTypes.background
-        @numAdjacent += 1
+        @countAdjacent!
     @closeDoors!
+
+  countAdjacent: =>
+    @numAdjacent = 0
+    for k, r in pairs @adjacent
+      if r
+        @numAdjacent += 1
 
   openDoors: =>
     for k, d in pairs @doors
