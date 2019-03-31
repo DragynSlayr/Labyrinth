@@ -8,7 +8,7 @@ queue = {}
 size = 0
 elements = 0
 max_size = 0
-speed = Screen_Size.width / 3
+speed = Screen_Size.width / 1.3
 
 love.update = (dt) ->
   size += speed * dt
