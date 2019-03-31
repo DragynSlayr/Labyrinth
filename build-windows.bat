@@ -1,13 +1,13 @@
 call build.bat
-cp "Tower Defense.love" "./../build/Tower Defense.love"
+cp "Labyrinth.love" "./../build/Labyrinth.love"
 cd ./../build
-mv "Tower Defense.love" TD.love
+mv "Labyrinth.love" TD.love
 cp ../love.exe love.exe
 copy /b love.exe + TD.love TD.exe
-mv TD.exe "Tower Defense.exe"
+mv TD.exe "Labyrinth.exe"
 rm TD.love
 rm love.exe
 set path="C:\Program Files\WinRAR\";%path%
-winrar a -r -afzip "Tower Defense"
-mv "Tower Defense.zip" ./../release/Windows.zip
-cd "./../Tower Defense"
+winrar a -r -afzip "Labyrinth"
+mv "Labyrinth.zip" ./../release/Windows.zip
+cd "./../Labyrinth"

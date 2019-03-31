@@ -1,3 +1,3 @@
-rm "Tower Defense.love"
+rm "Labyrinth.love"
 moonc .
-zip "Tower Defense.love" . -r -x .git/\* -x \*.bat -x \*.moon -x \*.py -x \*.sh -x changes.txt
+zip "Labyrinth.love" . -r -x .git/\* -x \*.bat -x \*.moon -x \*.py -x \*.sh -x changes.txt

@@ -80,7 +80,7 @@ export class Driver
     new: =>
       @setBindings!
 
-      love.filesystem.setIdentity "Tower Defense"
+      love.filesystem.setIdentity "Labyrinth"
       love.filesystem.createDirectory "screenshots"
 
       if not love.filesystem.getInfo "SETTINGS"

@@ -130,7 +130,7 @@ export class ScreenCreator
   createMainMenu: =>
     UI\set_screen Screen_State.main_menu
 
-    title = Text Screen_Size.width / 2, (Screen_Size.height / 4), "Tower Defense"
+    title = Text Screen_Size.width / 2, (Screen_Size.height / 4), NAME
     UI\add title
 
     start_button = Button Screen_Size.width / 2, (Screen_Size.height / 2) - (32 * Scale.height), 250, 60, "Start", () ->

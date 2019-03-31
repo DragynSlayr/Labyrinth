@@ -1,6 +1,6 @@
-# Tower Defense #
+# Labyrinth #
 
-This is a tower defense game
+This is a rogue-like game based on ancient Greek mythology
 
 ### How do I get set up? ###
 

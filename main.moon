@@ -39,5 +39,5 @@ love.load = () ->
   queue = require "logic.classLoader"
   elements = #queue
   export VERSION = "0.0.1"
-  export NAME = "Unknown Game"
-  love.window.setTitle NAME
+  export NAME = "Labyrinth"
+  love.window.setTitle (NAME .. " - v" .. VERSION)
