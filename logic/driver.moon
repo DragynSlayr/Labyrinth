@@ -133,7 +133,8 @@ export class Driver
                   box = ItemBoxPickUp o.position.x, o.position.y
                   Driver\addObject box, EntityTypes.item
                 v[k2]\kill!
-                Levels\entityKilled v[k2]
+                --Levels\entityKilled v[k2]
+                World\entityKilled v[k2]
               table.remove Driver.objects[k], k2
               found = true
               break
@@ -303,7 +304,8 @@ export class Driver
       export Controls = ControlsHandler!
       export Pause = PauseScreen!
       export GameOver = GameOverScreen!
-      export Levels = LevelHandler!
+      --export Levels = LevelHandler!
+      export World = WorldHandler!
 
     intializeDriverVars: =>
       Driver.objects = {}
@@ -333,7 +335,7 @@ export class Driver
       export MainPlayer = Driver.spawn (Player), EntityTypes.player, Screen_Size.half_width, Screen_Size.half_height
 
       -- Start game
-      Levels\nextLevel!
+      --Levels\nextLevel!
 
     update: (dt) ->
       --if not KEY_PUSHED
@@ -358,7 +360,8 @@ export class Driver
               for k2, o in pairs v
                 if o.health <= 0 or not o.alive
                   Driver\removeObject o
-            Levels\update dt
+            --Levels\update dt
+            World\update dt
         UI\update dt
         ScoreTracker\update dt
 
@@ -407,8 +410,9 @@ export class Driver
         when Game_State.playing
           Driver.drawBorder!
           Driver.drawScore!
+          --Levels\draw!
+          World\draw!
           Renderer\drawAll!
-          Levels\draw!
           Driver.drawDebugInfo!
         when Game_State.controls
           Controls\draw!

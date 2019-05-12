@@ -17,3 +17,4 @@ require "levels.level"
 --| Depends on level |--
 --+------------------+--
 require "levels.levelHandler"
+require "levels.worldHandler"

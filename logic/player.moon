@@ -170,6 +170,7 @@ export class Player extends GameObject
       i\update dt
 
     resetSpeed, start = @move dt
+    World.position\add (@speed\multiply -0.05)
     super dt
     if resetSpeed
       @speed = start
@@ -226,6 +227,7 @@ export class Player extends GameObject
 
   draw: =>
     if not @alive return
+    @position = Vector Screen_Size.half_width, Screen_Size.half_height
     for k, i in pairs @equipped_items
       i\draw!
     if DEBUGGING
