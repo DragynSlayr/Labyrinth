@@ -408,8 +408,8 @@ export class Driver
       UI\draw!
       switch Driver.game_state
         when Game_State.playing
-          Driver.drawBorder!
-          Driver.drawScore!
+          --Driver.drawBorder!
+          --Driver.drawScore!
           --Levels\draw!
           World\draw!
           Renderer\drawAll!

@@ -34,6 +34,8 @@ export class Player extends GameObject
     @is_clone = false
     @can_shoot = true
 
+    World.position = @position
+
   setBaseStats: =>
     @lives = 1
     @damage = Stats.player[3]

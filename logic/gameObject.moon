@@ -90,8 +90,8 @@ export class GameObject
         speed = Vector x, y, true
         @position\add speed\multiply (Scale.diag * 10)
         radius = @getHitBox!.radius
-        @position.x = clamp @position.x, Screen_Size.border[1] + radius, Screen_Size.border[3] - radius
-        @position.y = clamp @position.y, Screen_Size.border[2] + radius, (Screen_Size.border[4] + Screen_Size.border[2]) - radius
+        --@position.x = clamp @position.x, Screen_Size.border[1] + radius, Screen_Size.border[3] - radius
+        --@position.y = clamp @position.y, Screen_Size.border[2] + radius, (Screen_Size.border[4] + Screen_Size.border[2]) - radius
       @health = clamp @health, 0, @max_health
       @armor = clamp @armor, 0, @max_armor
 
@@ -133,8 +133,8 @@ export class GameObject
     radius = @getHitBox!.radius
     if @getAttackHitBox
       radius = @getAttackHitBox!.radius
-    @position.x = clamp @position.x, Screen_Size.border[1] + radius, Screen_Size.border[3] - radius
-    @position.y = clamp @position.y, Screen_Size.border[2] + radius, (Screen_Size.border[4] + Screen_Size.border[2]) - radius
+    --@position.x = clamp @position.x, Screen_Size.border[1] + radius, Screen_Size.border[3] - radius
+    --@position.y = clamp @position.y, Screen_Size.border[2] + radius, (Screen_Size.border[4] + Screen_Size.border[2]) - radius
 
   draw: =>
     love.graphics.push "all"
