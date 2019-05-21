@@ -34,7 +34,8 @@ export class Player extends GameObject
     @is_clone = false
     @can_shoot = true
 
-    World.position = @position
+    @position = World.position
+    -- -Screen_Size.half_width, -Screen_Size.half_height--(32 * 50), (32 * 50)
 
   setBaseStats: =>
     @lives = 1
@@ -172,11 +173,14 @@ export class Player extends GameObject
       i\update dt
 
     resetSpeed, start = @move dt
-    World.position\add (@speed\multiply -0.05)
+    -- World.position\add (@speed\multiply -0.05)
     super dt
+    World.position = @position
     if resetSpeed
       @speed = start
     @speed_boost = 0
+
+    --World.position\add (@speed\multiply -0.05)
 
     @lock_sprite\update dt
 
@@ -229,20 +233,28 @@ export class Player extends GameObject
 
   draw: =>
     if not @alive return
-    @position = Vector Screen_Size.half_width, Screen_Size.half_height
+    --@position = Vector Screen_Size.half_width, Screen_Size.half_height
+    position = Vector! --World.position\multiply 1
+    position.x += Screen_Size.half_width
+    position.y += Screen_Size.half_height
     for k, i in pairs @equipped_items
       i\draw!
     if DEBUGGING
       love.graphics.push "all"
       setColor 0, 0, 255, 100
       player = @getHitBox!
-      love.graphics.circle "fill", @position.x, @position.y, @attack_range + player.radius + @range_boost, 360
+      love.graphics.circle "fill", position.x, position.y, @attack_range + player.radius + @range_boost, 360
       setColor 0, 255, 0, 100
-      love.graphics.circle "fill", @position.x, @position.y, @speed_range, 360
+      love.graphics.circle "fill", position.x, position.y, @speed_range, 360
       love.graphics.pop!
+    -- old_pos = @position
+    -- @position = position
+    @position\add (Vector Screen_Size.half_width, Screen_Size.half_height)
     super!
+    @position\add ((Vector Screen_Size.half_width, Screen_Size.half_height)\multiply -1)
+    -- @position = old_pos
     if @movement_blocked and @draw_lock
-      @lock_sprite\draw @position.x, @position.y
+      @lock_sprite\draw position.x, position.y
 
     if @show_stats
       @drawPlayerStats!

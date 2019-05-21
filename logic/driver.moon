@@ -109,7 +109,7 @@ export class Driver
           if object\contains e
             touching = true
             break
-      if touching or not enemy\isOnScreen Screen_Size.border
+      if touching --or not enemy\isOnScreen Screen_Size.border
         Driver.spawn typeof, layer, x, y, i + 1
       else
         Driver\addObject enemy, layer
@@ -387,6 +387,8 @@ export class Driver
           font = Renderer\newFont 20
           Renderer\drawAlignedMessage message, y, "left", font, (Color 255, 255, 255)
           y += 25
+        Renderer\drawAlignedMessage (World.position.x .. ", " .. World.position.y), 325, "left", (Renderer\newFont 20), (Color 255, 255, 255)
+        Renderer\drawAlignedMessage (MainPlayer.position.x .. ", " .. MainPlayer.position.y), 350, "left", (Renderer\newFont 20), (Color 255, 255, 255)
 
     drawBorder: ->
       love.graphics.push "all"
@@ -404,8 +406,9 @@ export class Driver
 
     draw: ->
       Driver.setShader!
-      love.graphics.push "all"
       UI\draw!
+      love.graphics.push "all"
+      love.graphics.translate -World.position.x, -World.position.y
       switch Driver.game_state
         when Game_State.playing
           --Driver.drawBorder!
