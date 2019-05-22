@@ -34,8 +34,7 @@ export class Player extends GameObject
     @is_clone = false
     @can_shoot = true
 
-    @position = World.position
-    -- -Screen_Size.half_width, -Screen_Size.half_height--(32 * 50), (32 * 50)
+    @position = Camera.position
 
   setBaseStats: =>
     @lives = 1
@@ -167,20 +166,19 @@ export class Player extends GameObject
     return bullet_speed, bullet_speed\getLength! > 0
 
   update: (dt) =>
+    @position\add (Vector Screen_Size.half_width, Screen_Size.half_height)
+
     if not @alive return
 
     for k, i in pairs @equipped_items
       i\update dt
 
     resetSpeed, start = @move dt
-    -- World.position\add (@speed\multiply -0.05)
     super dt
-    World.position = @position
+    Camera\moveTo @position
     if resetSpeed
       @speed = start
     @speed_boost = 0
-
-    --World.position\add (@speed\multiply -0.05)
 
     @lock_sprite\update dt
 
@@ -201,10 +199,13 @@ export class Player extends GameObject
     if attacked
       @attack_timer = 0
 
+    @position\add ((Vector Screen_Size.half_width, Screen_Size.half_height)\multiply -1)
+  
   createBullet: (x, y, damage, speed, filters) =>
     return FilteredBullet x, y, damage, speed, filters
 
   drawPlayerStats: =>
+    Camera\unset!
     setColor 0, 0, 0, 255
     love.graphics.setFont @font
 
@@ -231,30 +232,23 @@ export class Player extends GameObject
     health = string.format "%.2f/%.2f HP", (@health + @armor), @max_health
     love.graphics.printf health, Screen_Size.half_width + (x_offset * 0.75), y, limit, "left"
 
+    Camera\set!
+
   draw: =>
     if not @alive return
-    --@position = Vector Screen_Size.half_width, Screen_Size.half_height
-    position = Vector! --World.position\multiply 1
-    position.x += Screen_Size.half_width
-    position.y += Screen_Size.half_height
+    @position\add (Vector Screen_Size.half_width, Screen_Size.half_height)
     for k, i in pairs @equipped_items
       i\draw!
     if DEBUGGING
-      love.graphics.push "all"
       setColor 0, 0, 255, 100
       player = @getHitBox!
-      love.graphics.circle "fill", position.x, position.y, @attack_range + player.radius + @range_boost, 360
+      love.graphics.circle "fill", @position.x, @position.y, @attack_range + player.radius + @range_boost, 360
       setColor 0, 255, 0, 100
-      love.graphics.circle "fill", position.x, position.y, @speed_range, 360
-      love.graphics.pop!
-    -- old_pos = @position
-    -- @position = position
-    @position\add (Vector Screen_Size.half_width, Screen_Size.half_height)
+      love.graphics.circle "fill", @position.x, @position.y, @speed_range, 360
     super!
-    @position\add ((Vector Screen_Size.half_width, Screen_Size.half_height)\multiply -1)
-    -- @position = old_pos
     if @movement_blocked and @draw_lock
-      @lock_sprite\draw position.x, position.y
+      @lock_sprite\draw @position.x, @position.y
 
     if @show_stats
       @drawPlayerStats!
+    @position\add ((Vector Screen_Size.half_width, Screen_Size.half_height)\multiply -1)

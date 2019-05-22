@@ -71,8 +71,6 @@ export class FilteredBullet extends GameObject
     if @speed\getLength! > 0
       if @alive
         if DEBUGGING
-          love.graphics.push "all"
           setColor 255, 0, 255, 127
           love.graphics.circle "fill", @position.x, @position.y, @attack_range + @getHitBox!.radius, 360
-          love.graphics.pop!
         super!

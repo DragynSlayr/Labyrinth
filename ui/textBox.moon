@@ -188,7 +188,7 @@ export class TextBox extends UIElement
     @cursor.position = Point @x + (10 * Scale.width) + width, @y + (height / 2) + ((@lines_index - 1) * height)
 
   draw: =>
-    love.graphics.push "all"
+    Camera\unset!
 
     setColor @color[1], @color[2], @color[3], @color[4]
     love.graphics.rectangle "fill", @x, @y, @width, @height
@@ -208,4 +208,4 @@ export class TextBox extends UIElement
       setColor @text_color[1], @text_color[2], @text_color[3], @cursor.alpha
       love.graphics.rectangle "fill", @cursor.position.x, @cursor.position.y, 10 * Scale.width, height
 
-    love.graphics.pop!
+    Camera\set!

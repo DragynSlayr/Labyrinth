@@ -104,7 +104,7 @@ export class ItemFrame extends UIElement
     @sprite\update dt
 
   draw: =>
-    love.graphics.push "all"
+    Camera\unset!
     setColor 200, 200, 200, 255
     love.graphics.rectangle "fill", @x, @y, @width, @height
     if not @empty
@@ -129,4 +129,4 @@ export class ItemFrame extends UIElement
       @sprite\draw @center.x, @y + (@height * 0.35)
       for k, b in pairs @buttons
         b\draw!
-    love.graphics.pop!
+    Camera\set!

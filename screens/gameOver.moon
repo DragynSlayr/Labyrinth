@@ -54,8 +54,6 @@ export class GameOverScreen extends Screen
     for k, v in pairs @ui_objects
       v\draw!
 
-    love.graphics.push "all"
-
     font = Renderer\newFont 30
     num_rows = 15
     gap = 20 * Scale.width
@@ -68,6 +66,7 @@ export class GameOverScreen extends Screen
     end_y = y + height
     Renderer\drawAlignedMessage "Score: " .. ScoreTracker.score, end_y + ((Screen_Size.height - end_y) / 4), nil, Renderer\newFont 60
 
+    Camera\unset!
     setColor 0, 0, 0, 127
     love.graphics.rectangle "fill", x, y, width, height
 
@@ -84,4 +83,4 @@ export class GameOverScreen extends Screen
       love.graphics.printf name .. node.name, x + gap, row_y, width - (2 * gap), "left"
       love.graphics.printf node.score, x + gap, row_y, width - (2 * gap), "right"
 
-    love.graphics.pop!
+    Camera\set!

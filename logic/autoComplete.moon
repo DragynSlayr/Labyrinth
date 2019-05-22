@@ -58,7 +58,7 @@ export class AutoComplete
         @words = words
 
   draw: =>
-    love.graphics.push "all"
+    Camera\unset!
 
     setColor 0, 255, 255, 255
     love.graphics.setFont @font
@@ -74,4 +74,4 @@ export class AutoComplete
       else
         break
 
-    love.graphics.pop!
+    Camera\set!

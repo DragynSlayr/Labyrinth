@@ -13,6 +13,7 @@ table.insert queue, "ui.uiLoader"
 --+------------------+--
 --| Depends on utils |--
 --+------------------+--
+table.insert queue, "logic.cameraHandler"
 table.insert queue, "logic.gameObject"
 table.insert queue, "logic.player"
 table.insert queue, "logic.collision"

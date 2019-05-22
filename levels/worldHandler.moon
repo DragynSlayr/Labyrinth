@@ -3,11 +3,6 @@ export class WorldHandler
     @valueRegex = "=\"([%w%d%./_]+)\""
     @tiles = @loadTiles!
     @map = @loadMap!
-    --x = (50 * -32) + Screen_Size.half_width -- -640
-    --y = (75 * -32) + Screen_Size.half_height -- -1860
-    @position = Vector!-- x, y
-    --print (x .. ", " .. y)
-    --@bounds = {-2180, 940, 0, 0}
 
   loadMap: =>
     path = "assets/sprites/map/town.tmx"
@@ -58,28 +53,18 @@ export class WorldHandler
     return
 
   update: (dt) =>
-    return
-    -- for k, v in pairs @tiles
-    --   v\update dt
-    --@position.x = clamp @position.x, 0, 100 * 32
-      --@position.y = clamp @position.y, Screen_Size.border[2] + radius, (Screen_Size.border[4] + Screen_Size.border[2]) - radius
+    for k, v in pairs @tiles
+      v\update dt
 
   draw: =>
-    love.graphics.push "all"
-    love.graphics.translate -@position.x, -@position.y
     for rowIdx, row in pairs @map
       for colIdx, val in pairs row
-        -- x = @position.x + ((colIdx - 1) * 32)
-        -- y = @position.y + ((rowIdx - 1) * 32)
         x = (colIdx - 51) * 32
         y = (rowIdx - 51) * 32
-        -- x = (colIdx - 51) * 32
-        -- y = (rowIdx - 51) * 32
-        --if @isOnScreen x, y
-        @tiles[val]\draw x, y
-    love.graphics.pop!
+        if @isOnScreen x, y
+          @tiles[val]\draw x, y
 
   isOnScreen: (x, y) =>
-    xOn = x >= -64 and x - 32 <= Screen_Size.width
-    yOn = y >= -64 and y - 32 <= Screen_Size.height
+    xOn = x >= Camera.position.x - 32 and x - 32 <= Camera.position.x + Screen_Size.width
+    yOn = y >= Camera.position.y - 32 and y - 32 <= Camera.position.y + Screen_Size.height
     return xOn and yOn

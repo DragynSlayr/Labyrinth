@@ -70,7 +70,5 @@ export class Circle
     @radius = radius
 
   draw: =>
-    love.graphics.push "all"
     setColor 0, 255, 0, 255
     love.graphics.circle "line", @center.x, @center.y, @radius, 360
-    love.graphics.pop!

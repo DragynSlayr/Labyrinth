@@ -148,9 +148,6 @@ export class Sprite
   -- x: X location of position to draw at
   -- y: Y location of position to draw at
   draw: (x, y) =>
-    -- Store previous transforms
-    love.graphics.push "all"
-
     if Driver.game_state == Game_State.playing or UI.current_screen == Screen_State.none
       if @has_shader and @should_shade
         love.graphics.setShader @shader
@@ -166,4 +163,3 @@ export class Sprite
     -- Restore previous transforms
     if Driver.game_state == Game_State.playing or UI.current_screen == Screen_State.none
       love.graphics.setShader!
-    love.graphics.pop!

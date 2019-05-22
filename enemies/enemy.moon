@@ -95,7 +95,6 @@ export class Enemy extends GameObject
 
   draw: =>
     if not @alive return
-    love.graphics.push "all"
     if DEBUGGING
       setColor 255, 0, 255, 127
     if @sprite == @action_sprite
@@ -103,7 +102,6 @@ export class Enemy extends GameObject
       setColor 255, 0, 0, alpha
     if DEBUGGING --or @sprite == @action_sprite
       @getHitBox!\draw!
-    love.graphics.pop!
     super!
 
   findNearestTarget: (all = false) =>

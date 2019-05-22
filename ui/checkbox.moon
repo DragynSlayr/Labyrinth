@@ -24,7 +24,7 @@ export class CheckBox extends Button
     @checked_sprite\update dt
 
   draw: =>
-    love.graphics.push "all"
+    Camera\unset!
     if @active
       shift_x = @x + (@width / 2)
       shift_y = @y + (@height / 2)
@@ -37,5 +37,4 @@ export class CheckBox extends Button
     else
       setColor 127, 127, 127, 255
       love.graphics.rectangle "fill", @x, @y, @width, @height
-
-    love.graphics.pop!
+    Camera\set!

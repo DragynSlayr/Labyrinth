@@ -296,6 +296,7 @@ export class Driver
     exportVars: =>
       export ScoreTracker = Score!
       export MusicPlayer = MusicHandler!
+      export Camera = CameraHandler!
       export Renderer = ObjectRenderer!
       export UI = UIHandler!
       export Debugger = DebugMenu!
@@ -368,16 +369,16 @@ export class Driver
         if not Driver.shader
           Driver.shader = love.graphics.newShader "shaders/normal.fs"
 
-    setShader: ->
-      love.graphics.push "all"
+    drawBackground: ->
       if Driver.game_state == Game_State.playing or UI.current_screen == Screen_State.none
         love.graphics.setShader Driver.shader
       --setColor 75, 163, 255, 255
+      Camera\unset!
       setColor 121, 128, 134, 255
       love.graphics.rectangle "fill", 0, 0, Screen_Size.width, Screen_Size.height
+      Camera\set!
       if Driver.game_state == Game_State.playing or UI.current_screen == Screen_State.none
         love.graphics.setShader!
-      love.graphics.pop!
 
     drawDebugInfo: ->
       if DEBUGGING
@@ -387,34 +388,26 @@ export class Driver
           font = Renderer\newFont 20
           Renderer\drawAlignedMessage message, y, "left", font, (Color 255, 255, 255)
           y += 25
-        Renderer\drawAlignedMessage (World.position.x .. ", " .. World.position.y), 325, "left", (Renderer\newFont 20), (Color 255, 255, 255)
-        Renderer\drawAlignedMessage (MainPlayer.position.x .. ", " .. MainPlayer.position.y), 350, "left", (Renderer\newFont 20), (Color 255, 255, 255)
-
-    drawBorder: ->
-      love.graphics.push "all"
-      setColor 15, 87, 132, 200
-      bounds = Screen_Size.border
-      love.graphics.rectangle "fill", 0, 0, bounds[3], bounds[2]
-      love.graphics.rectangle "fill", 0, bounds[2] + bounds[4], bounds[3], bounds[2]
-      love.graphics.pop!
+        Renderer\drawAlignedMessage ("Camera: " .. Camera.position.x .. ", " .. Camera.position.y), 325, "left", (Renderer\newFont 20), (Color 255, 255, 255)
+        Renderer\drawAlignedMessage ("Player: " .. MainPlayer.position.x .. ", " .. MainPlayer.position.y), 350, "left", (Renderer\newFont 20), (Color 255, 255, 255)
 
     drawScore: ->
+      Camera\unset!
       font = Renderer\newFont 30
       love.graphics.setFont font
       setColor 0, 0, 0, 255
       love.graphics.printf ScoreTracker.score, 0, (20 * Scale.width) - (font\getHeight! / 2), Screen_Size.width - (10 * Scale.width), "right"
+      Camera\set!
 
     draw: ->
-      Driver.setShader!
+      Camera\set!
+      Driver.drawBackground!
       UI\draw!
-      love.graphics.push "all"
-      love.graphics.translate -World.position.x, -World.position.y
       switch Driver.game_state
         when Game_State.playing
-          --Driver.drawBorder!
-          --Driver.drawScore!
-          --Levels\draw!
           World\draw!
+          Driver.drawScore!
+          --Levels\draw!
           Renderer\drawAll!
           Driver.drawDebugInfo!
         when Game_State.controls
@@ -423,14 +416,18 @@ export class Driver
           Pause\draw!
         when Game_State.game_over
           GameOver\draw!
+
+      Camera\unset!
       setColor 0, 0, 0, 127
       love.graphics.setFont (Renderer\newFont 20)
       love.graphics.printf VERSION, 0, Screen_Size.height - (25 * Scale.height), Screen_Size.width - (10 * Scale.width), "right"
       if SHOW_FPS
         love.graphics.printf love.timer.getFPS! .. " FPS", 0, Screen_Size.height - (50 * Scale.height), Screen_Size.width - (10 * Scale.width), "right"
-      love.graphics.pop!
+      Camera\set!
 
       if DEBUG_MENU
         Debugger\draw!
+
+      Camera\unset!
 
       collectgarbage "step"

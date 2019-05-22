@@ -48,9 +48,7 @@ export class HomingProjectile extends GameObject
     if @speed\getLength! > 0
       if @target and @target.alive and @alive
         if DEBUGGING
-          love.graphics.push "all"
           setColor 255, 0, 255, 127
           enemy = @getHitBox!
           love.graphics.circle "fill", @position.x, @position.y, @attack_range + enemy.radius, 360
-          love.graphics.pop!
         super!

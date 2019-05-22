@@ -86,8 +86,7 @@ export class Button extends UIElement
 
   -- Draw the Button
   draw: =>
-    -- Store transforms
-    love.graphics.push "all"
+    Camera\unset!
     if @active
       if @sprited
         -- Draw sprites
@@ -112,5 +111,4 @@ export class Button extends UIElement
     height = @font\getHeight!
     love.graphics.printf @text, @x, @y + ((@height - height) / 2), @width, "center"
 
-    -- Restore transforms
-    love.graphics.pop!
+    Camera\set!

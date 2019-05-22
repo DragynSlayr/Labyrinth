@@ -19,9 +19,6 @@ export class ObjectRenderer
 
   -- Draw everything in the layers
   drawAll: =>
-    -- Store transforms
-    love.graphics.push "all"
-
     -- Draw each GameObject in the layers
     for k, layer in pairs EntityTypes.order
       for i, object in pairs Driver.objects[layer]
@@ -35,17 +32,13 @@ export class ObjectRenderer
     -- Clear queue
     @queue = {}
 
-    -- Restore transforms
-    love.graphics.pop!
-
   -- Draws a HUD (large) message
   -- message: The message
   -- x: X location of the message
   -- y: Y location of the message
   -- font: The font to use
   drawHUDMessage: (message, x, y, font = (Renderer\newFont 30), color = Color!) =>
-    -- Store transforms
-    love.graphics.push "all"
+    Camera\unset!
 
     -- Clear shader
     love.graphics.setShader!
@@ -57,8 +50,7 @@ export class ObjectRenderer
     -- Display the message
     love.graphics.print message, x, y
 
-    -- Restore transforms
-    love.graphics.pop!
+    Camera\set!
 
   -- Draws a status (centered) message
   -- message: The message
@@ -69,8 +61,7 @@ export class ObjectRenderer
     @drawAlignedMessage message, y, "center", font, color
 
   drawAlignedMessage: (message, y, alignment = "center", font = (Renderer\newFont 20), color = Color!) =>
-    -- Store transforms
-    love.graphics.push "all"
+    Camera\unset!
 
     -- Clear shader
     love.graphics.setShader!
@@ -82,5 +73,4 @@ export class ObjectRenderer
     -- Draw an aligned message to the screen
     love.graphics.printf message, 0, y - (font\getHeight! / 2), love.graphics\getWidth!, alignment
 
-    -- Restore transforms
-    love.graphics.pop!
+    Camera\set!

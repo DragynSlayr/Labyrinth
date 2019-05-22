@@ -7,4 +7,6 @@ export class Icon extends UIElement
     @sprite\update dt
 
   draw: =>
+    Camera\unset!
     @sprite\draw @x, @y
+    Camera\set!

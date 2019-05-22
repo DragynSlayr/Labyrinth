@@ -39,7 +39,7 @@ export class ComboBox extends Button
         @selected = false
 
   draw: =>
-    love.graphics.push "all"
+    Camera\unset!
     if @active
       if @open
         for k, v in pairs @options
@@ -74,4 +74,4 @@ export class ComboBox extends Button
     else
       love.graphics.printf @text, @x, @y + ((@height - height) / 2), @width, "center"
 
-    love.graphics.pop!
+    Camera\set!

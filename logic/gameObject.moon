@@ -137,7 +137,6 @@ export class GameObject
     --@position.y = clamp @position.y, Screen_Size.border[2] + radius, (Screen_Size.border[4] + Screen_Size.border[2]) - radius
 
   draw: =>
-    love.graphics.push "all"
     old_color = @sprite.color
     if @charmed
       @sprite.color = {200, 0, 127}
@@ -163,15 +162,15 @@ export class GameObject
         ratio = @armor / @max_armor
         love.graphics.rectangle "fill", @position.x - radius, (@position.y + radius) + (6 * Scale.height), (radius * 2) * ratio, 10 * Scale.height
       love.graphics.setShader!
-    love.graphics.pop!
     if @shielded
       @shield_sprite\draw @position.x, @position.y
 
   isOnScreen: (bounds = Screen_Size.bounds) =>
     if not @alive return false
-    circle = @getHitBox!
-    x, y = circle.center\getComponents!
-    radius = circle.radius
-    xOn = x - radius >= bounds[1] and x + radius <= bounds[3] + bounds[1]
-    yOn = y - radius >= bounds[2] and y + radius <= bounds[4] + bounds[2]
-    return xOn and yOn
+    return true
+    -- circle = @getHitBox!
+    -- x, y = circle.center\getComponents!
+    -- radius = circle.radius
+    -- xOn = x - radius >= bounds[1] and x + radius <= bounds[3] + bounds[1]
+    -- yOn = y - radius >= bounds[2] and y + radius <= bounds[4] + bounds[2]
+    -- return xOn and yOn
