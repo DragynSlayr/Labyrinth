@@ -14,6 +14,15 @@ export class WorldHandler
     Driver\addObject wlft, EntityTypes.wall
     Driver\addObject wrgt, EntityTypes.wall
 
+    -- TODO: Combine walls to minimize number needed, can be done with 24 instead of 200
+    for rowIdx, row in pairs @map
+      for colIdx, val in pairs row
+        if val == @wallId
+          x = (colIdx - 1) * 32
+          y = (rowIdx - 1) * 32
+          w = Wall x, y, 32, 32, wallColor
+          Driver\addObject w, EntityTypes.wall
+
   loadMap: =>
     path = "assets/sprites/map/town.tmx"
     if love.filesystem.getInfo (PATH_PREFIX .. path)
@@ -55,6 +64,8 @@ export class WorldHandler
       width = tonumber tileInfo!
       height = tonumber tileInfo!
       path = "map/" .. tileInfo!
+      if path == "map/tiles/wall.tga"
+        @wallId = id + 1
       tiles[id + 1] = Sprite path, height, width
       lines!
     return tiles

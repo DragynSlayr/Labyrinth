@@ -392,7 +392,6 @@ export class Driver
           Renderer\drawAlignedMessage message, y, "left", font, (Color 255, 255, 255)
           y += 25
         Renderer\drawAlignedMessage ("Camera: " .. Camera.position.x .. ", " .. Camera.position.y), y, "left", (Renderer\newFont 20), (Color 255, 255, 255)
-        Renderer\drawAlignedMessage ("Player: " .. MainPlayer.position.x .. ", " .. MainPlayer.position.y), y + 25, "left", (Renderer\newFont 20), (Color 255, 255, 255)
 
     drawScore: ->
       Camera\unset!
