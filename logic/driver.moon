@@ -107,7 +107,7 @@ export class Driver
           object = o\getHitBox!
           e = enemy\getHitBox!
           if object\contains e
-            touching = true
+            --touching = true
             break
       if touching --or not enemy\isOnScreen Screen_Size.border
         Driver.spawn typeof, layer, x, y, i + 1
@@ -361,6 +361,9 @@ export class Driver
               for k2, o in pairs v
                 if o.health <= 0 or not o.alive
                   Driver\removeObject o
+            for k, v in pairs Driver.objects
+              for k2, o in pairs v
+                o\postUpdate dt
             --Levels\update dt
             World\update dt
         UI\update dt
@@ -382,14 +385,14 @@ export class Driver
 
     drawDebugInfo: ->
       if DEBUGGING
-        y = 100
+        y = 25
         for k, layer in pairs EntityTypes.order
           message = layer .. ": " .. #Driver.objects[layer]
           font = Renderer\newFont 20
           Renderer\drawAlignedMessage message, y, "left", font, (Color 255, 255, 255)
           y += 25
-        Renderer\drawAlignedMessage ("Camera: " .. Camera.position.x .. ", " .. Camera.position.y), 325, "left", (Renderer\newFont 20), (Color 255, 255, 255)
-        Renderer\drawAlignedMessage ("Player: " .. MainPlayer.position.x .. ", " .. MainPlayer.position.y), 350, "left", (Renderer\newFont 20), (Color 255, 255, 255)
+        Renderer\drawAlignedMessage ("Camera: " .. Camera.position.x .. ", " .. Camera.position.y), y, "left", (Renderer\newFont 20), (Color 255, 255, 255)
+        Renderer\drawAlignedMessage ("Player: " .. MainPlayer.position.x .. ", " .. MainPlayer.position.y), y + 25, "left", (Renderer\newFont 20), (Color 255, 255, 255)
 
     drawScore: ->
       Camera\unset!
@@ -406,7 +409,7 @@ export class Driver
       switch Driver.game_state
         when Game_State.playing
           World\draw!
-          Driver.drawScore!
+          --Driver.drawScore!
           --Levels\draw!
           Renderer\drawAll!
           Driver.drawDebugInfo!

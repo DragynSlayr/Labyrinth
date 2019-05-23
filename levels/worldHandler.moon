@@ -4,6 +4,16 @@ export class WorldHandler
     @tiles = @loadTiles!
     @map = @loadMap!
 
+    wallColor = Color 127, 127, 0
+    wtop = Wall -64, -64, 3200 + 128, 64, wallColor
+    wbot = Wall -64, 3200, 3200 + 128, 64, wallColor
+    wlft = Wall -64, -64, 64, 3200 + 128, wallColor
+    wrgt = Wall 3200, -64, 64, 3200 + 128, wallColor
+    Driver\addObject wtop, EntityTypes.wall
+    Driver\addObject wbot, EntityTypes.wall
+    Driver\addObject wlft, EntityTypes.wall
+    Driver\addObject wrgt, EntityTypes.wall
+
   loadMap: =>
     path = "assets/sprites/map/town.tmx"
     if love.filesystem.getInfo (PATH_PREFIX .. path)
@@ -59,12 +69,10 @@ export class WorldHandler
   draw: =>
     for rowIdx, row in pairs @map
       for colIdx, val in pairs row
-        x = (colIdx - 51) * 32
-        y = (rowIdx - 51) * 32
-        if @isOnScreen x, y
+        x = ((colIdx - 1) * 32) + Screen_Size.half_width
+        y = ((rowIdx - 1) * 32) + Screen_Size.half_height
+        if Camera\isOnScreen x, y, 32, 32
           @tiles[val]\draw x, y
-
-  isOnScreen: (x, y) =>
-    xOn = x >= Camera.position.x - 32 and x - 32 <= Camera.position.x + Screen_Size.width
-    yOn = y >= Camera.position.y - 32 and y - 32 <= Camera.position.y + Screen_Size.height
-    return xOn and yOn
+          if DEBUGGING
+            love.graphics.setColor 0, 0, 1
+            love.graphics.rectangle "line", x - 16, y - 16, 32, 32

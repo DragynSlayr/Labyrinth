@@ -33,13 +33,13 @@ export class CollisionChecker
       b = collision[2]
       if not (a.charmed or b.charmed)
         if a.solid
-          a.position = a.last_position
-          if a.speed\getLength! > 0
-            a.position\add (a.speed\multiply dt)
-        if b.solid
           b.position = b.last_position
           if b.speed\getLength! > 0
-            b.position\add (b.speed\multiply (-1 * dt))
+            b.position\add (b.speed\multiply dt)
+        if b.solid
+          a.position = a.last_position
+          if a.speed\getLength! > 0
+            a.position\add (a.speed\multiply -dt)
       else
         a.position = a.last_position
         b.position = b.last_position

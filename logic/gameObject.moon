@@ -136,6 +136,9 @@ export class GameObject
     --@position.x = clamp @position.x, Screen_Size.border[1] + radius, Screen_Size.border[3] - radius
     --@position.y = clamp @position.y, Screen_Size.border[2] + radius, (Screen_Size.border[4] + Screen_Size.border[2]) - radius
 
+  postUpdate: (dt) =>
+    return
+
   draw: =>
     old_color = @sprite.color
     if @charmed

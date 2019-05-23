@@ -4,7 +4,7 @@ export class Player extends GameObject
     super x, y, sprite
     @sprite\setRotationSpeed -math.pi / 2
 
-    @colliders = {EntityTypes.enemy, EntityTypes.boss}
+    @colliders = {EntityTypes.enemy, EntityTypes.boss, EntityTypes.wall}
 
     @setBaseStats!
 
@@ -34,7 +34,7 @@ export class Player extends GameObject
     @is_clone = false
     @can_shoot = true
 
-    @position = Camera.position
+    @position = Vector 1586, 2350
 
   setBaseStats: =>
     @lives = 1
@@ -175,7 +175,6 @@ export class Player extends GameObject
 
     resetSpeed, start = @move dt
     super dt
-    Camera\moveTo @position
     if resetSpeed
       @speed = start
     @speed_boost = 0
@@ -199,8 +198,10 @@ export class Player extends GameObject
     if attacked
       @attack_timer = 0
 
+  postUpdate: (dt) =>
     @position\add ((Vector Screen_Size.half_width, Screen_Size.half_height)\multiply -1)
-  
+    Camera\moveTo @position
+
   createBullet: (x, y, damage, speed, filters) =>
     return FilteredBullet x, y, damage, speed, filters
 

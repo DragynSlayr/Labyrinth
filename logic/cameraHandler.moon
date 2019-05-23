@@ -1,6 +1,6 @@
 export class CameraHandler
   new: =>
-    @position = Vector -Screen_Size.half_width, (Screen_Size.height * 0.15)
+    @position = Vector!
     @scale = Vector 1, 1
     @rotation = 0
     @isSet = false
@@ -29,3 +29,8 @@ export class CameraHandler
     if @isSet
       love.graphics.pop!
       @isSet = false
+
+  isOnScreen: (x, y, width, height) =>
+    xOn = x >= @position.x - width and x - width <= @position.x + Screen_Size.width
+    yOn = y >= @position.y - height and y - height <= @position.y + Screen_Size.height
+    return xOn and yOn

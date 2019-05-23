@@ -9,20 +9,23 @@ EntityTypes.bullet     = "Bullet"
 EntityTypes.background = "Background"
 EntityTypes.particle   = "Particle"
 EntityTypes.boss       = "Boss"
+EntityTypes.wall       = "Wall"
 
 EntityTypes.layers = {}
 
-EntityTypes.layers[EntityTypes.background] = 1
-EntityTypes.layers[EntityTypes.particle]   = 2
-EntityTypes.layers[EntityTypes.bullet]     = 3
-EntityTypes.layers[EntityTypes.coin]       = 4
-EntityTypes.layers[EntityTypes.item]       = 4
-EntityTypes.layers[EntityTypes.health]     = 4
-EntityTypes.layers[EntityTypes.boss]       = 5
-EntityTypes.layers[EntityTypes.enemy]      = 5
-EntityTypes.layers[EntityTypes.player]     = 6
+EntityTypes.layers[EntityTypes.wall]       = 1
+EntityTypes.layers[EntityTypes.background] = 2
+EntityTypes.layers[EntityTypes.particle]   = 3
+EntityTypes.layers[EntityTypes.bullet]     = 4
+EntityTypes.layers[EntityTypes.coin]       = 5
+EntityTypes.layers[EntityTypes.item]       = 5
+EntityTypes.layers[EntityTypes.health]     = 5
+EntityTypes.layers[EntityTypes.boss]       = 6
+EntityTypes.layers[EntityTypes.enemy]      = 6
+EntityTypes.layers[EntityTypes.player]     = 7
 
 EntityTypes.order = {
+  EntityTypes.wall,
   EntityTypes.background,
   EntityTypes.particle,
   EntityTypes.bullet,
