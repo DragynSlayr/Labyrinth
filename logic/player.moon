@@ -34,8 +34,6 @@ export class Player extends GameObject
     @is_clone = false
     @can_shoot = true
 
-    @position = Vector 1586, 2350
-
   setBaseStats: =>
     @lives = 1
     @damage = Stats.player[3]
@@ -166,8 +164,6 @@ export class Player extends GameObject
     return bullet_speed, bullet_speed\getLength! > 0
 
   update: (dt) =>
-    @position\add (Vector Screen_Size.half_width, Screen_Size.half_height)
-
     if not @alive return
 
     for k, i in pairs @equipped_items
@@ -197,9 +193,6 @@ export class Player extends GameObject
 
     if attacked
       @attack_timer = 0
-
-  postUpdate: (dt) =>
-    @position\add ((Vector Screen_Size.half_width, Screen_Size.half_height)\multiply -1)
     Camera\moveTo @position
 
   createBullet: (x, y, damage, speed, filters) =>
@@ -237,7 +230,6 @@ export class Player extends GameObject
 
   draw: =>
     if not @alive return
-    @position\add (Vector Screen_Size.half_width, Screen_Size.half_height)
     for k, i in pairs @equipped_items
       i\draw!
     if DEBUGGING
@@ -252,4 +244,3 @@ export class Player extends GameObject
 
     if @show_stats
       @drawPlayerStats!
-    @position\add ((Vector Screen_Size.half_width, Screen_Size.half_height)\multiply -1)

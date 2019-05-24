@@ -9,7 +9,6 @@ export class Wall extends GameObject
     @solid = true
     @draw_health = false
     @colliders = {EntityTypes.player, EntityTypes.bullet}
-    @position\add Vector Screen_Size.half_width, Screen_Size.half_height
     @position\add Vector @sprite.scaled_width / 2, @sprite.scaled_height / 2
     @position\add Vector -16, -16
 

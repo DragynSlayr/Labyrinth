@@ -127,11 +127,6 @@ export class Driver
               if player_kill
                 for k, player in pairs Driver.objects[EntityTypes.player]
                   player\onKill o
-
-                if Driver.box_counter < Driver.max_boxes and math.random! <= o.item_drop_chance
-                  Driver.box_counter += 1
-                  box = ItemBoxPickUp o.position.x, o.position.y
-                  Driver\addObject box, EntityTypes.item
                 v[k2]\kill!
                 --Levels\entityKilled v[k2]
                 World\entityKilled v[k2]
@@ -317,8 +312,6 @@ export class Driver
       Driver.state_stack\add Game_State.main_menu
       Driver.elapsed = 0
       Driver.shader = nil
-      Driver.box_counter = 0
-      Driver.max_boxes = 5
 
     restart: =>
       loadBaseStats!
@@ -333,7 +326,11 @@ export class Driver
       ScreenCreator!
 
       -- Create a player
-      export MainPlayer = Driver.spawn (Player), EntityTypes.player, Screen_Size.half_width, Screen_Size.half_height
+      export MainPlayer = Player 1586, 2350
+      Driver\addObject MainPlayer, EntityTypes.player
+
+      box = ItemBoxPickUp 1586, 2000
+      Driver\addObject box, EntityTypes.background
 
       -- Start game
       --Levels\nextLevel!
@@ -361,9 +358,6 @@ export class Driver
               for k2, o in pairs v
                 if o.health <= 0 or not o.alive
                   Driver\removeObject o
-            for k, v in pairs Driver.objects
-              for k2, o in pairs v
-                o\postUpdate dt
             --Levels\update dt
             World\update dt
         UI\update dt
@@ -391,7 +385,7 @@ export class Driver
           font = Renderer\newFont 20
           Renderer\drawAlignedMessage message, y, "left", font, (Color 255, 255, 255)
           y += 25
-        Renderer\drawAlignedMessage ("Camera: " .. Camera.position.x .. ", " .. Camera.position.y), y, "left", (Renderer\newFont 20), (Color 255, 255, 255)
+        Renderer\drawAlignedMessage ("Camera: " .. (Camera.position.x - Screen_Size.half_width) .. ", " .. (Camera.position.y - Screen_Size.half_height)), y, "left", (Renderer\newFont 20), (Color 255, 255, 255)
 
     drawScore: ->
       Camera\unset!

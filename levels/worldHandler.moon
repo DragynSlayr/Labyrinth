@@ -14,7 +14,53 @@ export class WorldHandler
     Driver\addObject wlft, EntityTypes.wall
     Driver\addObject wrgt, EntityTypes.wall
 
-    -- TODO: Combine walls to minimize number needed, can be done with 24 instead of 200
+    -- Combine horizontally
+    for rowIdx, row in pairs @map
+      colIdx = 1
+      while colIdx <= #row
+        val = @map[rowIdx][colIdx]
+        if val == @wallId
+          startCol = colIdx
+          while @map[rowIdx][colIdx] == @wallId
+            @map[rowIdx][colIdx] = 0
+            colIdx += 1
+          delta = colIdx - startCol
+          if delta == 0
+            @map[rowIdx][colIdx] = @wallId
+          elseif delta == 1
+            @map[rowIdx][colIdx - 1] = @wallId
+          else
+            x = (startCol - 1) * 32
+            y = (rowIdx - 1) * 32
+            w = Wall x, y, delta * 32, 32, wallColor
+            Driver\addObject w, EntityTypes.wall
+        else
+          colIdx += 1
+
+    -- Combine vertically
+    for colIdx, col in pairs @map
+      rowIdx = 1
+      while rowIdx <= #col
+        val = @map[rowIdx][colIdx]
+        if val == @wallId
+          startRow = rowIdx
+          while @map[rowIdx][colIdx] == @wallId
+            @map[rowIdx][colIdx] = 0
+            rowIdx += 1
+          delta = rowIdx - startRow
+          if delta == 0
+            @map[rowIdx][colIdx] = @wallId
+          elseif delta == 1
+            @map[rowIdx - 1][colIdx] = @wallId
+          else
+            x = (colIdx - 1) * 32
+            y = (startRow - 1) * 32
+            w = Wall x, y, 32, delta * 32, wallColor
+            Driver\addObject w, EntityTypes.wall
+        else
+          rowIdx += 1
+
+    -- Create remaining
     for rowIdx, row in pairs @map
       for colIdx, val in pairs row
         if val == @wallId
@@ -22,6 +68,7 @@ export class WorldHandler
           y = (rowIdx - 1) * 32
           w = Wall x, y, 32, 32, wallColor
           Driver\addObject w, EntityTypes.wall
+          @map[rowIdx][colIdx] = 0
 
   loadMap: =>
     path = "assets/sprites/map/town.tmx"
@@ -80,10 +127,11 @@ export class WorldHandler
   draw: =>
     for rowIdx, row in pairs @map
       for colIdx, val in pairs row
-        x = ((colIdx - 1) * 32) + Screen_Size.half_width
-        y = ((rowIdx - 1) * 32) + Screen_Size.half_height
-        if Camera\isOnScreen x, y, 32, 32
-          @tiles[val]\draw x, y
-          if DEBUGGING
-            love.graphics.setColor 0, 0, 1
-            love.graphics.rectangle "line", x - 16, y - 16, 32, 32
+        if val != 0
+          x = ((colIdx - 1) * 32) + Screen_Size.half_width
+          y = ((rowIdx - 1) * 32) + Screen_Size.half_height
+          if Camera\isOnScreen x, y, 32, 32
+            @tiles[val]\draw x, y
+            if DEBUGGING
+              love.graphics.setColor 0, 0, 1
+              love.graphics.rectangle "line", x - 16, y - 16, 32, 32

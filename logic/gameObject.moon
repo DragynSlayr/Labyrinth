@@ -1,6 +1,6 @@
 export class GameObject
   new: (x, y, sprite, x_speed = 0, y_speed = 0) =>
-    @position = Vector x, y
+    @position = Vector x + Screen_Size.half_width, y + Screen_Size.half_height
     @speed = Vector x_speed, y_speed
     @sprite = sprite
     @elapsed = 0
