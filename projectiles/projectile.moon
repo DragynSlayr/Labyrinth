@@ -1,6 +1,6 @@
 export class HomingProjectile extends GameObject
   new: (x, y, target, sprite) =>
-    super x, y, sprite
+    super x - Screen_Size.half_width, y - Screen_Size.half_height, sprite
     @target = target
     @attack_range = 15 * Scale.diag
     @damage = 1 / 10

@@ -5,11 +5,6 @@ export class DoubleShotPassive extends PassiveItem
     sprite = Sprite "item/doubleShotPassive.tga", 32, 32, 1, 1.75
     effect = (player) =>
       filters = {EntityTypes.enemy, EntityTypes.boss}
-      if not (tableContains filters, EntityTypes.goal)
-        for k, v in pairs Driver.objects[EntityTypes.goal]
-          if v.goal_type == GoalTypes.attack
-            table.insert filters, EntityTypes.goal
-            break
       bullet_speed = Vector 0, 0
       if love.keyboard.isDown Controls.keys.SHOOT_LEFT
         bullet_speed\add (Vector -player.bullet_speed, 0)

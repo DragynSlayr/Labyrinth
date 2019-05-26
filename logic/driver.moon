@@ -329,8 +329,15 @@ export class Driver
       export MainPlayer = Player 1586, 2350
       Driver\addObject MainPlayer, EntityTypes.player
 
-      box = ItemBoxPickUp 1586, 2000
-      Driver\addObject box, EntityTypes.background
+      item = DoubleShotPassive 5
+      ped = ItemPedestal 1586, 2000, item
+      Driver\addObject ped, EntityTypes.background
+
+      y = 1600
+      for i = 1, 10
+        coin = Coin 1650, y, (i * 2)
+        Driver\addObject coin, EntityTypes.background
+        y += 75
 
       -- Start game
       --Levels\nextLevel!
@@ -387,12 +394,12 @@ export class Driver
           y += 25
         Renderer\drawAlignedMessage ("Camera: " .. (Camera.position.x - Screen_Size.half_width) .. ", " .. (Camera.position.y - Screen_Size.half_height)), y, "left", (Renderer\newFont 20), (Color 255, 255, 255)
 
-    drawScore: ->
+    drawMoney: ->
       Camera\unset!
       font = Renderer\newFont 30
       love.graphics.setFont font
-      setColor 0, 0, 0, 255
-      love.graphics.printf ScoreTracker.score, 0, (20 * Scale.width) - (font\getHeight! / 2), Screen_Size.width - (10 * Scale.width), "right"
+      setColor 255, 215, 0, 255
+      love.graphics.printf ("$ " .. MainPlayer.coins), 0, (20 * Scale.width) - (font\getHeight! / 2), Screen_Size.width - (10 * Scale.width), "right"
       Camera\set!
 
     draw: ->
@@ -402,7 +409,7 @@ export class Driver
       switch Driver.game_state
         when Game_State.playing
           World\draw!
-          --Driver.drawScore!
+          Driver.drawMoney!
           --Levels\draw!
           Renderer\drawAll!
           Driver.drawDebugInfo!

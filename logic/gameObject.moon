@@ -52,6 +52,8 @@ export class GameObject
 
     @charmed = false
 
+    @health_drain_rate = 0
+
   setSpeedOverride: (new_speed, ratio) =>
     x, y = new_speed\getComponents!
     @speed_add = Vector x, y, true
@@ -136,8 +138,7 @@ export class GameObject
     --@position.x = clamp @position.x, Screen_Size.border[1] + radius, Screen_Size.border[3] - radius
     --@position.y = clamp @position.y, Screen_Size.border[2] + radius, (Screen_Size.border[4] + Screen_Size.border[2]) - radius
 
-  postUpdate: (dt) =>
-    return
+    @health -= @health_drain_rate
 
   draw: =>
     old_color = @sprite.color

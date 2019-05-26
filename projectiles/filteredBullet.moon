@@ -1,7 +1,7 @@
 export class FilteredBullet extends GameObject
   new: (x, y, damage, speed, filter = {}) =>
     sprite = Sprite "enemy/bullet.tga", 26, 20, 1, 0.5
-    super x, y, sprite
+    super x - Screen_Size.half_width, y - Screen_Size.half_height, sprite
     @filter = filter
     @damage = damage
     @attack_range = 15 * Scale.diag
