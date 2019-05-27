@@ -330,7 +330,7 @@ export class Driver
       Driver\addObject MainPlayer, EntityTypes.player
 
       item = DoubleShotPassive 5
-      ped = ItemPedestal 1586, 2000, item
+      ped = ItemPedestal 1586, 2000, item, 20
       Driver\addObject ped, EntityTypes.background
 
       y = 1600
