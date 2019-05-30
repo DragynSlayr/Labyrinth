@@ -195,6 +195,8 @@ export class Player extends GameObject
 
     if attacked
       @attack_timer = 0
+
+  postUpdate: (dt) =>
     Camera\moveTo @position
 
   createBullet: (x, y, damage, speed, filters) =>

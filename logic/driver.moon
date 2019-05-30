@@ -367,6 +367,7 @@ export class Driver
                   Driver\removeObject o
             --Levels\update dt
             World\update dt
+            MainPlayer\postUpdate dt
         UI\update dt
         ScoreTracker\update dt
 
@@ -409,9 +410,9 @@ export class Driver
       switch Driver.game_state
         when Game_State.playing
           World\draw!
-          Driver.drawMoney!
           --Levels\draw!
           Renderer\drawAll!
+          Driver.drawMoney!
           Driver.drawDebugInfo!
         when Game_State.controls
           Controls\draw!
