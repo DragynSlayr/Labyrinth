@@ -2,7 +2,7 @@ export class DebugMenu
   new: =>
     export DEBUG_MENU_ENABLED = true
     export DEBUG_MENU = false
-    export DEBUGGING = true--false
+    export DEBUGGING = false
     export SHOW_RANGE = false
 
     @completer = AutoComplete!

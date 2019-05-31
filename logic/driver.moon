@@ -329,9 +329,17 @@ export class Driver
       export MainPlayer = Player 1586, 2350
       Driver\addObject MainPlayer, EntityTypes.player
 
-      item = DoubleShotPassive 5
-      ped = ItemPedestal 1586, 2000, item, 20
-      Driver\addObject ped, EntityTypes.background
+      positions = {
+        (Vector 450, 2350),
+        (Vector 350, 2230),
+        (Vector 450, 2090)
+      }
+
+      for i = 1, 3
+        item = ItemPool\getItem!
+        vec = positions[i]
+        ped = ItemPedestal vec.x, vec.y, item, item.rarity * 10
+        Driver\addObject ped, EntityTypes.background
 
       y = 1600
       for i = 1, 10

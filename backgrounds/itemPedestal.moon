@@ -1,6 +1,6 @@
 export class ItemPedestal extends BackgroundObject
   new: (x, y, item, cost = 0) =>
-    sprite = Sprite "item/pedestal.tga", 32, 32, 1, 3
+    sprite = Sprite "item/pedestal.tga", 32, 32, 1, 2.4
     super x, y, sprite
     @item = item
     @item.position = Vector @position.x, @position.y - (@sprite.scaled_width * 0.3)

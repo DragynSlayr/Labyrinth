@@ -27,7 +27,7 @@ export class ActiveItem extends Item
       @used = true
 
   draw2: =>
-    love.graphics.push "all"
+    Camera\unset!
 
     x = ((Screen_Size.width / 2) + (10 * Scale.width)) / 2
     y = Screen_Size.height - (35 * Scale.height)
@@ -64,7 +64,7 @@ export class ActiveItem extends Item
 
       love.graphics.setShader!
 
-    love.graphics.pop!
+    Camera\set!
 
   update2: (dt) =>
     super dt
