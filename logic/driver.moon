@@ -330,15 +330,16 @@ export class Driver
       Driver\addObject MainPlayer, EntityTypes.player
 
       positions = {
-        (Vector 450, 2350),
+        (Vector 450, 2340),
         (Vector 350, 2230),
-        (Vector 450, 2090)
+        (Vector 450, 2080)
       }
 
       for i = 1, 3
         item = ItemPool\getItem!
         vec = positions[i]
         ped = ItemPedestal vec.x, vec.y, item, item.rarity * 10
+        ped.refilling = true
         Driver\addObject ped, EntityTypes.background
 
       y = 1600
