@@ -7,8 +7,8 @@ files = []
 ignore = [".git", "assets"]
 key_words = {}
 SPLIT_CHAR = "\\"
-if os.uname()[0] == "Linux":
-    SPLIT_CHAR = "/"
+# if os.uname()[0] == "Linux":
+#     SPLIT_CHAR = "/"
 
 brackets = [("[", "]"), ("{", "}"), ("(", ")"), ("\"", "\"")]
 
