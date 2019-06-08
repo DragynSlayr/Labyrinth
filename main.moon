@@ -1,5 +1,4 @@
 require "logic.constants"
-require "logic.globals"
 
 export setColor = (r, g, b, a = 255) ->
   love.graphics.setColor (r / 255), (g / 255), (b / 255), (a / 255)

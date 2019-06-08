@@ -12,5 +12,5 @@ export class PlayerBullet extends HomingProjectile
     super!
     for k, p in pairs Driver.objects[EntityTypes.player]
       if p\hasItem (LifeStealPassive)
-        p.health += Stats.player[3] * 0.01
+        p.health += MainPlayer.damage * 0.01
         p.health = math.min p.health, p.max_health

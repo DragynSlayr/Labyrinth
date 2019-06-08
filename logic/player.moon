@@ -6,8 +6,6 @@ export class Player extends GameObject
 
     @colliders = {EntityTypes.enemy, EntityTypes.boss, EntityTypes.wall}
 
-    @setBaseStats!
-
     @keys_pushed = 0
     @hit = false
     @attack_timer = 0
@@ -36,13 +34,31 @@ export class Player extends GameObject
 
     @coins = 0
 
-  setBaseStats: =>
+    @stats = {}
+    @stats.strength = 0
+    @stats.dexterity = 0
+    @stats.constitution = 0
+    @stats.intelligence = 0
+    @stats.wisdom = 0
+    --@stats.charisma = 0
+
+  pickClass: (num) =>
+    switch num
+      when 0
+        @stats.strength = 10
+        @stats.dexterity = 10
+        @stats.constitution = 10
+        @stats.intelligence = 0
+        @stats.wisdom = 0
+        -- @stats.charisma = 0
+
+  updateStats: =>
     @lives = 1
-    @damage = Stats.player[3]
-    @max_speed = Stats.player[4]
-    @max_health = Stats.player[1]
-    @attack_range = Stats.player[2]
-    @attack_speed = Stats.player[5]
+    @damage = 0.125 * @stats.strength
+    @max_speed = 27.5 * @stats.dexterity * Scale.diag
+    @max_health = 0.625 * @stats.constitution
+    @attack_range = 7.5 * @stats.strength * Scale.diag
+    @attack_speed = 1 / @stats.dexterity
     @health = @max_health
     @setArmor 0, @max_health
     @bullet_speed = @max_speed * 1.25

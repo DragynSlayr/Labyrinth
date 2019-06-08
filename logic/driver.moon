@@ -314,8 +314,6 @@ export class Driver
       Driver.shader = nil
 
     restart: =>
-      loadBaseStats!
-
       -- Set love environment
       love.graphics.setDefaultFilter "nearest", "nearest", 1
 
@@ -327,6 +325,8 @@ export class Driver
 
       -- Create a player
       export MainPlayer = Player 1586, 2350
+      MainPlayer\pickClass 0
+      MainPlayer\updateStats!
       Driver\addObject MainPlayer, EntityTypes.player
 
       positions = {
