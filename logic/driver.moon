@@ -28,6 +28,7 @@ export class Driver
       defaults ..= "USE_ITEM q\n"
       defaults ..= "PAUSE_GAME escape\n"
       defaults ..= "SHOW_RANGE z\n"
+      defaults ..= "OPEN_INVENTORY i\n"
       love.filesystem.write "SETTINGS", defaults
 
     checkMods: =>

@@ -42,6 +42,8 @@ export class Player extends GameObject
     @stats.wisdom = 0
     --@stats.charisma = 0
 
+    @inventory = Inventory!
+
   pickClass: (num) =>
     switch num
       when 0
@@ -184,6 +186,8 @@ export class Player extends GameObject
   update: (dt) =>
     if not @alive return
 
+    @inventory\update dt
+
     for k, i in pairs @equipped_items
       i\update dt
 
@@ -264,3 +268,5 @@ export class Player extends GameObject
 
     if @show_stats
       @drawPlayerStats!
+
+    @inventory\draw!
