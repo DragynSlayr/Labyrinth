@@ -10,26 +10,39 @@ export class Driver
       love.draw = @draw
 
     writeDefaultSettings: =>
-      defaults = "MODS_ENABLED 0\n"
-      defaults ..= "FILES_DUMPED 0\n"
-      defaults ..= "FULLSCREEN 1\n"
-      defaults ..= "WIDTH " .. love.graphics.getWidth! .. "\n"
-      defaults ..= "HEIGHT " .. love.graphics.getHeight! .. "\n"
-      defaults ..= "VSYNC 0\n"
-      defaults ..= "SHOW_FPS 0\n"
-      defaults ..= "MOVE_UP w\n"
-      defaults ..= "MOVE_DOWN s\n"
-      defaults ..= "MOVE_LEFT a\n"
-      defaults ..= "MOVE_RIGHT d\n"
-      defaults ..= "SHOOT_UP up\n"
-      defaults ..= "SHOOT_DOWN down\n"
-      defaults ..= "SHOOT_LEFT left\n"
-      defaults ..= "SHOOT_RIGHT right\n"
-      defaults ..= "USE_ITEM q\n"
-      defaults ..= "PAUSE_GAME escape\n"
-      defaults ..= "SHOW_RANGE z\n"
-      defaults ..= "OPEN_INVENTORY i\n"
-      love.filesystem.write "SETTINGS", defaults
+      defaults = {}
+      defaults[1]  = {"MODS_ENABLED", 0}
+      defaults[2]  = {"FILES_DUMPED", 0}
+      defaults[3]  = {"FULLSCREEN", 1}
+      defaults[4]  = {"WIDTH", love.graphics.getWidth!}
+      defaults[5]  = {"HEIGHT", love.graphics.getHeight!}
+      defaults[6]  = {"VSYNC", 0}
+      defaults[7]  = {"SHOW_FPS", 0}
+      defaults[8]  = {"MOVE_UP", "w"}
+      defaults[9]  = {"MOVE_DOWN", "s"}
+      defaults[10] = {"MOVE_LEFT", "a"}
+      defaults[11] = {"MOVE_RIGHT", "d"}
+      defaults[12] = {"SHOOT_UP", "up"}
+      defaults[13] = {"SHOOT_DOWN", "down"}
+      defaults[14] = {"SHOOT_LEFT", "left"}
+      defaults[15] = {"SHOOT_RIGHT", "right"}
+      defaults[16] = {"USE_ITEM", "q"}
+      defaults[17] = {"PAUSE_GAME", "escape"}
+      defaults[18] = {"SHOW_RANGE", "z"}
+      defaults[19] = {"OPEN_INVENTORY", "i"}
+      defaults[20] = {"OPEN_LEVEL_UP", "l"}
+
+      newSettings = ""
+      if love.filesystem.getInfo "SETTINGS"
+        for i = 1, #defaults
+          k = defaults[i][1]
+          val = readKey k
+          if val
+            defaults[i] = {k, val}
+      for i = 1, #defaults
+        newSettings ..= defaults[i][1] .. " " .. defaults[i][2] .. "\n"
+
+      love.filesystem.write "SETTINGS", newSettings
 
     checkMods: =>
       if MODS_ENABLED and not FILES_DUMPED
@@ -84,8 +97,7 @@ export class Driver
       love.filesystem.setIdentity "Labyrinth"
       love.filesystem.createDirectory "screenshots"
 
-      if not love.filesystem.getInfo "SETTINGS"
-        @writeDefaultSettings!
+      @writeDefaultSettings!
 
       MODS_ENABLED = (readKey "MODS_ENABLED") == "1"
       FILES_DUMPED = (readKey "FILES_DUMPED") == "1"

@@ -12,7 +12,12 @@ export class ScreenCreator
     y = 0.1
     for k, v in pairs Controls.key_names
       key = split v, "_"
-      key = toTitle (key[1] .. " " .. key[2])
+      s = ""
+      for i = 1, #key
+        s ..= key[i]
+        if i != #key
+          s ..= " "
+      key = toTitle s
       UI\add (Text Screen_Size.width * 0.45, Screen_Size.height * y, key, (Renderer\newFont 20))
       b = Button Screen_Size.width * 0.55, Screen_Size.height * y, 125, 35, Controls.keys[v], nil, (Renderer\newFont 20)
       b.action = (() ->

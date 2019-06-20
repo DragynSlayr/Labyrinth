@@ -43,6 +43,10 @@ export class Player extends GameObject
     --@stats.charisma = 0
 
     @inventory = Inventory!
+    @levelUp = LevelUp!
+    @level = 0
+    @exp = 0
+    @nextExp = 100
 
   pickClass: (num) =>
     switch num
@@ -187,6 +191,7 @@ export class Player extends GameObject
     if not @alive return
 
     @inventory\update dt
+    @levelUp\update dt
 
     for k, i in pairs @equipped_items
       i\update dt
@@ -270,3 +275,4 @@ export class Player extends GameObject
       @drawPlayerStats!
 
     @inventory\draw!
+    @levelUp\draw!

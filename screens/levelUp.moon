@@ -1,4 +1,4 @@
-export class Inventory extends Screen
+export class LevelUp extends Screen
   new: =>
     @isOpen = false
     @elapsed = 0
@@ -7,7 +7,7 @@ export class Inventory extends Screen
   update: (dt) =>
     @elapsed += dt
     if @elapsed > @delay
-      if love.keyboard.isDown Controls.keys.OPEN_INVENTORY
+      if love.keyboard.isDown Controls.keys.OPEN_LEVEL_UP
         @elapsed = 0
         @isOpen = not @isOpen
 
@@ -17,6 +17,6 @@ export class Inventory extends Screen
     Camera\unset!
 
     setColor 50, 50, 50, 127
-    love.graphics.rectangle "fill", Screen_Size.half_width + 75, 50, Screen_Size.half_width - 125, Screen_Size.half_height
+    love.graphics.rectangle "fill", 75, 50, Screen_Size.half_width * 0.5, Screen_Size.half_height * 1.3
 
     Camera\set!
