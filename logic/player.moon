@@ -43,7 +43,7 @@ export class Player extends GameObject
     --@stats.charisma = 0
 
     @inventory = Inventory!
-    @levelUp = LevelUp!
+    @levelUp = LevelUp @
     @level = 0
     @exp = 0
     @nextExp = 100
