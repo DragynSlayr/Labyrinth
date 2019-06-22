@@ -16,6 +16,8 @@ export class LevelUp extends Screen
     @buttons = {}
     @makeButtons!
 
+    @popup = nil
+
   loadPlayerStats: () =>
     for k, v in pairs @player.stats
       @stats[k] = v
@@ -59,16 +61,21 @@ export class LevelUp extends Screen
 
       i += 1
 
+    popup_color = {(Color 200, 150, 200)\get!}
     y = y_start + (i * 45) + 10
     apply = Button @x + (@width * 0.675), y, @width * 0.15, 30, 'Apply', (() ->
       @updatePlayerStats!
       @loadPlayerStats!
+      @popup = PopupText @x + (@width / 2), y + 55, "Stats Applied", 3, Renderer\newFont 30
+      @popup.color = popup_color
     ), Renderer\newFont 20
     apply.sprited = false
     table.insert @buttons, apply
 
     reset = Button @x + (@width * 0.85), y, @width * 0.15, 30, 'Reset', (() ->
       @resetPoints!
+      @popup = PopupText @x + (@width / 2), y + 55, "Stats Reset", 3, Renderer\newFont 30
+      @popup.color = popup_color
     ), Renderer\newFont 20
     reset.sprited = false
     table.insert @buttons, reset
@@ -92,6 +99,8 @@ export class LevelUp extends Screen
     if not @isOpen return
     for k, v in pairs @buttons
       v\update dt
+    if @popup
+      @popup\update dt
 
   draw: =>
     if not @isOpen return
@@ -122,5 +131,10 @@ export class LevelUp extends Screen
 
     for k, v in pairs @buttons
       v\draw!
+
+    if @popup
+      @popup\draw!
+      if not @popup.active
+        @popup = nil
 
     Camera\set!
