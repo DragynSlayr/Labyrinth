@@ -107,7 +107,9 @@ export class Button extends UIElement
 
     -- Draw centered text
     love.graphics.setFont @font
-    setColor 0, 0, 0
+    setColor 0, 0, 0, 255
+    if @font_color
+      setColor @font_color\get!
     height = @font\getHeight!
     love.graphics.printf @text, @x, @y + ((@height - height) / 2), @width, "center"
 
