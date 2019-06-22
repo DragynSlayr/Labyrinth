@@ -26,11 +26,6 @@ export class LevelUp extends Screen
     for k, v in pairs @stats
       @player.stats[k] = v
 
-  resetPoints: () =>
-    for k, v in pairs @stats
-      @pointsAvailable += v - @player.stats[k]
-    @loadPlayerStats!
-
   makeButtons: () =>
     y_start = @y + (@height * 0.17)
     i = 1
@@ -63,22 +58,20 @@ export class LevelUp extends Screen
 
     popup_color = {(Color 200, 150, 200)\get!}
     y = y_start + (i * 45) + 10
-    apply = Button @x + (@width * 0.675), y, @width * 0.15, 30, 'Apply', (() ->
-      @updatePlayerStats!
-      @loadPlayerStats!
-      @popup = PopupText @x + (@width / 2), y + 55, "Stats Applied", 3, Renderer\newFont 30
+    apply = Button @x + (@width * 0.8), y, @width * 0.2, 30, 'Apply', (() ->
+      changes = 0
+      for k, v in pairs @stats
+        changes += v - @player.stats[k]
+      if changes > 0
+        @updatePlayerStats!
+        @loadPlayerStats!
+        @popup = PopupText @x + (@width / 2), y + 55, "Stats Applied", 3, Renderer\newFont 30
+      else
+        @popup = PopupText @x + (@width / 2), y + 55, "No Stats Changed", 3, Renderer\newFont 30
       @popup.color = popup_color
     ), Renderer\newFont 20
     apply.sprited = false
     table.insert @buttons, apply
-
-    reset = Button @x + (@width * 0.85), y, @width * 0.15, 30, 'Reset', (() ->
-      @resetPoints!
-      @popup = PopupText @x + (@width / 2), y + 55, "Stats Reset", 3, Renderer\newFont 30
-      @popup.color = popup_color
-    ), Renderer\newFont 20
-    reset.sprited = false
-    table.insert @buttons, reset
 
   mousepressed: (x, y, button, isTouch) =>
     if not @isOpen return
@@ -119,7 +112,10 @@ export class LevelUp extends Screen
     i = 1
     for k, v in pairs @stats
       y = y_start + (i * 45)
-      setColor 95, 125, 255, 255
+      if v == @player.stats[k]
+        setColor 95, 125, 255, 255
+      else
+        setColor 50, 255, 50, 255
       love.graphics.printf k, @x + (@width * 0.05), y, @width
       love.graphics.printf v, @x + (@width * 0.7), y, @width
 
