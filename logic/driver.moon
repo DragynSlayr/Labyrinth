@@ -225,8 +225,7 @@ export class Driver
           UI\keypressed key, scancode, isrepeat
           switch Driver.game_state
             when Game_State.playing
-              for k, v in pairs Driver.objects[EntityTypes.player]
-                v\keypressed key
+              MainPlayer\keypressed key
             when Game_State.game_over
               GameOver\keypressed key, scancode, isrepeat
 
@@ -244,8 +243,7 @@ export class Driver
         UI\keyreleased key
         switch Driver.game_state
           when Game_State.playing
-            for k, v in pairs Driver.objects[EntityTypes.player]
-              v\keyreleased key
+            MainPlayer\keyreleased key
           when Game_State.game_over
             GameOver\keyreleased key
           when Game_State.controls
@@ -257,6 +255,8 @@ export class Driver
       else
         UI\mousepressed x, y, button, isTouch
         switch Driver.game_state
+          when Game_State.playing
+            MainPlayer\mousepressed x, y, button, isTouch
           when Game_State.game_over
             GameOver\mousepressed x, y, button, isTouch
 
@@ -266,6 +266,8 @@ export class Driver
       else
         UI\mousereleased x, y, button, isTouch
         switch Driver.game_state
+          when Game_State.playing
+            MainPlayer\mousereleased x, y, button, isTouch
           when Game_State.game_over
             GameOver\mousereleased x, y, button, isTouch
 

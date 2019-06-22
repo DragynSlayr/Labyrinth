@@ -42,12 +42,6 @@ export class Player extends GameObject
     @stats.wisdom = 0
     --@stats.charisma = 0
 
-    @inventory = Inventory!
-    @levelUp = LevelUp @
-    @level = 0
-    @exp = 0
-    @nextExp = 100
-
   pickClass: (num) =>
     switch num
       when 0
@@ -57,6 +51,11 @@ export class Player extends GameObject
         @stats.intelligence = 0
         @stats.wisdom = 0
         -- @stats.charisma = 0
+    @inventory = Inventory!
+    @levelUp = LevelUp @
+    @level = 0
+    @exp = 0
+    @nextExp = 100
 
   updateStats: =>
     @lives = 1
@@ -160,6 +159,12 @@ export class Player extends GameObject
         for k, v in pairs {Controls.keys.MOVE_LEFT, Controls.keys.MOVE_RIGHT, Controls.keys.MOVE_UP, Controls.keys.MOVE_DOWN}
           if key == v
             @keys_pushed -= 1
+
+  mousepressed: (x, y, button, isTouch) =>
+    @levelUp\mousepressed x, y, button, isTouch
+
+  mousereleased: (x, y, button, isTouch) =>
+    @levelUp\mousereleased x, y, button, isTouch
 
   move: (dt) =>
     if @keys_pushed == 0 or @movement_blocked
