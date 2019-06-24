@@ -25,6 +25,7 @@ export class LevelUp extends Screen
   updatePlayerStats: () =>
     for k, v in pairs @stats
       @player.stats[k] = v
+    @player\updateStats!
 
   makeButtons: () =>
     y_start = @y + (@height * 0.17)

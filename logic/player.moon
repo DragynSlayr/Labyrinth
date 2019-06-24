@@ -42,6 +42,10 @@ export class Player extends GameObject
     @stats.wisdom = 0
     --@stats.charisma = 0
 
+    @heart_sprite = Sprite "unused/heart.tga", 26, 26, 1, 32 / 26
+    @half_heart_sprite = Sprite "unused/half_heart.tga", 26, 13, 1, 32 / 26
+    @popup = nil
+
     timer = Timer 1, () ->
       if Driver.game_state == Game_State.playing
         @addExp 20
@@ -67,11 +71,11 @@ export class Player extends GameObject
     @lives = 1
     @damage = 0.125 * @stats.strength
     @max_speed = 27.5 * @stats.dexterity * Scale.diag
-    @max_health = 0.625 * @stats.constitution
+    @max_health = 0.5 * @stats.constitution
     @attack_range = 7.5 * @stats.strength * Scale.diag
     @attack_speed = 1 / @stats.dexterity
     @health = @max_health
-    @setArmor 0, @max_health
+    -- @setArmor 0, @max_health
     @bullet_speed = @max_speed * 1.25
 
   getStats: =>
@@ -91,6 +95,8 @@ export class Player extends GameObject
       @exp_chase = 0
       @nextExp = @nextExp + 20
       @levelUp.pointsAvailable += 1
+      @popup = PopupText Screen_Size.half_width, Screen_Size.half_height, "Level Up!", 3, Renderer\newFont 30
+      @popup.color = {255, 150, 255, 255}
 
   hasItem: (itemType) =>
     for k, v in pairs @equipped_items
@@ -226,6 +232,10 @@ export class Player extends GameObject
     @speed_boost = 0
 
     @lock_sprite\update dt
+    @heart_sprite\update dt
+
+    if @popup
+      @popup\update dt
 
     @attack_timer += dt
     attacked = false
@@ -252,31 +262,57 @@ export class Player extends GameObject
 
   drawPlayerStats: =>
     Camera\unset!
-    setColor 0, 0, 0, 255
-    love.graphics.setFont @font
 
-    y_start = Screen_Size.height - (60 * Scale.height)
+    -- setColor 0, 0, 0, 255
+    -- love.graphics.setFont @font
+    --
+    -- y_start = Screen_Size.height - (60 * Scale.height)
+    --
+    -- setColor 0, 0, 0, 255
+    -- love.graphics.rectangle "fill", Screen_Size.half_width - (200 * Scale.width), y_start, 400 * Scale.width, 20 * Scale.height
+    -- setColor 255, 0, 0, 255
+    -- ratio = @health / @max_health
+    -- love.graphics.rectangle "fill", Screen_Size.half_width - (197 * Scale.width), y_start + (3 * Scale.height), 394 * ratio * Scale.width, 14 * Scale.height
+    -- if @armored
+    --   setColor 0, 127, 255, 255
+    --   ratio = @armor / @max_armor
+    --   love.graphics.rectangle "fill", Screen_Size.half_width - (197 * Scale.width), y_start + (3 * Scale.height), 394 * ratio * Scale.width, 14 * Scale.height
+    --
+    -- love.graphics.setFont @font
+    -- setColor 0, 0, 0, 255
+    -- x_offset = 325 * Scale.width
+    --
+    -- limit = (@font\getWidth ".") * 17
+    --
+    -- y = y_start + (1.5 * Scale.height)
+    -- love.graphics.printf "Health", Screen_Size.half_width - x_offset, y, limit, "left"
+    -- health = string.format "%.2f/%.2f HP", (@health + @armor), @max_health
+    -- love.graphics.printf health, Screen_Size.half_width + (x_offset * 0.75), y, limit, "left"
 
-    setColor 0, 0, 0, 255
-    love.graphics.rectangle "fill", Screen_Size.half_width - (200 * Scale.width), y_start, 400 * Scale.width, 20 * Scale.height
-    setColor 255, 0, 0, 255
-    ratio = @health / @max_health
-    love.graphics.rectangle "fill", Screen_Size.half_width - (197 * Scale.width), y_start + (3 * Scale.height), 394 * ratio * Scale.width, 14 * Scale.height
-    if @armored
-      setColor 0, 127, 255, 255
-      ratio = @armor / @max_armor
-      love.graphics.rectangle "fill", Screen_Size.half_width - (197 * Scale.width), y_start + (3 * Scale.height), 394 * ratio * Scale.width, 14 * Scale.height
+    x_start = (@heart_sprite.scaled_width / 2) + 10
+    x = x_start
+    y = 50
+    xs = {}
+    @heart_sprite\setColor {0, 0, 0, 255}
+    @half_heart_sprite\setColor {0, 0, 0, 255}
+    @heart_sprite\setScale 1.6
+    @half_heart_sprite\setScale 1.6
+    for i = 1, math.floor @max_health
+      table.insert xs, x
+      @heart_sprite\draw xs[i], y
+      x += @heart_sprite.scaled_width + 5
+    if @max_health > math.floor @max_health
+      table.insert xs, x - (@half_heart_sprite.scaled_width / 2)
+      @half_heart_sprite\draw xs[#xs], y
 
-    love.graphics.setFont @font
-    setColor 0, 0, 0, 255
-    x_offset = 325 * Scale.width
-
-    limit = (@font\getWidth ".") * 17
-
-    y = y_start + (1.5 * Scale.height)
-    love.graphics.printf "Health", Screen_Size.half_width - x_offset, y, limit, "left"
-    health = string.format "%.2f/%.2f HP", (@health + @armor), @max_health
-    love.graphics.printf health, Screen_Size.half_width + (x_offset * 0.75), y, limit, "left"
+    @heart_sprite\setColor {255, 255, 255, 255}
+    @half_heart_sprite\setColor {255, 255, 255, 255}
+    @heart_sprite\setScale 32 / 26
+    @half_heart_sprite\setScale 32 / 26
+    for i = 1, math.floor @health
+      @heart_sprite\draw xs[i], y
+    if @health > math.floor @health
+      @half_heart_sprite\draw xs[#xs], y
 
     x = 10
     y = 10
@@ -287,6 +323,11 @@ export class Player extends GameObject
     love.graphics.rectangle "fill", x, y, @exp, height
     setColor 150, 150, 50, 255
     love.graphics.rectangle "fill", x, y, @exp_chase, height
+
+    if @popup
+      @popup\draw!
+      if not @popup.active
+        @popup = nil
 
     Camera\set!
 
