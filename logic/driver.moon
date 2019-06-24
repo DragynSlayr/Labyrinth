@@ -131,6 +131,12 @@ export class Driver
     addObject: (object, layer) =>
       table.insert @objects[layer], object
 
+    addTimer: (timer) =>
+      table.insert @timers, timer
+
+    removeTimer: (timer) =>
+      table.remove @timers, v
+
     removeObject: (object, player_kill = true) =>
       found = false
       for k, v in pairs Driver.objects
@@ -319,6 +325,7 @@ export class Driver
       export World = WorldHandler!
 
     intializeDriverVars: =>
+      Driver.timers = {}
       Driver.objects = {}
       for k, v in pairs EntityTypes.layers
         Driver.objects[k] = {}
@@ -373,6 +380,11 @@ export class Driver
         Debugger\update dt
       else
         Driver.elapsed += dt
+        for k, v in pairs Driver.timers
+          v\update dt
+        for k, v in pairs Driver.timers
+          if v.done
+            Driver\removeTimer v
         switch Driver.game_state
           when Game_State.game_over
             GameOver\update dt

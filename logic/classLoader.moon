@@ -4,6 +4,7 @@ queue = {}
 --| Load utils |--
 --+------------+--
 table.insert queue, "utils.utilsLoader"
+table.insert queue, "logic.timer"
 
 --+---------+--
 --| Load ui |--
