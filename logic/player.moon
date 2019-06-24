@@ -139,6 +139,11 @@ export class Player extends GameObject
         @hit = true
       if object.slagging
         @slagged = true
+      @shielded = true
+      timer = Timer 2, (() ->
+        MainPlayer.shielded = false
+      ), false
+      Driver\addTimer timer
     @health = clamp @health, 0, @max_health
     @armor = clamp @armor, 0, @max_armor
 
