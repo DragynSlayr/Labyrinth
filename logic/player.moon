@@ -42,6 +42,11 @@ export class Player extends GameObject
     @stats.wisdom = 0
     --@stats.charisma = 0
 
+    timer = Timer 1, () ->
+      if Driver.game_state == Game_State.playing
+        @addExp 20
+    Driver\addTimer timer
+
   pickClass: (num) =>
     switch num
       when 0
@@ -55,6 +60,7 @@ export class Player extends GameObject
     @levelUp = LevelUp @
     @level = 0
     @exp = 0
+    @exp_chase = 0
     @nextExp = 100
 
   updateStats: =>
@@ -76,6 +82,15 @@ export class Player extends GameObject
     stats[4] = @max_speed
     stats[5] = @attack_speed
     return stats
+
+  addExp: (amount) =>
+    @exp += amount
+    while @exp >= @nextExp
+      @exp -= @nextExp
+      @level += 1
+      @exp_chase = 0
+      @nextExp = @nextExp + 20
+      @levelUp.pointsAvailable += 1
 
   hasItem: (itemType) =>
     for k, v in pairs @equipped_items
@@ -198,6 +213,9 @@ export class Player extends GameObject
     @inventory\update dt
     @levelUp\update dt
 
+    @exp_chase += dt * (@nextExp / 20)
+    @exp_chase = clamp @exp_chase, 0, @exp
+
     for k, i in pairs @equipped_items
       i\update dt
 
@@ -259,6 +277,16 @@ export class Player extends GameObject
     love.graphics.printf "Health", Screen_Size.half_width - x_offset, y, limit, "left"
     health = string.format "%.2f/%.2f HP", (@health + @armor), @max_health
     love.graphics.printf health, Screen_Size.half_width + (x_offset * 0.75), y, limit, "left"
+
+    x = 10
+    y = 10
+    height = 10
+    setColor 0, 0, 0, 255
+    love.graphics.rectangle "fill", x - 5, y - 5, @nextExp + 10, height + 10
+    setColor 200, 200, 100, 255
+    love.graphics.rectangle "fill", x, y, @exp, height
+    setColor 150, 150, 50, 255
+    love.graphics.rectangle "fill", x, y, @exp_chase, height
 
     Camera\set!
 
