@@ -30,8 +30,10 @@ export class UIElement
   draw: =>
     Camera\unset!
     setColor @color[1], @color[2], @color[3], @color[4]
+    font = love.graphics.getFont!
     love.graphics.setFont @font
     height = @font\getHeight!
     width = @font\getWidth @text
     love.graphics.printf @text, @x - (width / 2), @y - (height / 2), width, "center"
+    love.graphics.setFont font
     Camera\set!
