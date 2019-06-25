@@ -1,3 +1,40 @@
+class HeartContainer
+  new: (player) =>
+    @player = player
+
+    inner_scale = 32 / 26
+    outer_scale = 40 / 30
+    @heart = Sprite "unused/heart.tga", 26, 26, 1, inner_scale
+    @half_heart = Sprite "unused/half_heart.tga", 26, 26, 1, inner_scale
+    @heart_out = Sprite "unused/heart_outline.tga", 30, 30, 1, outer_scale
+    @half_heart_out = Sprite "unused/half_heart_outline.tga", 30, 30, 1, outer_scale
+
+  update: (dt) =>
+    @heart\update dt
+    @half_heart\update dt
+    @heart_out\update dt
+    @half_heart_out\update dt
+
+  draw: =>
+    x = (@heart_out.scaled_width / 2) + 10
+    y = 50
+    xs = {}
+    for i = 1, math.floor @player.max_health
+      table.insert xs, x
+      @heart_out\draw xs[i], y
+      x += @heart_out.scaled_width + 5
+    if @player.max_health > math.floor @player.max_health
+      table.insert xs, x
+      @half_heart_out\draw xs[#xs], y
+
+    last_x = 0
+    for i = 1, math.floor @player.health
+      @heart\draw xs[i], y
+      last_x = i
+    if @player.health > math.floor @player.health
+      @half_heart\draw xs[last_x + 1], y
+
+
 export class Player extends GameObject
   new: (x, y) =>
     sprite = Sprite "player/test.tga", 16, 16, 2, 4
@@ -42,8 +79,7 @@ export class Player extends GameObject
     @stats.wisdom = 0
     --@stats.charisma = 0
 
-    @heart_sprite = Sprite "unused/heart.tga", 26, 26, 1, 32 / 26
-    @half_heart_sprite = Sprite "unused/half_heart.tga", 26, 13, 1, 32 / 26
+    @hearts = HeartContainer @
     @popup = nil
 
     timer = Timer 1, () ->
@@ -237,7 +273,7 @@ export class Player extends GameObject
     @speed_boost = 0
 
     @lock_sprite\update dt
-    @heart_sprite\update dt
+    @hearts\update dt
 
     if @popup
       @popup\update dt
@@ -294,30 +330,7 @@ export class Player extends GameObject
     -- health = string.format "%.2f/%.2f HP", (@health + @armor), @max_health
     -- love.graphics.printf health, Screen_Size.half_width + (x_offset * 0.75), y, limit, "left"
 
-    x_start = (@heart_sprite.scaled_width / 2) + 10
-    x = x_start
-    y = 50
-    xs = {}
-    @heart_sprite\setColor {0, 0, 0, 255}
-    @half_heart_sprite\setColor {0, 0, 0, 255}
-    @heart_sprite\setScale 1.6
-    @half_heart_sprite\setScale 1.6
-    for i = 1, math.floor @max_health
-      table.insert xs, x
-      @heart_sprite\draw xs[i], y
-      x += @heart_sprite.scaled_width + 5
-    if @max_health > math.floor @max_health
-      table.insert xs, x - (@half_heart_sprite.scaled_width / 2)
-      @half_heart_sprite\draw xs[#xs], y
-
-    @heart_sprite\setColor {255, 255, 255, 255}
-    @half_heart_sprite\setColor {255, 255, 255, 255}
-    @heart_sprite\setScale 32 / 26
-    @half_heart_sprite\setScale 32 / 26
-    for i = 1, math.floor @health
-      @heart_sprite\draw xs[i], y
-    if @health > math.floor @health
-      @half_heart_sprite\draw xs[#xs], y
+    @hearts\draw!
 
     x = 10
     y = 10
