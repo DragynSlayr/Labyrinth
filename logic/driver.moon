@@ -384,9 +384,6 @@ export class Driver
         Driver.elapsed += dt
         for k, v in pairs Driver.timers
           v\update dt
-        for k, v in pairs Driver.timers
-          if v.done
-            Driver\removeTimer v
         switch Driver.game_state
           when Game_State.game_over
             GameOver\update dt
@@ -425,13 +422,17 @@ export class Driver
 
     drawDebugInfo: ->
       if DEBUGGING
-        y = 25
+        y = 75
+        font = Renderer\newFont 20
+        white_color = Color 255, 255, 255
         for k, layer in pairs EntityTypes.order
           message = layer .. ": " .. #Driver.objects[layer]
-          font = Renderer\newFont 20
-          Renderer\drawAlignedMessage message, y, "left", font, (Color 255, 255, 255)
+          Renderer\drawAlignedMessage message, y, "left", font, white_color
           y += 25
-        Renderer\drawAlignedMessage ("Camera: " .. (Camera.position.x - Screen_Size.half_width) .. ", " .. (Camera.position.y - Screen_Size.half_height)), y, "left", (Renderer\newFont 20), (Color 255, 255, 255)
+        camera_pos = (Camera.position.x - Screen_Size.half_width) .. ", " .. (Camera.position.y - Screen_Size.half_height)
+        Renderer\drawAlignedMessage ("Camera: " .. camera_pos), y, "left", font, white_color
+        y += 25
+        Renderer\drawAlignedMessage "Timers: " .. #Driver.timers, y, "left", font, white_color
 
     drawMoney: ->
       Camera\unset!
