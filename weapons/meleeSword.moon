@@ -7,7 +7,6 @@ export class MeleeSword extends MeleeWeapon
       sprite = Sprite "item/trailActive.tga", 32, 32, 1, 1.75
       radius = (sprite\getBounds 0, 0).radius
       direction = Vector x - @player.position.x, y - @player.position.y, true
-      print direction
       for i = 1, 6
         particle = EnemyPoisonParticle @player.position.x, @player.position.y, sprite, 127, 0, use_time
         particle.position\add (Vector -Screen_Size.half_width, -Screen_Size.half_height)
