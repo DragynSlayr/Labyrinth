@@ -49,6 +49,11 @@ table.insert queue, "particles.particleLoader"
 --+------------+--
 table.insert queue, "items.itemLoader"
 
+--+--------------+--
+--| Load weapons |--
+--+--------------+--
+table.insert queue, "weapons.weaponLoader"
+
 --+-------------+--
 --| Load levels |--
 --+-------------+--
