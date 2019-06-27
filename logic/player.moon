@@ -82,10 +82,11 @@ export class Player extends GameObject
     @hearts = HeartContainer @
     @popup = nil
 
-    timer = Timer 1, () ->
+    @weapon = nil
+
+    Timer 1, @, () =>
       if Driver.game_state == Game_State.playing
-        @addExp 20
-    Driver\addTimer timer
+        @parent\addExp 20
 
   pickClass: (num) =>
     switch num
@@ -96,6 +97,7 @@ export class Player extends GameObject
         @stats.intelligence = 0
         @stats.wisdom = 0
         -- @stats.charisma = 0
+        @weapon = MeleeSword @
     @inventory = Inventory!
     @levelUp = LevelUp @
     @level = 0
@@ -176,10 +178,9 @@ export class Player extends GameObject
       if object.slagging
         @slagged = true
       @shielded = true
-      timer = Timer 2, (() ->
-        MainPlayer.shielded = false
+      Timer 2, @, (() =>
+        @parent.shielded = false
       ), false
-      Driver\addTimer timer
     @health = clamp @health, 0, @max_health
     @armor = clamp @armor, 0, @max_armor
 
@@ -224,6 +225,7 @@ export class Player extends GameObject
 
   mousepressed: (x, y, button, isTouch) =>
     @levelUp\mousepressed x, y, button, isTouch
+    @weapon\mousepressed x + Camera.position.x - Screen_Size.half_width, y + Camera.position.y - Screen_Size.half_height, button, isTouch
 
   mousereleased: (x, y, button, isTouch) =>
     @levelUp\mousereleased x, y, button, isTouch
@@ -259,6 +261,7 @@ export class Player extends GameObject
 
     @inventory\update dt
     @levelUp\update dt
+    @weapon\update dt
 
     @exp_chase += dt * (@nextExp / 20)
     @exp_chase = clamp @exp_chase, 0, @exp
@@ -368,3 +371,4 @@ export class Player extends GameObject
 
     @inventory\draw!
     @levelUp\draw!
+    @weapon\draw!
