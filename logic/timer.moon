@@ -1,7 +1,8 @@
 export class Timer
-  new: (@delay, @action, @repeating = true) =>
+  new: (@delay, @parent, @action, @repeating = true) =>
     @elapsed = 0
     @done = false
+    Driver\addTimer @
 
   update: (dt) =>
     @elapsed += dt
@@ -11,3 +12,5 @@ export class Timer
       if not @repeating
         @done = true
         break
+    if @done
+      Driver\removeTimer @
