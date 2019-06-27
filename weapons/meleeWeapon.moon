@@ -3,7 +3,6 @@ export class MeleeWeapon extends Weapon
     super player, sprite, action
     @cooldown = cooldown
     @elapsed = cooldown
-    @damage = 0
 
   update: (dt) =>
     @elapsed += dt

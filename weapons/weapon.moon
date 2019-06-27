@@ -3,6 +3,7 @@ export class Weapon
     @player = player
     @sprite = sprite
     @action = action
+    @damage = 0
 
   mousepressed: (x, y, button, isTouch) =>
     if @canUse!
