@@ -6,13 +6,10 @@ export class EnemyPoisonParticle extends Particle
   update: (dt) =>
     super dt
     if @alive
-      for k, v in pairs Driver.objects[EntityTypes.enemy]
-        other = v\getHitBox!
-        this = @getHitBox!
-        if other\contains this
-          v\onCollide @
-      for k, v in pairs Driver.objects[EntityTypes.boss]
-        other = v\getHitBox!
-        this = @getHitBox!
-        if other\contains this
-          v\onCollide @
+      filters = {EntityTypes.enemy, EntityTypes.boss}
+      for k2, filter in pairs filters
+        for k, v in pairs Driver.objects[filter]
+          other = v\getHitBox!
+          this = @getHitBox!
+          if other\contains this
+            v\onCollide @
