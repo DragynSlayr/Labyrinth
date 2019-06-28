@@ -1,24 +1,34 @@
 export class MeleeSword extends MeleeWeapon
   new: (player) =>
     sprite = Sprite "unused/wormhole.tga", 40, 40, 1, 1
-    use_time = 3
+    use_time = 0.35
     action = (x, y, button, isTouch) =>
       @used = true
-      sprite = Sprite "item/trailActive.tga", 32, 32, 1, 1.75
+      sprite = Sprite "weapon/sword.tga", 31, 12, 1, 5
       radius = (sprite\getBounds 0, 0).radius
       direction = Vector x - @player.position.x, y - @player.position.y, true
-      for i = 1, 6
-        particle = EnemyPoisonParticle @player.position.x, @player.position.y, sprite, 127, 0, use_time
-        particle.position\add (Vector -Screen_Size.half_width, -Screen_Size.half_height)
-        particle.position\add (direction\multiply (i * radius * 1.5))
-        particle.damage = @damage
+      direction\rotate (-math.pi / 2)
+      num_steps = 20
+      rotation_step = math.pi / num_steps
+      offset = Vector -Screen_Size.half_width, -Screen_Size.half_height
+      timer = Timer use_time / num_steps, @, (() =>
+        player_out = @start_rotation\multiply (radius * 7)
+        sprite\setRotation (player_out\getAngle! + (math.pi / 2))
+        particle = EnemyPoisonParticle @parent.player.position.x, @parent.player.position.y, sprite, 255, 127, use_time / num_steps
+        particle.position\add offset
+        particle.position\add (@start_rotation\multiply (radius * 4))
+        particle.damage = @parent.damage
         Driver\addObject particle, EntityTypes.particle
-      Timer use_time, @, (() =>
-        @parent.used = false
-      ), false
+        @start_rotation\rotate rotation_step
+        @activations += 1
+        if @activations >= num_steps
+          @done = true
+      )
+      timer.activations = 0
+      timer.start_rotation = direction
     super player, sprite, action, use_time
     @used = false
-    @damage = 0.1
+    @damage = 0.3
 
   draw: =>
     if @used
