@@ -4,6 +4,7 @@ export class Weapon
     @sprite = sprite
     @action = action
     @damage = 0
+    @used = false
 
   mousepressed: (x, y, button, isTouch) =>
     if @canUse!
@@ -13,7 +14,7 @@ export class Weapon
     @sprite\update dt
 
   canUse: =>
-    return true
+    return not @used
 
   draw: =>
     return

@@ -23,11 +23,11 @@ export class MeleeSword extends MeleeWeapon
         @activations += 1
         if @activations >= num_steps
           @done = true
+          @parent.used = false
       )
       timer.activations = 0
       timer.start_rotation = direction
     super player, sprite, action, use_time
-    @used = false
     @damage = 0.3
 
   draw: =>
