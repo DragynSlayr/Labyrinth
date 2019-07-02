@@ -3,6 +3,7 @@ export class MeleeSword extends MeleeWeapon
     sprite = Sprite "unused/wormhole.tga", 40, 40, 1, 1
     use_time = 0.35
     action = (x, y, button, isTouch) =>
+      if button != 1 return
       @used = true
       sprite = Sprite "weapon/sword.tga", 31, 12, 1, 5
       radius = (sprite\getBounds 0, 0).radius
