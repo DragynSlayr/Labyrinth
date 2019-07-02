@@ -1,4 +1,4 @@
-export class MeleeSword extends MeleeWeapon
+export class MeleeSword extends Weapon
   new: (player) =>
     sprite = Sprite "unused/wormhole.tga", 40, 40, 1, 1
     use_time = 0.35
@@ -17,7 +17,10 @@ export class MeleeSword extends MeleeWeapon
         sprite\setRotation (player_out\getAngle! + (math.pi / 2))
         particle = EnemyPoisonParticle @parent.player.position.x, @parent.player.position.y, sprite, 255, 127, use_time / num_steps
         particle.position\add offset
-        particle.position\add (@start_rotation\multiply (radius * 4))
+        particle.position\add (@start_rotation\multiply (radius * 1.5))
+        particle.getHitBox = () =>
+          radius = math.max @sprite.scaled_height / 2, @sprite.scaled_width / 2
+          return Circle @position.x, @position.y, radius
         particle.damage = @parent.damage
         Driver\addObject particle, EntityTypes.particle
         @start_rotation\rotate rotation_step
@@ -28,7 +31,7 @@ export class MeleeSword extends MeleeWeapon
       )
       timer.activations = 0
       timer.start_rotation = direction
-    super player, sprite, action, use_time
+    super player, sprite, action
     @damage = 0.3
 
   draw: =>
