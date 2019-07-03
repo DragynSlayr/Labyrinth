@@ -97,7 +97,8 @@ export class Player extends GameObject
         @stats.intelligence = 0
         @stats.wisdom = 0
         -- @stats.charisma = 0
-        @weapon = MeleeSword @
+        -- @weapon = MeleeSword @
+        @weapon = RangedBow @
     @inventory = Inventory!
     @levelUp = LevelUp @
     @level = 0
