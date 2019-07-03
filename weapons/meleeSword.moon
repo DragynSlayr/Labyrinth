@@ -15,12 +15,9 @@ export class MeleeSword extends Weapon
       timer = Timer use_time / num_steps, @, (() =>
         player_out = @start_rotation\multiply (radius * 7)
         sprite\setRotation (player_out\getAngle! + (math.pi / 2))
-        particle = EnemyPoisonParticle @parent.player.position.x, @parent.player.position.y, sprite, 255, 127, use_time / num_steps
+        particle = EnemyPoisonParticle @parent.player.position.x, @parent.player.position.y, sprite, 255, 0, 20 * (use_time / num_steps)
         particle.position\add offset
-        particle.position\add (@start_rotation\multiply (radius * 1.5))
-        particle.getHitBox = () =>
-          radius = math.max @sprite.scaled_height / 2, @sprite.scaled_width / 2
-          return Circle @position.x, @position.y, radius
+        particle.position\add (@start_rotation\multiply (radius * 4))
         particle.damage = @parent.damage
         Driver\addObject particle, EntityTypes.particle
         @start_rotation\rotate rotation_step
