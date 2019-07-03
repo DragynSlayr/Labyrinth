@@ -135,7 +135,10 @@ export class Driver
       table.insert @timers, timer
 
     removeTimer: (timer) =>
-      table.remove @timers, v
+      for k, v in pairs @timers
+        if v == timer
+          table.remove @timers, k
+          break
 
     removeObject: (object, player_kill = true) =>
       found = false
