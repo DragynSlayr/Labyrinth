@@ -83,6 +83,10 @@ export class Vector
     -- Return absolute Vector
     return Vector x, y
 
+  -- Get a copy of this vector
+  getCopy: =>
+    return Vector @x, @y
+
   -- Get the x and y of this Vector
   getComponents: =>
     -- Return x and y
