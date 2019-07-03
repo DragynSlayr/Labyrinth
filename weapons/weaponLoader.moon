@@ -8,3 +8,4 @@ require "weapons.weapon"
 --+-------------------+--
 require "weapons.meleeSword"
 require "weapons.rangedBow"
+require "weapons.magicFireball"
