@@ -23,13 +23,15 @@ export class ParticleTrail extends GameObject
     change = Vector @last_position.x - @position.x, @last_position.y - @position.y
     if change\getLength! >= @average_size
       @last_position = Vector @parent.position\getComponents!
+      x = @position.x - Screen_Size.half_width
+      y = @position.y - Screen_Size.half_height
       particle = switch @particle_type
         when ParticleTypes.normal
-          Particle @position.x, @position.y, @sprite, 255, 0, @life_time
+          Particle x, y, @sprite, 255, 0, @life_time
         when ParticleTypes.poison
-          PoisonParticle @position.x, @position.y, @sprite, 255, 0, @life_time
+          PoisonParticle x, y, @sprite, 255, 0, @life_time
         when ParticleTypes.enemy_poison
-          EnemyPoisonParticle @position.x, @position.y, @sprite, 255, 0, @life_time
+          EnemyPoisonParticle x, y, @sprite, 255, 0, @life_time
       table.insert @objects, particle
 
   draw: =>
