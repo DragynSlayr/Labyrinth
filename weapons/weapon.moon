@@ -17,4 +17,5 @@ export class Weapon
     return not @used
 
   draw: =>
-    return
+    if @used
+      @sprite\draw @player.position.x, @player.position.y

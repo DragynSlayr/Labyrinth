@@ -33,7 +33,3 @@ export class MeleeSword extends Weapon
       timer.start_rotation = direction
     super player, sprite, action
     @damage = 0.3
-
-  draw: =>
-    if @used
-      @sprite\draw @player.position.x, @player.position.y
