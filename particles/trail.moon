@@ -10,6 +10,10 @@ export class ParticleTrail extends GameObject
     @average_size = (@sprite.scaled_width + @sprite.scaled_height) / 8
     @particle_type = ParticleTypes.normal
 
+  kill: =>
+    super!
+    @objects = {}
+
   update: (dt) =>
     if @speed\getLength! > 0
       @position\add @speed\multiply dt
