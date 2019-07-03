@@ -66,6 +66,8 @@ export class FilteredBullet extends GameObject
         if p\hasItem (LifeStealPassive)
           p.health += MainPlayer.damage * 0.01
           p.health = math.min p.health, p.max_health
+    if @trail
+      @trail.health = 0
 
   draw: =>
     if @speed\getLength! > 0
