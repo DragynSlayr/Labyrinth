@@ -100,7 +100,8 @@ export class Player extends GameObject
         -- @weapon = MeleeSword @
         -- @weapon = RangedBow @
         -- @weapon = MagicFireball @
-        @weapon = SummonOrb @
+        -- @weapon = SummonOrb @
+        @weapon = MeleeSpear @
     @inventory = Inventory!
     @levelUp = LevelUp @
     @level = 0
