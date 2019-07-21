@@ -1,10 +1,12 @@
 export class Weapon
-  new: (player, sprite, action) =>
+  new: (player, sprite) =>
     @player = player
     @sprite = sprite
-    @action = action
     @damage = 0
     @used = false
+
+  action: (x, y, button, isTouch) =>
+    return
 
   mousepressed: (x, y, button, isTouch) =>
     if @canUse!
