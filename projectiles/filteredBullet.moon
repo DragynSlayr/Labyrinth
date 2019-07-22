@@ -19,6 +19,8 @@ export class FilteredBullet extends GameObject
     sound = Sound "player_bullet.ogg", 0.025, false, 1.125, true
     @death_sound = MusicPlayer\add sound
 
+    @fix_rotation = true
+
   update: (dt) =>
     if not @alive
       return
@@ -30,7 +32,8 @@ export class FilteredBullet extends GameObject
     if @trail
       @trail\update dt
     @sprite\update dt
-    @sprite.rotation = @speed\getAngle! + (math.pi / 2)
+    if @fix_rotation
+      @sprite.rotation = @speed\getAngle! + (math.pi / 2)
 
     delta = @speed\multiply dt
     @position\add delta
