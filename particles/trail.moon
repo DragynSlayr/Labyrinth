@@ -9,6 +9,7 @@ export class ParticleTrail extends GameObject
     @life_time = 1
     @average_size = (@sprite.scaled_width + @sprite.scaled_height) / 8
     @particle_type = ParticleTypes.normal
+    @damage = 0.01
 
   kill: =>
     super!
@@ -36,6 +37,7 @@ export class ParticleTrail extends GameObject
           PoisonParticle x, y, @sprite, 255, 0, @life_time
         when ParticleTypes.enemy_poison
           EnemyPoisonParticle x, y, @sprite, 255, 0, @life_time
+      particle.damage = @damage
       table.insert @objects, particle
 
   draw: =>
