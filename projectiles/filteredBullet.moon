@@ -20,6 +20,7 @@ export class FilteredBullet extends GameObject
     @death_sound = MusicPlayer\add sound
 
     @fix_rotation = true
+    @kill_trail = true
 
   update: (dt) =>
     if not @alive
@@ -48,7 +49,7 @@ export class FilteredBullet extends GameObject
       return
 
     if #@filter == 0
-      @health = 0
+      -- @health = 0
       return
 
     for k, filter in pairs @filter
@@ -69,7 +70,7 @@ export class FilteredBullet extends GameObject
         if p\hasItem (LifeStealPassive)
           p.health += MainPlayer.damage * 0.01
           p.health = math.min p.health, p.max_health
-    if @trail
+    if @trail and @kill_trail
       @trail.health = 0
 
   draw: =>
