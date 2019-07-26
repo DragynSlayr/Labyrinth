@@ -25,7 +25,7 @@ export class FilteredBullet extends GameObject
     if not @alive
       return
 
-    if not (@isOnScreen Screen_Size.border)
+    if not @isOnScreen!
       @health = 0
       return
 

@@ -92,8 +92,6 @@ export class GameObject
         speed = Vector x, y, true
         @position\add speed\multiply (Scale.diag * 10)
         radius = @getHitBox!.radius
-        --@position.x = clamp @position.x, Screen_Size.border[1] + radius, Screen_Size.border[3] - radius
-        --@position.y = clamp @position.y, Screen_Size.border[2] + radius, (Screen_Size.border[4] + Screen_Size.border[2]) - radius
       @health = clamp @health, 0, @max_health
       @armor = clamp @armor, 0, @max_armor
 
@@ -104,6 +102,7 @@ export class GameObject
 
   update: (dt) =>
     if not @alive return
+    if not @isOnScreen! return
     @last_position = Vector @position\getComponents!
     if @shielded
       @shield_timer += dt
@@ -135,12 +134,11 @@ export class GameObject
     radius = @getHitBox!.radius
     if @getAttackHitBox
       radius = @getAttackHitBox!.radius
-    --@position.x = clamp @position.x, Screen_Size.border[1] + radius, Screen_Size.border[3] - radius
-    --@position.y = clamp @position.y, Screen_Size.border[2] + radius, (Screen_Size.border[4] + Screen_Size.border[2]) - radius
 
     @health -= @health_drain_rate
 
   draw: =>
+    if not @isOnScreen! return
     old_color = @sprite.color
     if @charmed
       @sprite.color = {200, 0, 127}
@@ -169,12 +167,9 @@ export class GameObject
     if @shielded
       @shield_sprite\draw @position.x, @position.y
 
-  isOnScreen: (bounds = Screen_Size.bounds) =>
+  isOnScreen: () =>
     if not @alive return false
-    return true
-    -- circle = @getHitBox!
-    -- x, y = circle.center\getComponents!
-    -- radius = circle.radius
-    -- xOn = x - radius >= bounds[1] and x + radius <= bounds[3] + bounds[1]
-    -- yOn = y - radius >= bounds[2] and y + radius <= bounds[4] + bounds[2]
-    -- return xOn and yOn
+    circle = @getHitBox!
+    x, y = circle.center\getComponents!
+    radius = circle.radius
+    return Camera\isOnScreen x, y, radius, radius

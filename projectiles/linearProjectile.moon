@@ -12,8 +12,9 @@ export class LinearProjectile extends HomingProjectile
       return
     if not @target
       @health = 0
-    if not @isOnScreen Screen_Size.bounds
+    if not @isOnScreen!
       @health = 0
+      return
 
     super dt
 
