@@ -4,6 +4,7 @@ export class Driver
       love.keyreleased = @keyreleased
       love.mousepressed = @mousepressed
       love.mousereleased = @mousereleased
+      love.wheelmoved = @wheelmoved
       love.textinput = @textinput
       love.focus = @focus
       love.update = @update
@@ -279,6 +280,10 @@ export class Driver
             MainPlayer\mousereleased x, y, button, isTouch
           when Game_State.game_over
             GameOver\mousereleased x, y, button, isTouch
+
+    wheelmoved: (x, y) ->
+      if Driver.game_state == Game_State.playing
+        MainPlayer\wheelmoved x, y
 
     textinput: (text) ->
       if DEBUG_MENU
