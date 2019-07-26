@@ -10,12 +10,11 @@ export class MagicLightning extends Weapon
     @used = true
     bullet_speed = Vector x - @player.position.x, y - @player.position.y, true
     @make_lightning @player.position, bullet_speed, 3
-    Timer 0.5, @, (() =>
+    Timer 1.5, @, (() =>
       @parent.used = false
     ), false
 
   make_lightning: (position, speed, depth) =>
-    if depth <= 0 return
     spread = ({math.pi / 6, math.pi / 8, math.pi / 16})[depth]
     rotations = {-spread, spread, spread}
     lens = {2, 4, 3}
@@ -34,7 +33,7 @@ export class MagicLightning extends Weapon
           height = sprite.scaled_height * 0.99
           sprite\setRotation (@speed\getAngle! + (math.pi / 2))
           @position\add (@speed\multiply ((i - 0.5) * height))
-          particle = EnemyPoisonParticle @position.x - Screen_Size.half_width, @position.y - Screen_Size.half_height, sprite, 255, 127, total_time * 1.2
+          particle = EnemyPoisonParticle @position.x - Screen_Size.half_width, @position.y - Screen_Size.half_height, sprite, 0, 255, total_time * 1.2
           particle.damage = @parent.damage / 4
           particle.oldHB = particle.getHitBox
           particle.getHitBox = () =>
@@ -42,7 +41,7 @@ export class MagicLightning extends Weapon
             hb.radius *= 3
             return hb
           Driver\addObject particle, EntityTypes.particle
-          if i == len_cap
+          if i == len_cap and depth != 1
             t = Timer 0, @, (() =>
               @parent.parent\make_lightning @position, @speed, (depth - 1)
             ), false
