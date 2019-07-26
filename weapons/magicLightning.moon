@@ -34,7 +34,7 @@ export class MagicLightning extends Weapon
           height = sprite.scaled_height * 0.99
           sprite\setRotation (@speed\getAngle! + (math.pi / 2))
           @position\add (@speed\multiply ((i - 0.5) * height))
-          particle = EnemyPoisonParticle @position.x - Screen_Size.half_width, @position.y - Screen_Size.half_height, sprite, 255, 127, total_time
+          particle = EnemyPoisonParticle @position.x - Screen_Size.half_width, @position.y - Screen_Size.half_height, sprite, 255, 127, total_time * 1.2
           particle.damage = @parent.damage / 4
           particle.oldHB = particle.getHitBox
           particle.getHitBox = () =>
@@ -43,7 +43,11 @@ export class MagicLightning extends Weapon
             return hb
           Driver\addObject particle, EntityTypes.particle
           if i == len_cap
-            @parent\make_lightning @position, @speed, (depth - 1)
+            t = Timer 0, @, (() =>
+              @parent.parent\make_lightning @position, @speed, (depth - 1)
+            ), false
+            t.position = @position\getCopy!
+            t.speed = @speed\getCopy!
         ), false
         t.speed = speed\getCopy!
         t.position = position\getCopy!
