@@ -23,15 +23,11 @@ export class Driver
       defaults[9]  = {"MOVE_DOWN", "s"}
       defaults[10] = {"MOVE_LEFT", "a"}
       defaults[11] = {"MOVE_RIGHT", "d"}
-      defaults[12] = {"SHOOT_UP", "up"}
-      defaults[13] = {"SHOOT_DOWN", "down"}
-      defaults[14] = {"SHOOT_LEFT", "left"}
-      defaults[15] = {"SHOOT_RIGHT", "right"}
-      defaults[16] = {"USE_ITEM", "q"}
-      defaults[17] = {"PAUSE_GAME", "escape"}
-      defaults[18] = {"SHOW_RANGE", "z"}
-      defaults[19] = {"OPEN_INVENTORY", "i"}
-      defaults[20] = {"OPEN_LEVEL_UP", "l"}
+      defaults[12] = {"USE_ITEM", "q"}
+      defaults[13] = {"PAUSE_GAME", "escape"}
+      defaults[14] = {"SHOW_RANGE", "z"}
+      defaults[15] = {"OPEN_INVENTORY", "i"}
+      defaults[16] = {"OPEN_LEVEL_UP", "l"}
 
       newSettings = ""
       if love.filesystem.getInfo "SETTINGS"
