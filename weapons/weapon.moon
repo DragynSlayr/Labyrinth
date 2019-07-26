@@ -12,6 +12,9 @@ export class Weapon
     if @canUse!
       @action x, y, button, isTouch
 
+  mousereleased: (x, y, button, isTouch) =>
+    return
+
   update: (dt) =>
     @sprite\update dt
 
