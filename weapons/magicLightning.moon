@@ -36,6 +36,11 @@ export class MagicLightning extends Weapon
           @position\add (@speed\multiply ((i - 0.5) * height))
           particle = EnemyPoisonParticle @position.x - Screen_Size.half_width, @position.y - Screen_Size.half_height, sprite, 255, 127, total_time
           particle.damage = @parent.damage / 4
+          particle.oldHB = particle.getHitBox
+          particle.getHitBox = () =>
+            hb = @oldHB!
+            hb.radius *= 3
+            return hb
           Driver\addObject particle, EntityTypes.particle
           if i == len_cap
             @parent\make_lightning @position, @speed, (depth - 1)
