@@ -93,29 +93,24 @@ export class Player extends GameObject
 
     @keys_pushed = 0
     @hit = false
-    @attack_timer = 0
 
     @id = EntityTypes.player
     @draw_health = false
 
     @font = Renderer\newFont 20
 
-    @range_boost = 0
     @speed_boost = 0
     @speed_range = @sprite\getBounds!.radius + (150 * Scale.diag)
     @charged = true
 
     @equipped_items = {}
 
-    @knocking_back = false
-    @knock_back_sprite = Sprite "projectile/knockback.tga", 26, 20, 1, 0.75
     @movement_blocked = false
     @lock_sprite = Sprite "effect/lock.tga", 32, 32, 1, 1.75
     @draw_lock = true
 
     @show_stats = true
     @is_clone = false
-    @can_shoot = true
 
     @coins = 0
 
@@ -157,8 +152,6 @@ export class Player extends GameObject
     @damage = 0.125 * @stats.strength
     @max_speed = 27.5 * @stats.dexterity * Scale.diag
     @max_health = 0.5 * @stats.constitution
-    @attack_range = 7.5 * @stats.strength * Scale.diag
-    @attack_speed = 1 / @stats.dexterity
     @health = @max_health
     -- @setArmor 0, @max_health
     @bullet_speed = @max_speed * 1.25
@@ -166,10 +159,8 @@ export class Player extends GameObject
   getStats: =>
     stats = {}
     stats[1] = @max_health
-    stats[2] = @attack_range
-    stats[3] = @damage
-    stats[4] = @max_speed
-    stats[5] = @attack_speed
+    stats[2] = @damage
+    stats[3] = @max_speed
     return stats
 
   addExp: (amount) =>
@@ -301,18 +292,6 @@ export class Player extends GameObject
       @speed\add boost
       return true, start
 
-  calculateBulletSpeed: =>
-    bullet_speed = Vector 0, 0
-    if love.keyboard.isDown Controls.keys.SHOOT_LEFT
-      bullet_speed\add (Vector -@bullet_speed, 0)
-    if love.keyboard.isDown Controls.keys.SHOOT_RIGHT
-      bullet_speed\add (Vector @bullet_speed, 0)
-    if love.keyboard.isDown Controls.keys.SHOOT_UP
-      bullet_speed\add (Vector 0, -@bullet_speed)
-    if love.keyboard.isDown Controls.keys.SHOOT_DOWN
-      bullet_speed\add (Vector 0, @bullet_speed)
-    return bullet_speed, bullet_speed\getLength! > 0
-
   update: (dt) =>
     if not @alive return
 
@@ -338,28 +317,8 @@ export class Player extends GameObject
     if @popup
       @popup\update dt
 
-    @attack_timer += dt
-    attacked = false
-    filters = {EntityTypes.enemy, EntityTypes.boss}
-    if @attack_timer >= @attack_speed
-      bullet_speed, should_fire = @calculateBulletSpeed!
-      if should_fire and @can_shoot
-        bullet = @createBullet @position.x, @position.y, @damage, bullet_speed, filters
-        bullet.max_dist = (@getHitBox!.radius + (2 * (@attack_range + @range_boost)))
-        if @knocking_back
-          bullet.sprite = @knock_back_sprite
-          bullet.knockback = true
-        Driver\addObject bullet, EntityTypes.bullet
-        attacked = true
-
-    if attacked
-      @attack_timer = 0
-
   postUpdate: (dt) =>
     Camera\moveTo @position
-
-  createBullet: (x, y, damage, speed, filters) =>
-    return FilteredBullet x, y, damage, speed, filters
 
   drawPlayerStats: =>
     Camera\unset!
@@ -413,12 +372,6 @@ export class Player extends GameObject
     if not @alive return
     for k, i in pairs @equipped_items
       i\draw!
-    if DEBUGGING
-      setColor 0, 0, 255, 100
-      player = @getHitBox!
-      love.graphics.circle "fill", @position.x, @position.y, @attack_range + player.radius + @range_boost, 360
-      setColor 0, 255, 0, 100
-      love.graphics.circle "fill", @position.x, @position.y, @speed_range, 360
     super!
     if @movement_blocked and @draw_lock
       @lock_sprite\draw @position.x, @position.y
