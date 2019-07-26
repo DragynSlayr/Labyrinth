@@ -132,6 +132,6 @@ export class WorldHandler
           y = ((rowIdx - 1) * 32) + Screen_Size.half_height
           if Camera\isOnScreen x, y, 32, 32
             @tiles[val]\draw x, y
-            if DEBUGGING
-              love.graphics.setColor 0, 0, 1
-              love.graphics.rectangle "line", x - 16, y - 16, 32, 32
+            -- if DEBUGGING
+            --   love.graphics.setColor 0, 0, 1
+            --   love.graphics.rectangle "line", x - 16, y - 16, 32, 32
