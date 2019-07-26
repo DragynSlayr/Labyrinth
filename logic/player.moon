@@ -56,7 +56,6 @@ class WeaponHolder
     }
     for i, weapon in pairs weapons
       @addWeapon (weapon)
-    @addWeapon (MagicFireball)
 
   addWeapon: (typeof) =>
     table.insert @weapons, (typeof @player)
