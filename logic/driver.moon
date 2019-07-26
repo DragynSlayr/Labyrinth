@@ -376,10 +376,16 @@ export class Driver
 
       Driver.spawn (BasicEnemy), EntityTypes.enemy
 
+      love.mouse.setVisible false
+
+      @cursor_sprite = Sprite "ui/crosshair.tga", 24, 24, 1, 1.5
+      @cursor_sprite\setRotationSpeed (math.pi / 2)
+
       -- Start game
       --Levels\nextLevel!
 
     update: (dt) ->
+      Driver.cursor_sprite\update dt
       --if not KEY_PUSHED
       --  return
       if DEBUG_MENU
@@ -476,5 +482,8 @@ export class Driver
         Debugger\draw!
 
       Camera\unset!
+
+      x, y = love.mouse.getPosition!
+      Driver.cursor_sprite\draw x, y
 
       collectgarbage "step"
