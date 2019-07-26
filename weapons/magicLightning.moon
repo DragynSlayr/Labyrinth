@@ -16,19 +16,25 @@ export class MagicLightning extends Weapon
 
   make_lightning: (position, speed, depth) =>
     if depth <= 0 return
-    spread = math.pi / 8
+    spread = ({math.pi / 6, math.pi / 8, math.pi / 16})[depth]
     rotations = {-spread, spread, spread}
-    len_cap = depth * 2
+    lens = {2, 4, 3}
+    len_cap = lens[depth]
+    times = {0.052, 0.0515, 0.051}
+    timing = times[depth]
+    total_time = 0.0
+    for i, num in pairs lens
+      total_time += num * times[i]
     for i, rotation in pairs rotations
       speed\rotate rotation
       for i = 1, len_cap
-        t = Timer (i * 0.15), @, (() =>
+        t = Timer (i * timing), @, (() =>
           sprite = Sprite "weapon/lightning.tga", 32, 18, 1, 1
-          sprite\setScale 1, 1.5
-          height = sprite.scaled_height * 0.9
+          sprite\setScale 0.5, 1.3
+          height = sprite.scaled_height * 0.99
           sprite\setRotation (@speed\getAngle! + (math.pi / 2))
-          @position\add (@speed\multiply (i * height))
-          particle = EnemyPoisonParticle @position.x - Screen_Size.half_width, @position.y - Screen_Size.half_height, sprite, 255, 127, 1.75
+          @position\add (@speed\multiply ((i - 0.5) * height))
+          particle = EnemyPoisonParticle @position.x - Screen_Size.half_width, @position.y - Screen_Size.half_height, sprite, 255, 127, total_time
           particle.damage = @parent.damage / 4
           Driver\addObject particle, EntityTypes.particle
           if i == len_cap
