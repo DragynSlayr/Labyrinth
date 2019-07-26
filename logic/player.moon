@@ -35,6 +35,55 @@ class HeartContainer
       @half_heart\draw xs[last_x + 1], y
 
 
+class WeaponHolder
+  new: (player) =>
+    @player = player
+
+    @weapons = {}
+    @loadWeapons!
+    @weapon_idx = math.random(1, #@weapons)
+
+  loadWeapons: =>
+    weapons = {
+      (MagicFireball),
+      (MagicLightning),
+      (MeleeSpear),
+      (MeleeSword),
+      (RangedBow),
+      (RangedShuriken),
+      (SummonCrystal),
+      (SummonOrb)
+    }
+    for i, weapon in pairs weapons
+      @addWeapon (weapon)
+    @addWeapon (MagicFireball)
+
+  addWeapon: (typeof) =>
+    table.insert @weapons, (typeof @player)
+
+  mousepressed: (x, y, button, isTouch) =>
+    @weapons[@weapon_idx]\mousepressed x, y, button, isTouch
+
+  mousereleased: (x, y, button, isTouch) =>
+    @weapons[@weapon_idx]\mousereleased x, y, button, isTouch
+
+  wheelmoved: (x, y) =>
+    if y > 0
+      @weapon_idx += 1
+      if @weapon_idx > #@weapons
+        @weapon_idx = 1
+    if y < 0
+      @weapon_idx -= 1
+      if @weapon_idx < 1
+        @weapon_idx = #@weapons
+
+  update: (dt) =>
+    @weapons[@weapon_idx]\update dt
+
+  draw: () =>
+    @weapons[@weapon_idx]\draw!
+
+
 export class Player extends GameObject
   new: (x, y) =>
     sprite = Sprite "player/test.tga", 16, 16, 2, 4
@@ -82,7 +131,7 @@ export class Player extends GameObject
     @hearts = HeartContainer @
     @popup = nil
 
-    @weapon = nil
+    @weapons = WeaponHolder @
 
     Timer 1, @, () =>
       if Driver.game_state == Game_State.playing
@@ -97,14 +146,6 @@ export class Player extends GameObject
         @stats.intelligence = 0
         @stats.wisdom = 0
         -- @stats.charisma = 0
-        -- @weapon = MeleeSword @
-        -- @weapon = RangedBow @
-        -- @weapon = MagicFireball @
-        -- @weapon = SummonOrb @
-        -- @weapon = MeleeSpear @
-        -- @weapon = RangedShuriken @
-        -- @weapon = SummonCrystal @
-        @weapon = MagicLightning @
     @inventory = Inventory!
     @levelUp = LevelUp @
     @level = 0
@@ -232,10 +273,20 @@ export class Player extends GameObject
 
   mousepressed: (x, y, button, isTouch) =>
     @levelUp\mousepressed x, y, button, isTouch
-    @weapon\mousepressed x + Camera.position.x - Screen_Size.half_width, y + Camera.position.y - Screen_Size.half_height, button, isTouch
+
+    x += Camera.position.x - Screen_Size.half_width
+    y += Camera.position.y - Screen_Size.half_height
+    @weapons\mousepressed x, y, button, isTouch
 
   mousereleased: (x, y, button, isTouch) =>
     @levelUp\mousereleased x, y, button, isTouch
+
+    x += Camera.position.x - Screen_Size.half_width
+    y += Camera.position.y - Screen_Size.half_height
+    @weapons\mousereleased x, y, button, isTouch
+
+  wheelmoved: (x, y) =>
+    @weapons\wheelmoved x, y
 
   move: (dt) =>
     if @keys_pushed == 0 or @movement_blocked
@@ -268,7 +319,7 @@ export class Player extends GameObject
 
     @inventory\update dt
     @levelUp\update dt
-    @weapon\update dt
+    @weapons\update dt
 
     @exp_chase += dt * (@nextExp / 20)
     @exp_chase = clamp @exp_chase, 0, @exp
@@ -378,4 +429,4 @@ export class Player extends GameObject
 
     @inventory\draw!
     @levelUp\draw!
-    @weapon\draw!
+    @weapons\draw!
