@@ -264,16 +264,18 @@ export class Player extends GameObject
   mousepressed: (x, y, button, isTouch) =>
     @levelUp\mousepressed x, y, button, isTouch
 
-    x += Camera.position.x - Screen_Size.half_width
-    y += Camera.position.y - Screen_Size.half_height
-    @weapons\mousepressed x, y, button, isTouch
+    if not (@levelUp\mouseOn x, y)
+      x += Camera.position.x - Screen_Size.half_width
+      y += Camera.position.y - Screen_Size.half_height
+      @weapons\mousepressed x, y, button, isTouch
 
   mousereleased: (x, y, button, isTouch) =>
     @levelUp\mousereleased x, y, button, isTouch
 
-    x += Camera.position.x - Screen_Size.half_width
-    y += Camera.position.y - Screen_Size.half_height
-    @weapons\mousereleased x, y, button, isTouch
+    if not (@levelUp\mouseOn x, y)
+      x += Camera.position.x - Screen_Size.half_width
+      y += Camera.position.y - Screen_Size.half_height
+      @weapons\mousereleased x, y, button, isTouch
 
   wheelmoved: (x, y) =>
     @weapons\wheelmoved x, y
