@@ -4,8 +4,8 @@ export class LevelUp extends Screen
     @elapsed = 0
     @delay = 0.5
 
-    @x = 75
-    @y = 50
+    @x = 8
+    @y = 80
     @width = Screen_Size.half_width * 0.5
     @height = Screen_Size.half_height * 1.3
 
@@ -75,12 +75,10 @@ export class LevelUp extends Screen
     table.insert @buttons, apply
 
   mousepressed: (x, y, button, isTouch) =>
-    if not @isOpen return
     for k, v in pairs @buttons
       v\mousepressed x, y, button, isTouch
 
   mousereleased: (x, y, button, isTouch) =>
-    if not @isOpen return
     for k, v in pairs @buttons
       v\mousereleased x, y, button, isTouch
 
@@ -95,6 +93,14 @@ export class LevelUp extends Screen
       v\update dt
     if @popup
       @popup\update dt
+
+  mouseOn: (x, y) =>
+    if not @isOpen
+      return false
+    else
+      xOn = x >= @x and x <= @x + @width
+      yOn = y >= @y and y <= @y + @height
+      return xOn and yOn
 
   draw: =>
     if not @isOpen return
