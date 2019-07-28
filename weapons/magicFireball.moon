@@ -1,7 +1,6 @@
 export class MagicFireball extends Weapon
   new: (player) =>
-    sprite = Sprite "unused/wormhole.tga", 40, 40, 1, 1
-    sprite.color = {100, 20, 255, 255}
+    sprite = Sprite "weapon/fireballMini.tga", 32, 32
     super player, sprite
     @damage = 3
 

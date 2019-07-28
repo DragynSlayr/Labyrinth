@@ -1,7 +1,6 @@
 export class MagicLightning extends Weapon
   new: (player) =>
-    sprite = Sprite "unused/wormhole.tga", 40, 40, 1, 1
-    sprite.color = {100, 20, 255, 255}
+    sprite = Sprite "weapon/lightningMini.tga", 32, 32
     super player, sprite
     @damage = 3
 

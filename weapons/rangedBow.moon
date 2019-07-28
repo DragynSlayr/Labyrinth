@@ -1,7 +1,6 @@
 export class RangedBow extends Weapon
   new: (player) =>
-    sprite = Sprite "unused/wormhole.tga", 40, 40, 1, 1
-    sprite.color = {255, 120, 200, 255}
+    sprite = Sprite "weapon/arrowMini.tga", 28, 28
     super player, sprite
     @damage = 3
 

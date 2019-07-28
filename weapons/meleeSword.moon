@@ -1,6 +1,6 @@
 export class MeleeSword extends Weapon
   new: (player) =>
-    sprite = Sprite "unused/wormhole.tga", 40, 40, 1, 1
+    sprite = Sprite "weapon/swordMini.tga", 23, 23
     super player, sprite
     @damage = 0.3
 

@@ -1,7 +1,6 @@
 export class SummonOrb extends Weapon
   new: (player) =>
-    sprite = Sprite "unused/wormhole.tga", 40, 40, 1, 1
-    sprite.color = {20, 255, 100, 255}
+    sprite = Sprite "weapon/orbMini.tga", 40, 40
     super player, sprite
     @damage = 3
 
@@ -9,7 +8,6 @@ export class SummonOrb extends Weapon
     if button != 1 return
     @used = true
     sprite = Sprite "weapon/orb.tga", 40, 40, 1, 1
-    sprite.color = {50, 200, 200, 255}
     sprite\setRotationSpeed (-math.pi / 2)
     orb = GameObject @player.position.x - Screen_Size.half_width, @player.position.y - Screen_Size.half_height, sprite
     orb.base_color = sprite.color

@@ -1,7 +1,6 @@
 export class SummonCrystal extends Weapon
   new: (player) =>
-    sprite = Sprite "unused/wormhole.tga", 40, 40, 1, 1
-    sprite.color = {20, 255, 100, 255}
+    sprite = Sprite "weapon/crystalMini.tga", 43, 44
     super player, sprite
     @damage = 3
 
