@@ -6,6 +6,8 @@ export class SummonOrb extends Weapon
     @damage = 3
 
   action: (x, y, button, isTouch) =>
+    if button != 1 return
+    @used = true
     sprite = Sprite "weapon/orb.tga", 40, 40, 1, 1
     sprite.color = {50, 200, 200, 255}
     sprite\setRotationSpeed (-math.pi / 2)

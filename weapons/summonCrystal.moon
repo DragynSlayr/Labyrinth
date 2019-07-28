@@ -6,6 +6,8 @@ export class SummonCrystal extends Weapon
     @damage = 3
 
   action: (x, y, button, isTouch) =>
+    if button != 1 return
+    @used = true
     sprite = Sprite "weapon/crystal.tga", 64, 32, 1, 1
     sprite.color = {50, 200, 200, 255}
     orb = GameObject @player.position.x - Screen_Size.half_width, @player.position.y - Screen_Size.half_height, sprite
