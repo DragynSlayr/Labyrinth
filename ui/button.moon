@@ -66,15 +66,19 @@ export class Button extends UIElement
     if @active
       if button == 1
         @selected = @isHovering x, y
+        return @selected
 
   mousereleased: (x, y, button, isTouch) =>
+    wasPushed = false
     if @active
       if button == 1
         selected = @isHovering x, y
         if selected and @selected
           @action!
           @elapsed = 0
+          wasPushed = true
         @selected = false
+    return wasPushed
 
   -- Update state of the Button
   -- dt: Time since last update
