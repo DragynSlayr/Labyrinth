@@ -31,6 +31,6 @@ export class CameraHandler
       @isSet = false
 
   isOnScreen: (x, y, width, height) =>
-    xOn = x >= @position.x - width - Screen_Size.half_width and x - width <= @position.x + Screen_Size.width
-    yOn = y >= @position.y - height - Screen_Size.half_height and y - height <= @position.y + Screen_Size.height
+    xOn = x >= @position.x - width - Screen_Size.half_width and x - width <= @position.x + Screen_Size.half_width
+    yOn = y >= @position.y - height - Screen_Size.half_height and y - height <= @position.y + Screen_Size.half_height
     return xOn and yOn
