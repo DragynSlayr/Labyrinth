@@ -4,6 +4,11 @@ export class Weapon
     @sprite = sprite
     @damage = 0
     @used = false
+    @sprite_color = @sprite.color
+    @sprite_color[4] = 150
+    x_scale = (@player.sprite.scaled_width / @sprite.width) / Scale.width
+    y_scale = (@player.sprite.scaled_height / @sprite.height) / Scale.height
+    @sprite\setScale x_scale, y_scale
 
   action: (x, y, button, isTouch) =>
     return
@@ -23,4 +28,7 @@ export class Weapon
 
   draw: =>
     if @used
-      @sprite\draw @player.position.x, @player.position.y
+      @sprite.color = {0, 0, 0, 150}
+    else
+      @sprite.color = @sprite_color
+    @sprite\draw @player.position.x, @player.position.y
