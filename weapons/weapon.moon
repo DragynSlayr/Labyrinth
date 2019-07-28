@@ -5,10 +5,9 @@ export class Weapon
     @damage = 0
     @used = false
     @sprite_color = @sprite.color
-    @sprite_color[4] = 150
     x_scale = (@player.sprite.scaled_width / @sprite.width) / Scale.width
     y_scale = (@player.sprite.scaled_height / @sprite.height) / Scale.height
-    @sprite\setScale x_scale, y_scale
+    @sprite\setScale (x_scale * 0.75), (y_scale * 0.75)
 
   action: (x, y, button, isTouch) =>
     return
@@ -31,4 +30,12 @@ export class Weapon
       @sprite.color = {0, 0, 0, 150}
     else
       @sprite.color = @sprite_color
-    @sprite\draw @player.position.x, @player.position.y
+
+    Camera\unset!
+    love.graphics.setLineWidth 5
+    setColor 0, 0, 0, 255
+    love.graphics.rectangle "line", 10, 10, 60, 60
+    setColor 139, 69, 19, 255
+    love.graphics.rectangle "fill", 10, 10, 60, 60
+    @sprite\draw 40, 40
+    Camera\set!
