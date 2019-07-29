@@ -2,12 +2,18 @@ export class Weapon
   new: (player, sprite) =>
     @player = player
     @sprite = sprite
-    @damage = 0
     @used = false
     @sprite_color = @sprite.color
     x_scale = (@player.sprite.scaled_width / @sprite.width) / Scale.width
     y_scale = (@player.sprite.scaled_height / @sprite.height) / Scale.height
     @sprite\setScale (x_scale * 0.75), (y_scale * 0.75)
+    @updateDamage!
+
+  calcDamage: =>
+    return 0
+
+  updateDamage: =>
+    @damage = @calcDamage!
 
   action: (x, y, button, isTouch) =>
     return
@@ -38,4 +44,5 @@ export class Weapon
     setColor 139, 69, 19, 255
     love.graphics.rectangle "fill", 10, 10, 60, 60
     @sprite\draw 40, 40
+    love.graphics.setLineWidth 1
     Camera\set!
