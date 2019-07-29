@@ -67,6 +67,10 @@ export class LevelUp extends Screen
         @updatePlayerStats!
         @loadPlayerStats!
         @popup = PopupText @x + (@width / 2), y + 55, "Stats Applied", 3, Renderer\newFont 30
+        if @pointsAvailable == 0
+          Timer 3, @, (() =>
+            @parent.isOpen = false
+          ), false
       else
         @popup = PopupText @x + (@width / 2), y + 55, "No Stats Changed", 3, Renderer\newFont 30
       @popup.color = popup_color
