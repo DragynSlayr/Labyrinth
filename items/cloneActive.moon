@@ -7,11 +7,12 @@ export class CloneActive extends ActiveItem
     sprite = Sprite "player/test.tga", 16, 16, 2, 3.50
     sprite\setRotationSpeed -math.pi / 2
     effect = (player) =>
-      @clone = Player player.position.x, player.position.y
+      @clone = Player player.position.x - Screen_Size.half_width, player.position.y - Screen_Size.half_height
+      @clone\pickClass 0
+      @clone\updateStats true
       @clone.is_clone = true
       @clone.draw_health = true
       @clone.show_stats = false
-      @clone.attack_speed = @effect_time + 1
       @clone.solid = false
       @clone.sprite\setColor {100, 100, 100, 200}
       @clone.kill = () =>
