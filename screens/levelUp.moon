@@ -7,7 +7,7 @@ export class LevelUp extends Screen
     @x = 8
     @y = 80
     @width = Screen_Size.half_width * 0.5
-    @height = Screen_Size.half_height * 1.3
+    @height = Screen_Size.half_height * 1.1
 
     @pointsAvailable = 10
     @stats = {}
