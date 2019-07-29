@@ -303,6 +303,7 @@ export class Player extends GameObject
 
   update: (dt) =>
     if not @alive return
+    if @is_clone return
 
     @inventory\update dt
     @levelUp\update dt
@@ -382,6 +383,7 @@ export class Player extends GameObject
     for k, i in pairs @equipped_items
       i\draw!
     super!
+    if @is_clone return
     if @movement_blocked and @draw_lock
       @lock_sprite\draw @position.x, @position.y
 
