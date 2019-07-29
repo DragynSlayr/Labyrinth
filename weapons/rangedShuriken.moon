@@ -2,7 +2,9 @@ export class RangedShuriken extends Weapon
   new: (player) =>
     sprite = Sprite "weapon/shurikenMini.tga", 62, 62
     super player, sprite
-    @damage = 3
+    
+  calcDamage: =>
+    return @player.stats.dexterity * 0.6
 
   action: (x, y, button, isTouch) =>
     if button != 1 return

@@ -2,7 +2,9 @@ export class MeleeSpear extends Weapon
   new: (player) =>
     sprite = Sprite "weapon/spearMini.tga", 51, 51
     super player, sprite
-    @damage = 0.05
+
+  calcDamage: =>
+    return @player.stats.dexterity / 100.0
 
   action: (x, y, button, isTouch) =>
     if button != 1 return

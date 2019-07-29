@@ -2,7 +2,9 @@ export class SummonOrb extends Weapon
   new: (player) =>
     sprite = Sprite "weapon/orbMini.tga", 40, 40
     super player, sprite
-    @damage = 3
+
+  calcDamage: =>
+    return @player.stats.wisdom * 0.6
 
   action: (x, y, button, isTouch) =>
     if button != 1 return
@@ -10,6 +12,7 @@ export class SummonOrb extends Weapon
     sprite = Sprite "weapon/orb.tga", 40, 40, 1, 1
     sprite\setRotationSpeed (-math.pi / 2)
     orb = GameObject @player.position.x - Screen_Size.half_width, @player.position.y - Screen_Size.half_height, sprite
+    orb.damage = @damage
     orb.base_color = sprite.color
     orb.attack_color = {255, 20, 100, 255}
     orb.delay = 2

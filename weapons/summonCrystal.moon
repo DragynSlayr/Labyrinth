@@ -2,7 +2,9 @@ export class SummonCrystal extends Weapon
   new: (player) =>
     sprite = Sprite "weapon/crystalMini.tga", 43, 44
     super player, sprite
-    @damage = 3
+
+  calcDamage: =>
+    return @player.stats.intelligence * 0.6
 
   action: (x, y, button, isTouch) =>
     if button != 1 return
@@ -10,6 +12,7 @@ export class SummonCrystal extends Weapon
     sprite = Sprite "weapon/crystal.tga", 64, 32, 1, 1
     sprite.color = {50, 200, 200, 255}
     orb = GameObject @player.position.x - Screen_Size.half_width, @player.position.y - Screen_Size.half_height, sprite
+    orb.damage = @damage
     orb.base_color = sprite.color
     orb.attack_color = {255, 20, 100, 255}
     orb.delay = 2

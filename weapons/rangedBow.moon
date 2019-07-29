@@ -2,7 +2,9 @@ export class RangedBow extends Weapon
   new: (player) =>
     sprite = Sprite "weapon/arrowMini.tga", 28, 28
     super player, sprite
-    @damage = 3
+
+  calcDamage: =>
+    return @player.stats.dexterity * 0.6
 
   action: (x, y, button, isTouch) =>
     if button != 1 return

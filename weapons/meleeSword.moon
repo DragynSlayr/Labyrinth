@@ -2,7 +2,9 @@ export class MeleeSword extends Weapon
   new: (player) =>
     sprite = Sprite "weapon/swordMini.tga", 23, 23
     super player, sprite
-    @damage = 0.3
+
+  calcDamage: =>
+    return @player.stats.strength * 0.06
 
   action: (x, y, button, isTouch) =>
     if button != 1 return

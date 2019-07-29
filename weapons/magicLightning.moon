@@ -2,7 +2,9 @@ export class MagicLightning extends Weapon
   new: (player) =>
     sprite = Sprite "weapon/lightningMini.tga", 32, 32
     super player, sprite
-    @damage = 3
+
+  calcDamage: =>
+    return @player.stats.wisdom / 75.0
 
   action: (x, y, button, isTouch) =>
     if button != 1 return
@@ -27,7 +29,7 @@ export class MagicLightning extends Weapon
     for j, rotation in pairs rotations
       speed_copy\rotate rotation
       position_copy = position\getCopy!
-      bullet = FilteredBullet position_copy.x, position_copy.y, 0.5, (speed_copy\multiply 200), {}
+      bullet = FilteredBullet position_copy.x, position_copy.y, 0, (speed_copy\multiply 200), {}
       sprite\setRotation (speed_copy\getAngle! + (math.pi / 2))
       bullet.sprite = sprite\getCopy!
       bullet.parent = @
@@ -43,7 +45,7 @@ export class MagicLightning extends Weapon
       bullet.trail = ParticleTrail bullet.position.x - Screen_Size.half_width, bullet.position.y - Screen_Size.half_height, trail_sprite, bullet
       bullet.trail.particle_type = ParticleTypes.enemy_poison
       bullet.trail.life_time = 5
-      bullet.trail.damage = @damage / 15
+      bullet.trail.damage = @damage * depth
       bullet.kill_trail = false
       Driver\addObject bullet, EntityTypes.bullet
       Driver\addObject bullet.trail, EntityTypes.particle
