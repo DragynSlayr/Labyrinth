@@ -374,7 +374,8 @@ export class Driver
         Driver\addObject coin, EntityTypes.background
         y += 75
 
-      Driver.spawn (BasicEnemy), EntityTypes.enemy
+      Timer 1, @, () =>
+        Driver.spawn (BasicEnemy), EntityTypes.enemy
 
       love.mouse.setVisible false
 
