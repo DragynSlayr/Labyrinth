@@ -352,27 +352,25 @@ export class Driver
       -- Create a player
       export MainPlayer = Player 1586, 2350
       MainPlayer\pickClass 0
-      MainPlayer\updateStats!
+      MainPlayer\updateStats true
       Driver\addObject MainPlayer, EntityTypes.player
 
-      positions = {
-        (Vector 450, 2340),
-        (Vector 350, 2230),
-        (Vector 450, 2080)
-      }
-
-      for i = 1, 3
-        item = ItemPool\getItem!
-        vec = positions[i]
-        ped = ItemPedestal vec.x, vec.y, item, item.rarity * 10
-        ped.refilling = true
-        Driver\addObject ped, EntityTypes.background
-
-      y = 1600
-      for i = 1, 10
-        coin = Coin 1650, y, (i * 2)
-        Driver\addObject coin, EntityTypes.background
-        y += 75
+      -- positions = {
+      --   (Vector 450, 2340),
+      --   (Vector 350, 2230),
+      --   (Vector 450, 2080)
+      -- }
+      -- for i = 1, 3
+      --   item = ItemPool\getItem!
+      --   vec = positions[i]
+      --   ped = ItemPedestal vec.x, vec.y, item, item.rarity * 10
+      --   ped.refilling = true
+      --   Driver\addObject ped, EntityTypes.background
+      -- y = 1600
+      -- for i = 1, 10
+      --   coin = Coin 1650, y, (i * 2)
+      --   Driver\addObject coin, EntityTypes.background
+      --   y += 75
 
       Timer 1, @, () =>
         Driver.spawn (BasicEnemy), EntityTypes.enemy
