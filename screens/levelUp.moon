@@ -23,7 +23,10 @@ export class LevelUp extends Screen
       @stats[k] = v
 
   updatePlayerStats: () =>
-    for k, v in pairs @stats
+    @saveStats @stats
+
+  saveStats: (stats) =>
+    for k, v in pairs stats
       @player.stats[k] = v
     @player\updateStats!
 
@@ -106,6 +109,45 @@ export class LevelUp extends Screen
       yOn = y >= @y and y <= @y + @height
       return xOn and yOn
 
+  drawStatChanges: (y) =>
+    temp = {}
+    for k, v in pairs @player.stats
+      temp[k] = v
+
+    old_hp = @player.max_health
+    old_speed = @player.max_speed
+    old_damage = @player.weapons\getCurrentDamage!
+
+    love.graphics.printf 'HP', @x + (@width * 0.1), y, @width
+    love.graphics.printf (string.format "%.2f", old_hp), @x + (@width * 0.325), y, @width
+    love.graphics.printf 'Speed', @x + (@width * 0.1), y + 45, @width
+    love.graphics.printf (string.format "%.2f", old_speed), @x + (@width * 0.325), y + 45, @width
+    love.graphics.printf 'Damage', @x + (@width * 0.1), y + 90, @width
+    love.graphics.printf (string.format "%.2f", old_damage), @x + (@width * 0.325), y + 90, @width
+
+    @saveStats @stats
+
+    new_hp = @player.max_health
+    new_speed = @player.max_speed
+    new_damage = @player.weapons\getCurrentDamage!
+
+    setColor 95, 125, 255, 255
+    if new_hp > old_hp
+      setColor 0, 255, 0, 255
+    love.graphics.printf (string.format "%.2f", new_hp), @x + (@width * 0.7), y, @width
+
+    setColor 95, 125, 255, 255
+    if new_speed > old_speed
+      setColor 0, 255, 0, 255
+    love.graphics.printf (string.format "%.2f", new_speed), @x + (@width * 0.7), y + 45, @width
+
+    setColor 95, 125, 255, 255
+    if new_damage > old_damage
+      setColor 0, 255, 0, 255
+    love.graphics.printf (string.format "%.2f", new_damage), @x + (@width * 0.7), y + 90, @width
+
+    @saveStats temp
+
   draw: =>
     if not @isOpen return
 
@@ -135,6 +177,9 @@ export class LevelUp extends Screen
     y = y_start + (i * 45)
     setColor 95, 125, 255, 255
     love.graphics.printf ('Points Available: ' .. @pointsAvailable), @x + (@width * 0.05), y, @width
+
+    y += 80
+    @drawStatChanges y
 
     for k, v in pairs @buttons
       v\draw!

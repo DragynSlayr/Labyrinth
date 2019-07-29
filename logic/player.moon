@@ -66,6 +66,9 @@ class WeaponHolder
     for i, weapon in pairs @weapons
       weapon\updateDamage!
 
+  getCurrentDamage: =>
+    return @weapons[@weapon_idx]\calcDamage!
+
   mousepressed: (x, y, button, isTouch) =>
     @weapons[@weapon_idx]\mousepressed x, y, button, isTouch
 
@@ -152,12 +155,13 @@ export class Player extends GameObject
     @exp_chase = 0
     @nextExp = 100
 
-  updateStats: =>
+  updateStats: (fillHealth = false) =>
     @lives = 1
     @max_speed = 55.0 * @stats.dexterity * Scale.diag
-    @max_health = 1.0 * @stats.constitution
-    @health = @max_health
-    -- @setArmor 0, @max_health
+    @max_health = 1.3 * @stats.constitution
+    if fillHealth
+      @health = @max_health
+      -- @setArmor 0, @max_health
     @weapons\updateDamages!
 
   getStats: =>
