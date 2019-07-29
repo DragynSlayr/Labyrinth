@@ -14,6 +14,8 @@ export class BlackHole extends BackgroundObject
       b.speed_override = false
 
   update: (dt) =>
+    ratio = (7.5 - @life_time) / 7.5
+    @sprite\setRotationSpeed (ratio * -2 * math.pi)
     super dt
     for k, e in pairs Driver.objects[EntityTypes.enemy]
       @applyPull e, dt
