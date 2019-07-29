@@ -10,8 +10,6 @@ export class CharmActive extends ActiveItem
           v.charmed = true
           v.old_attack_filters = v.attack_filters
           v.attack_filters = {EntityTypes.boss, EntityTypes.enemy}
-          --v.old_solid = v.solid
-          --v.solid = false
           v.old_damage = v.damage
           v.damage = v.damage * 2
     super sprite, cd, effect
@@ -25,8 +23,6 @@ export class CharmActive extends ActiveItem
           v.charmed = false
           v.attack_filters = v.old_attack_filters
           v.old_attack_filters = nil
-          --v.solid = v.old_solid
-          --v.old_solid = nil
           v.damage = v.old_damage
           v.old_damage = nil
 
