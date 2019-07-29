@@ -366,6 +366,7 @@ export class Driver
       --   ped = ItemPedestal vec.x, vec.y, item, item.rarity * 10
       --   ped.refilling = true
       --   Driver\addObject ped, EntityTypes.background
+
       -- y = 1600
       -- for i = 1, 10
       --   coin = Coin 1650, y, (i * 2)
@@ -379,6 +380,10 @@ export class Driver
 
       @cursor_sprite = Sprite "ui/crosshair.tga", 24, 24, 1, 1.5
       @cursor_sprite\setRotationSpeed (math.pi / 2)
+
+      item = CloneActive 4
+      ped = ItemPedestal 1586, 2200, item
+      Driver\addObject ped, EntityTypes.background
 
       -- Start game
       --Levels\nextLevel!
