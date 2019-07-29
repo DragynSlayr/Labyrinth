@@ -43,6 +43,8 @@ class WeaponHolder
     @loadWeapons!
     @weapon_idx = math.random(1, #@weapons)
 
+    @updateDamages!
+
   loadWeapons: =>
     weapons = {
       (MagicFireball),
@@ -59,6 +61,10 @@ class WeaponHolder
 
   addWeapon: (typeof) =>
     table.insert @weapons, (typeof @player)
+
+  updateDamages: =>
+    for i, weapon in pairs @weapons
+      weapon\updateDamage!
 
   mousepressed: (x, y, button, isTouch) =>
     @weapons[@weapon_idx]\mousepressed x, y, button, isTouch
@@ -125,8 +131,6 @@ export class Player extends GameObject
     @hearts = HeartContainer @
     @popup = nil
 
-    @weapons = WeaponHolder @
-
     Timer 1, @, () =>
       if Driver.game_state == Game_State.playing
         @parent\addExp 20
@@ -134,14 +138,15 @@ export class Player extends GameObject
   pickClass: (num) =>
     switch num
       when 0
-        @stats.strength = 10
-        @stats.dexterity = 10
-        @stats.constitution = 10
-        @stats.intelligence = 0
-        @stats.wisdom = 0
+        @stats.strength = 5
+        @stats.dexterity = 5
+        @stats.constitution = 5
+        @stats.intelligence = 5
+        @stats.wisdom = 5
         -- @stats.charisma = 0
     @inventory = Inventory!
     @levelUp = LevelUp @
+    @weapons = WeaponHolder @
     @level = 0
     @exp = 0
     @exp_chase = 0
@@ -149,18 +154,16 @@ export class Player extends GameObject
 
   updateStats: =>
     @lives = 1
-    @damage = 0.125 * @stats.strength
-    @max_speed = 27.5 * @stats.dexterity * Scale.diag
-    @max_health = 0.5 * @stats.constitution
+    @max_speed = 55.0 * @stats.dexterity * Scale.diag
+    @max_health = 1.0 * @stats.constitution
     @health = @max_health
     -- @setArmor 0, @max_health
-    @bullet_speed = @max_speed * 1.25
+    @weapons\updateDamages!
 
   getStats: =>
     stats = {}
     stats[1] = @max_health
-    stats[2] = @damage
-    stats[3] = @max_speed
+    stats[2] = @max_speed
     return stats
 
   addExp: (amount) =>
