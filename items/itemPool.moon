@@ -14,7 +14,6 @@ export class ItemPoolHandler
       DeadEyeActive,
       MissileActive,
       StealthActive,
-      KamikazeActive,
       WholeHogActive,
       BlackHoleActive,
       MoltenCoreActive,
