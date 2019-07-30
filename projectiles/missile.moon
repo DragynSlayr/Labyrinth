@@ -16,8 +16,4 @@ export class Missile extends HomingProjectile
     targets = {}
     targets = concatTables targets, Driver.objects[EntityTypes.enemy]
     targets = concatTables targets, Driver.objects[EntityTypes.boss]
-    goals = {GoalTypes.attack, GoalTypes.capture}
-    for k, g in pairs Driver.objects[EntityTypes.goal]
-      if tableContains goals, g.goal_type
-        table.insert targets, g
     return pick targets
