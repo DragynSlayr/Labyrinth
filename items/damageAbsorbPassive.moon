@@ -3,7 +3,7 @@ export class DamageAbsorbPassive extends PassiveItem
   @highest_rarity = 4
   new: (rarity) =>
     @rarity = rarity
-    @chance = ({5, 7.5, 10, 12.5, 15})[@rarity]
+    @chance = ({50, 55, 60, 65, 70})[@rarity]
     sprite = Sprite "item/damageAbsorbPassive.tga", 32, 32, 1, 1.75
     effect = (player) =>
       health = player.health
