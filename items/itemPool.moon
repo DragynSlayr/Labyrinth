@@ -7,7 +7,6 @@ export class ItemPoolHandler
       NukeActive,
       CharmActive,
       CloneActive,
-      DrunkActive,
       TrailActive,
       JacketActive,
       SentryActive,
