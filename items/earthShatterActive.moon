@@ -28,7 +28,7 @@ export class EarthShatterActive extends ActiveItem
     @effect_time = 6
 
   createShatter: (x, y, angle) =>
-    shatter = FrostField x, y
+    shatter = FrostField x - Screen_Size.half_width, y - Screen_Size.half_height
     shatter.sprite = Sprite "background/earthShatter.tga", 32, 32, 1, 6
     shatter.sprite.color[4] = 200
     shatter.sprite.rotation = angle
