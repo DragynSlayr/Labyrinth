@@ -7,9 +7,6 @@ export class JacketActive extends ActiveItem
     effect = (player) =>
       for k, v in pairs Driver.objects[EntityTypes.player]
         v.shielded = true
-      for k, v in pairs Driver.objects[EntityTypes.goal]
-        if v.goal_type == GoalTypes.defend
-          v.shielded = true
     super sprite, cd, effect
     @name = "Winter Jacket"
     @description = "Allies receive a temporary shield"
