@@ -32,7 +32,6 @@ export class ItemPoolHandler
       ExpBoostPassive,
       ExtraLifePassive,
       LifeStealPassive,
-      DoubleShotPassive,
       RangeBoostPassive,
       SpeedBoostPassive,
       HealthBoostPassive,
