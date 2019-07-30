@@ -12,7 +12,6 @@ export class ItemPoolHandler
       SentryActive,
       ShieldActive,
       DeadEyeActive,
-      HarvestActive,
       MissileActive,
       StealthActive,
       KamikazeActive,
