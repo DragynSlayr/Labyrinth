@@ -25,7 +25,8 @@ export class DeadEyeActive extends ActiveItem
     filters = {EntityTypes.enemy, EntityTypes.boss}
     for k2, filter in pairs filters
       for k, v in pairs Driver.objects[filter]
-        v\onCollide @
+        if v\isOnScreen!
+          v\onCollide @
     @effect_timer = 0
     @damage = 0
     @used = false
