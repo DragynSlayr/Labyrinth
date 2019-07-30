@@ -6,6 +6,6 @@ export class MissilePassive extends PassiveItem
     effect = (player) =>
       missile = Missile player.position.x, player.position.y
       Driver\addObject missile, EntityTypes.bullet
-    super sprite, 5.5, effect
+    super sprite, 0.1, effect
     @name = "Gonna Get You"
     @description = "A homing missile spawns periodically"
