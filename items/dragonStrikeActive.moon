@@ -32,7 +32,7 @@ export class DragonStrikeActive extends ActiveItem
     @effect_time = 6
 
   createDragon: (x, y, r = -1, f = false) =>
-    dragon = PoisonField x, y
+    dragon = PoisonField x - Screen_Size.half_width, y - Screen_Size.half_height
     dragon.sprite = Sprite "background/dragonStrike.tga", 32, 32, 1, 6
     dragon.sprite.color[4] = 200
     dragon.sprite\setRotationSpeed math.pi / (3 * r)
