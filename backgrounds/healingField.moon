@@ -5,7 +5,7 @@ export class HealingField extends BackgroundObject
     @life_time = 6.5
     @timer = 0
     @heal_delay = 0.5
-    @healing_amount = 1 / 4
+    @healing_amount = 1 / 6
 
   update: (dt) =>
     super dt
