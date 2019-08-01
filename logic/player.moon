@@ -303,7 +303,9 @@ export class Player extends GameObject
 
   update: (dt) =>
     if not @alive return
-    if @is_clone return
+    if @is_clone
+      @sprite\update dt
+      return
 
     @inventory\update dt
     @levelUp\update dt
