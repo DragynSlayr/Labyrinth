@@ -16,7 +16,7 @@ class HeartContainer
     @half_heart_out\update dt
 
   draw: =>
-    x = (@heart_out.scaled_width / 2) + 80
+    x = (@heart_out.scaled_width / 2) + 150
     y = 27.5
     xs = {}
     for i = 1, math.floor @player.max_health
@@ -363,7 +363,7 @@ export class Player extends GameObject
 
     @hearts\draw!
 
-    x = 85
+    x = 155
     y = 57.5
     height = 10
     setColor 0, 0, 0, 255

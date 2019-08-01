@@ -382,7 +382,7 @@ export class Driver
       @cursor_sprite = Sprite "ui/crosshair.tga", 24, 24, 1, 1.5
       @cursor_sprite\setRotationSpeed (math.pi / 2)
 
-      -- item = TrailPassive 5
+      -- item = BlackHoleActive 5
       -- ped = ItemPedestal 1586, 2200, item
       -- Driver\addObject ped, EntityTypes.background
 

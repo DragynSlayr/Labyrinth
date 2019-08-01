@@ -29,23 +29,21 @@ export class ActiveItem extends Item
   draw2: =>
     Camera\unset!
 
-    x = ((Screen_Size.width / 2) + (10 * Scale.width)) / 2
-    y = Screen_Size.height - (35 * Scale.height)
+    x = 40
+    y = 40
+
+    love.graphics.setLineWidth 5
+    setColor 0, 0, 0, 255
+    love.graphics.rectangle "line", 10, 10, 60, 60
+    love.graphics.setLineWidth 1
 
     if @charged
-      setColor 132, 87, 15, 200
+      setColor 139, 69, 19, 255
     else
       setColor 15, 87, 132, 200
-    love.graphics.rectangle "fill", x - (60 * Scale.width * 0.5), y - (60 * Scale.height * 0.5), 60 * Scale.width, 60 * Scale.height
+    love.graphics.rectangle "fill", x - (30 * Scale.width), y - (30 * Scale.height), 60 * Scale.width, 60 * Scale.height
 
     @sprite\draw x, y
-
-    if not @charged
-      setColor 0, 0, 0, 127
-      font = Renderer\newFont 30
-      love.graphics.setFont font
-      message = math.ceil (@charge_time - @timer)
-      love.graphics.printf message, x + (60 * Scale.width * 0.5), y - (font\getHeight! / 2), 60 * Scale.width, "center"
 
     if @used and @effect_time and @effect_timer
       love.graphics.setShader Driver.shader

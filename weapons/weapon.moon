@@ -40,9 +40,9 @@ export class Weapon
     Camera\unset!
     love.graphics.setLineWidth 5
     setColor 0, 0, 0, 255
-    love.graphics.rectangle "line", 10, 10, 60, 60
+    love.graphics.rectangle "line", 80, 10, 60, 60
     setColor 139, 69, 19, 255
-    love.graphics.rectangle "fill", 10, 10, 60, 60
-    @sprite\draw 40, 40
+    love.graphics.rectangle "fill", 80, 10, 60, 60
+    @sprite\draw 110, 40
     love.graphics.setLineWidth 1
     Camera\set!
