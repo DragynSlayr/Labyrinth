@@ -386,6 +386,8 @@ export class Driver
       ped = ItemPedestal 1586, 2200, item
       Driver\addObject ped, EntityTypes.background
 
+      @dialog = Dialog "Test Dialog"
+
       -- Start game
       --Levels\nextLevel!
 
@@ -418,6 +420,7 @@ export class Driver
             --Levels\update dt
             World\update dt
             MainPlayer\postUpdate dt
+            Driver.dialog\update dt
         UI\update dt
         ScoreTracker\update dt
 
@@ -468,6 +471,7 @@ export class Driver
           Renderer\drawAll!
           Driver.drawMoney!
           Driver.drawDebugInfo!
+          Driver.dialog\draw!
         when Game_State.controls
           Controls\draw!
         when Game_State.paused
