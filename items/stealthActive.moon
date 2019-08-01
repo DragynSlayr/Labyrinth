@@ -5,17 +5,19 @@ export class StealthActive extends ActiveItem
     cd = 7
     sprite = Sprite "item/stealthActive.tga", 32, 32, 1, 1.75
     effect = (player) =>
-      @clone = AttackClone player
+      @clone = Player player.position.x - Screen_Size.half_width, player.position.y - Screen_Size.half_height
+      @clone\pickClass 0
+      @clone\updateStats true
+      @clone.is_clone = true
       @clone.draw_health = false
-      @clone.max_time = @effect_time
-      @clone.max_health = player.max_health * 20
-      @clone.bullet_time = @effect_time + 1
-      @clone.sprite\setColor {255, 255, 255, 0}
-      @clone.keypressed = (_) => return
-      @clone.keyreleased = (_) => return
-      @clone.hasItem = (_) => return false
-      @clone.exp_multiplier = 0
-      @clone.exp = 0
+      @clone.show_stats = false
+      @clone.solid = false
+      @clone.sprite\setColor {100, 100, 100, 100}
+      @clone.onCollide = (_) =>
+        return
+      @clone.kill = () =>
+        return
+
       player.old_color = player.sprite.color
       player.sprite\setColor {200, 200, 200, 127}
       Driver\addObject @clone, EntityTypes.player
