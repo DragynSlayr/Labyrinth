@@ -24,12 +24,10 @@ export class ItemPoolHandler
       TrailPassive,
       MissilePassive,
       ExtraLifePassive,
-      SpeedBoostPassive,
       HealthBoostPassive,
       StutterShotPassive,
       DamageAbsorbPassive,
-      DamageReflectPassive,
-      SpeedBoostSpecialPassive
+      DamageReflectPassive
     }
     @generatePool!
 
