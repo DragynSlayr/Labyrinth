@@ -373,17 +373,18 @@ export class Driver
       --   Driver\addObject coin, EntityTypes.background
       --   y += 75
 
-      Timer 1, @, () =>
+      Timer 1, @, (() =>
         Driver.spawn (BasicEnemy), EntityTypes.enemy
+      ), true
 
       love.mouse.setVisible false
 
       @cursor_sprite = Sprite "ui/crosshair.tga", 24, 24, 1, 1.5
       @cursor_sprite\setRotationSpeed (math.pi / 2)
 
-      item = CloneActive 4
-      ped = ItemPedestal 1586, 2200, item
-      Driver\addObject ped, EntityTypes.background
+      -- item = TrailPassive 5
+      -- ped = ItemPedestal 1586, 2200, item
+      -- Driver\addObject ped, EntityTypes.background
 
       -- Start game
       --Levels\nextLevel!
