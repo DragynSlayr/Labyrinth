@@ -25,7 +25,6 @@ export class ItemPoolHandler
       MissilePassive,
       ExtraLifePassive,
       HealthBoostPassive,
-      StutterShotPassive,
       DamageAbsorbPassive,
       DamageReflectPassive
     }

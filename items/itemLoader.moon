@@ -41,7 +41,6 @@ require "items.trailPassive"
 require "items.missilePassive"
 require "items.extraLifePassive"
 require "items.healthBoostPassive"
-require "items.stutterShotPassive"
 require "items.damageAbsorbPassive"
 require "items.damageReflectPassive"
 
