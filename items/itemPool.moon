@@ -8,7 +8,6 @@ export class ItemPoolHandler
       CloneActive,
       TrailActive,
       JacketActive,
-      ShieldActive,
       DeadEyeActive,
       MissileActive,
       StealthActive,
