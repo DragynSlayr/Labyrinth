@@ -40,7 +40,7 @@ export class ActiveItem extends Item
     if @charged
       setColor 139, 69, 19, 255
     else
-      setColor 15, 87, 132, 200
+      setColor 15, 87, 132, 255
     love.graphics.rectangle "fill", x - (30 * Scale.width), y - (30 * Scale.height), 60 * Scale.width, 60 * Scale.height
 
     @sprite\draw x, y
@@ -49,8 +49,8 @@ export class ActiveItem extends Item
       love.graphics.setShader Driver.shader
 
       radius = @player\getHitBox!.radius
-      x = @player.position.x - radius
-      y = @player.position.y + radius + (5 * Scale.height)
+      x = Screen_Size.half_width - radius
+      y = Screen_Size.half_height + radius + (5 * Scale.height)
 
       setColor 0, 0, 0, 255
       love.graphics.rectangle "fill", x, y, radius * 2, 10 * Scale.height
