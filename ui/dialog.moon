@@ -7,6 +7,9 @@ export class Dialog extends UIElement
     @maxWidth = 400
     @updateBox text
 
+    @doneAction = (dialog) =>
+      dialog\updateBox {"Endless Loop"}
+
   updateBox: (text) =>
     @texts = text
     @boxes = {}
@@ -78,6 +81,7 @@ export class Dialog extends UIElement
         @canClick = false
         if @idx > #@boxes
           @enabled = false
+          @doneAction @
       @selected = false
 
   countChars: (texts) =>
