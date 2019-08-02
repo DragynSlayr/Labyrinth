@@ -262,7 +262,10 @@ export class Driver
         UI\mousepressed x, y, button, isTouch
         switch Driver.game_state
           when Game_State.playing
-            MainPlayer\mousepressed x, y, button, isTouch
+            if Driver.dialog.enabled
+              Driver.dialog\mousepressed x, y, button, isTouch
+            else
+              MainPlayer\mousepressed x, y, button, isTouch
           when Game_State.game_over
             GameOver\mousepressed x, y, button, isTouch
 
@@ -273,7 +276,10 @@ export class Driver
         UI\mousereleased x, y, button, isTouch
         switch Driver.game_state
           when Game_State.playing
-            MainPlayer\mousereleased x, y, button, isTouch
+            if Driver.dialog.enabled
+              Driver.dialog\mousereleased x, y, button, isTouch
+            else
+              MainPlayer\mousereleased x, y, button, isTouch
           when Game_State.game_over
             GameOver\mousereleased x, y, button, isTouch
 
@@ -386,7 +392,7 @@ export class Driver
       ped = ItemPedestal 1586, 2200, item
       Driver\addObject ped, EntityTypes.background
 
-      @dialog = Dialog "Test Dialog, this much text should overflow and cause a new line to be added"
+      @dialog = Dialog {"Test Dialog", "this much text should overflow and cause a new line to be added", "but this much might not"}
 
       -- Start game
       --Levels\nextLevel!
@@ -399,8 +405,9 @@ export class Driver
         Debugger\update dt
       else
         Driver.elapsed += dt
-        for k, v in pairs Driver.timers
-          v\update dt
+        if not Driver.dialog.enabled
+          for k, v in pairs Driver.timers
+            v\update dt
         switch Driver.game_state
           when Game_State.game_over
             GameOver\update dt
@@ -409,18 +416,22 @@ export class Driver
           when Game_State.controls
             Controls\update dt
           when Game_State.playing
-            for k, v in pairs Driver.objects
-              for k2, o in pairs v
-                o\update dt
-            Collision\update dt
-            for k, v in pairs Driver.objects
-              for k2, o in pairs v
-                if o.health <= 0 or not o.alive
-                  Driver\removeObject o
-            --Levels\update dt
-            World\update dt
-            MainPlayer\postUpdate dt
-            Driver.dialog\update dt
+            if Driver.dialog.enabled
+              Driver.dialog\update dt
+              World\update dt
+              MainPlayer\postUpdate dt
+            else
+              for k, v in pairs Driver.objects
+                for k2, o in pairs v
+                  o\update dt
+              Collision\update dt
+              for k, v in pairs Driver.objects
+                for k2, o in pairs v
+                  if o.health <= 0 or not o.alive
+                    Driver\removeObject o
+              --Levels\update dt
+              World\update dt
+              MainPlayer\postUpdate dt
         UI\update dt
         ScoreTracker\update dt
 
