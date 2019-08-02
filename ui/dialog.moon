@@ -8,7 +8,8 @@ export class Dialog extends UIElement
     @updateBox text
 
     @doneAction = (dialog) =>
-      dialog\updateBox {"Endless Loop"}
+      -- dialog\updateBox {"Endless Loop"}
+      return
 
   updateBox: (text) =>
     @texts = text
