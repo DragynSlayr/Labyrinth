@@ -405,9 +405,6 @@ export class Driver
         Debugger\update dt
       else
         Driver.elapsed += dt
-        if not Driver.dialog.enabled
-          for k, v in pairs Driver.timers
-            v\update dt
         switch Driver.game_state
           when Game_State.game_over
             GameOver\update dt
@@ -421,6 +418,8 @@ export class Driver
               World\update dt
               MainPlayer\postUpdate dt
             else
+              for k, v in pairs Driver.timers
+                v\update dt
               for k, v in pairs Driver.objects
                 for k2, o in pairs v
                   o\update dt
