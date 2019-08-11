@@ -100,6 +100,12 @@ export class GameObject
     @alive = false
     @health = 0
 
+  mousepressed: (x, y, button, isTouch) =>
+    return false
+
+  mousereleased: (x, y, button, isTouch) =>
+    return false
+
   update: (dt) =>
     if not @alive return
     -- if not @isOnScreen! return
