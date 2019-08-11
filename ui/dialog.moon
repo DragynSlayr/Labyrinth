@@ -1,11 +1,15 @@
 export class Dialog extends UIElement
-  new: (text) =>
+  new: (text = nil) =>
     super 0, 0, "", (Renderer\newFont 20)
 
     @textSpacing = 20
     @lineSpacing = 10
     @maxWidth = 400
-    @updateBox text
+
+    if not text or #text == 0
+      @enabled = false
+    else
+      @updateBox text
 
     @doneAction = (dialog) =>
       -- dialog\updateBox {"Endless Loop"}
