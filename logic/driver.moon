@@ -138,20 +138,17 @@ export class Driver
           break
 
     removeObject: (object, player_kill = true) =>
-      found = false
       for k, v in pairs Driver.objects
-        if not found
-          for k2, o in pairs v
-            if object == o
-              if player_kill
-                for k, player in pairs Driver.objects[EntityTypes.player]
-                  player\onKill o
-                v[k2]\kill!
-                --Levels\entityKilled v[k2]
-                World\entityKilled v[k2]
-              table.remove Driver.objects[k], k2
-              found = true
-              break
+        for k2, o in pairs v
+          if object == o
+            if player_kill
+              for k, player in pairs Driver.objects[EntityTypes.player]
+                player\onKill o
+              v[k2]\kill!
+              --Levels\entityKilled v[k2]
+              World\entityKilled v[k2]
+            table.remove Driver.objects[k], k2
+            return
 
     clearObjects: (typeof) =>
       objects = {}
@@ -265,7 +262,8 @@ export class Driver
             if Driver.dialog.enabled
               Driver.dialog\mousepressed x, y, button, isTouch
             else
-              MainPlayer\mousepressed x, y, button, isTouch
+              if not (NPCHandler\mousepressed x, y, button, isTouch)
+                MainPlayer\mousepressed x, y, button, isTouch
           when Game_State.game_over
             GameOver\mousepressed x, y, button, isTouch
 
@@ -279,7 +277,8 @@ export class Driver
             if Driver.dialog.enabled
               Driver.dialog\mousereleased x, y, button, isTouch
             else
-              MainPlayer\mousereleased x, y, button, isTouch
+              if not (NPCHandler\mousereleased x, y, button, isTouch)
+                MainPlayer\mousereleased x, y, button, isTouch
           when Game_State.game_over
             GameOver\mousereleased x, y, button, isTouch
 
@@ -332,6 +331,7 @@ export class Driver
       export Pause = PauseScreen!
       export GameOver = GameOverScreen!
       --export Levels = LevelHandler!
+      export NPCHandler = Handler!
       export World = WorldHandler!
 
     intializeDriverVars: =>
@@ -392,7 +392,7 @@ export class Driver
       ped = ItemPedestal 1586, 2200, item
       Driver\addObject ped, EntityTypes.background
 
-      @dialog = Dialog {"Test Dialog", "this much text should overflow and cause a new line to be added", "but this much might not"}
+      @dialog = Dialog! --{"Test Dialog", "this much text should overflow and cause a new line to be added", "but this much might not"}
 
       -- Start game
       --Levels\nextLevel!
@@ -423,11 +423,12 @@ export class Driver
               for k, v in pairs Driver.objects
                 for k2, o in pairs v
                   o\update dt
-              Collision\update dt
               for k, v in pairs Driver.objects
                 for k2, o in pairs v
                   if o.health <= 0 or not o.alive
                     Driver\removeObject o
+              NPCHandler\update dt
+              Collision\update dt
               --Levels\update dt
               World\update dt
               MainPlayer\postUpdate dt
@@ -479,6 +480,7 @@ export class Driver
           World\draw!
           --Levels\draw!
           Renderer\drawAll!
+          NPCHandler\draw!
           Driver.drawMoney!
           Driver.drawDebugInfo!
           Driver.dialog\draw!
