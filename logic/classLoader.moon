@@ -74,6 +74,7 @@ table.insert queue, "logic.score"
 --+------------------------------+--
 --| Dependent on everything else |--
 --+------------------------------+--
+table.insert queue, "logic.handler"
 table.insert queue, "logic.driver"
 
 return queue
