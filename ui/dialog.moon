@@ -15,8 +15,9 @@ export class Dialog extends UIElement
       -- dialog\updateBox {"Endless Loop"}
       return
 
-  updateBox: (text) =>
+  updateBox: (text, name = "...") =>
     @texts = text
+    @name = name
     @boxes = {}
     for i, text in pairs @texts
       @text = text
@@ -108,9 +109,25 @@ export class Dialog extends UIElement
 
     setColor 0, 0, 0, 200
     love.graphics.rectangle "fill", box.x, box.y, box.width, box.height, 10, 10
+    love.graphics.setLineWidth 3
+    setColor 150, 150, 150, 255
+    love.graphics.rectangle "line", box.x, box.y, box.width, box.height, 10, 10
+    love.graphics.setLineWidth 1
 
     font = love.graphics.getFont!
     love.graphics.setFont @font
+    width = love.graphics.getFont!\getWidth @name
+    height = love.graphics.getFont!\getHeight!
+
+    setColor 0, 0, 0, 200
+    love.graphics.rectangle "fill", box.x + 6, box.y - 15, width + 10, height + 4, 3, 3
+    love.graphics.setLineWidth 2
+    setColor 150, 150, 150, 255
+    love.graphics.rectangle "line", box.x + 6, box.y - 15, width + 10, height + 4, 3, 3
+    love.graphics.setLineWidth 1
+    setColor 255, 255, 255, 255
+    love.graphics.printf @name, box.x + 11, box.y - 13, width, "center"
+
     setColor 255, 255, 255, 255
     lines = box.lines
     toDraw = math.ceil @elapsed
