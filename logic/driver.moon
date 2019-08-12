@@ -379,9 +379,9 @@ export class Driver
       --   Driver\addObject coin, EntityTypes.background
       --   y += 75
 
-      Timer 1, @, (() =>
-        Driver.spawn (BasicEnemy), EntityTypes.enemy
-      ), true
+      -- Timer 1, @, (() =>
+      --   Driver.spawn (BasicEnemy), EntityTypes.enemy
+      -- ), true
 
       love.mouse.setVisible false
 
@@ -394,7 +394,13 @@ export class Driver
 
       @dialog = Dialog!
 
-      npc = NPC 1800, 2200, {"Test Dialog", "this much text should overflow and cause a new line to be added", "but this much might not"}
+      @npc = NPC 2680, 2000, {"Test Dialog", "this much text should overflow and cause a new line to be added", "but this much might not"}
+      @npc\setPath {
+        {(Vector 100, 0), 2.5},
+        {(Vector 0, 100), 3},
+        {(Vector -100, 0), 2.5},
+        {(Vector 0, -100), 3}
+      }
 
       -- Start game
       --Levels\nextLevel!
@@ -464,6 +470,10 @@ export class Driver
         Renderer\drawAlignedMessage ("Camera: " .. camera_pos), y, "left", font, white_color
         y += 25
         Renderer\drawAlignedMessage "Timers: " .. #Driver.timers, y, "left", font, white_color
+
+        cursor_x, cursor_y = love.mouse.getPosition!
+        cursor_pos = (cursor_x + Camera.position.x - Screen_Size.width) .. ", " .. (cursor_y + Camera.position.y - Screen_Size.height)
+        Renderer\drawAlignedMessage ("Cursor: " .. cursor_pos), y + 25, "left", font, white_color
 
     drawMoney: ->
       Camera\unset!
