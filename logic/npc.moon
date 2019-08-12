@@ -40,10 +40,11 @@ class NPCPath
       @npc.speed = node.speed
 
 export class NPC extends GameObject
-  new: (x, y, text = {}) =>
+  new: (x, y, name = "", text = {}) =>
     sprite = Sprite "npc/npc.tga", 48, 26, 1, 2
     super x, y, sprite
 
+    @name = name
     @text = text
     @draw_health = false
     @clicked = false
@@ -65,7 +66,7 @@ export class NPC extends GameObject
     was_clicked = false
     if (@isHovering x, y) and @clicked
       if #@text > 0
-        Driver.dialog\updateBox @text
+        Driver.dialog\updateBox @text, @name
       was_clicked = true
     @clicked = false
     return was_clicked
@@ -73,6 +74,22 @@ export class NPC extends GameObject
   update: (dt) =>
     @path\update dt
     super dt
+
+  draw: =>
+    super!
+    width = love.graphics.getFont!\getWidth @name
+    height = love.graphics.getFont!\getHeight!
+    x = @position.x - (width / 2)
+    y = @position.y - (@sprite.scaled_height / 2) - 35
+
+    setColor 0, 0, 0, 200
+    love.graphics.rectangle "fill", x - 6, y - 2, width + 12, height + 4, 3, 3
+    love.graphics.setLineWidth 2
+    setColor 150, 150, 150, 255
+    love.graphics.rectangle "line", x - 6, y - 2, width + 12, height + 4, 3, 3
+    love.graphics.setLineWidth 1
+    setColor 255, 255, 255, 255
+    love.graphics.printf @name, x, y, width, "center"
 
   isHovering: (x, y) =>
     x += Camera.position.x - Screen_Size.half_width

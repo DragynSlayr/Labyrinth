@@ -394,7 +394,7 @@ export class Driver
 
       @dialog = Dialog!
 
-      @npc = NPC 2680, 2000, {"Test Dialog", "this much text should overflow and cause a new line to be added", "but this much might not"}
+      @npc = NPC 2680, 2000, "Ted", {"Test Dialog", "this much text should overflow and cause a new line to be added", "but this much might not"}
       @npc\setPath {
         {(Vector 100, 0), 2.5},
         {(Vector 0, 100), 3},
