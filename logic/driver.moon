@@ -392,7 +392,9 @@ export class Driver
       ped = ItemPedestal 1586, 2200, item
       Driver\addObject ped, EntityTypes.background
 
-      @dialog = Dialog! --{"Test Dialog", "this much text should overflow and cause a new line to be added", "but this much might not"}
+      @dialog = Dialog!
+
+      npc = NPC 1800, 2200, {"Test Dialog", "this much text should overflow and cause a new line to be added", "but this much might not"}
 
       -- Start game
       --Levels\nextLevel!
