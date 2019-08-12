@@ -76,5 +76,6 @@ table.insert queue, "logic.score"
 --+------------------------------+--
 table.insert queue, "logic.handler"
 table.insert queue, "logic.driver"
+table.insert queue, "logic.npc"
 
 return queue
