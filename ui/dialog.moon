@@ -51,18 +51,15 @@ export class Dialog extends UIElement
       splitted = split @text, " "
       temp = ""
       i = 1
-      added = false
       while i <= #splitted
-        added = false
         old = temp
         temp ..= splitted[i] .. " "
         if (@font\getWidth temp) > widthMax
           table.insert @lines, (strip old)
           temp = splitted[i] .. " "
-          added = true
         i += 1
-      if not added
-        table.insert @lines, temp
+      if #(strip temp) > 0
+        table.insert @lines, (strip temp)
       @height = padding + (#@lines * @font\getHeight!) + ((#@lines - 1) * @lineSpacing)
 
     @x = Screen_Size.half_width - (@width / 2)
