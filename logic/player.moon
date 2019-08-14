@@ -101,7 +101,6 @@ export class Player extends GameObject
     @keys_pushed = 0
     @hit = false
 
-    @id = EntityTypes.player
     @draw_health = false
 
     @font = Renderer\newFont 20
@@ -202,9 +201,6 @@ export class Player extends GameObject
   onCollide: (object) =>
     if not @alive return
 
-    if object.id == EntityTypes.item
-      object\pickup @
-      return
     if not @shielded
       damage = object.damage
       if @slagged

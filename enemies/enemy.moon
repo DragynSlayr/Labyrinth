@@ -5,7 +5,6 @@ export class Enemy extends GameObject
     bounds = @sprite\getBounds 0, 0
     @attack_range = bounds.radius * 2
     @delay = attack_delay
-    @id = EntityTypes.enemy
     @max_speed = 150 * Scale.diag
     @speed_multiplier = @max_speed
     @value = 1

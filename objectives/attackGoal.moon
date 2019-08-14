@@ -5,7 +5,6 @@ export class AttackGoal extends GameObject
     sprite\setColor color
     sprite\setRotationSpeed math.pi * -0.75
     super x, y, sprite
-    @id = EntityTypes.goal
     @goal_type = GoalTypes.attack
     @health = math.min 690, 50 + (107 * Objectives\getScaling!)
     @max_health = @health

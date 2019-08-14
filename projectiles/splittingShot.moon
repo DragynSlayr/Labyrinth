@@ -6,7 +6,6 @@ export class SplitShot extends LinearProjectile
     @dist = dist
     @block_rotation = false
     @target = Jitter @target.position.x, @target.position.y
-    Driver\addObject @target, EntityTypes.background
 
   kill: =>
     super!

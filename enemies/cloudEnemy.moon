@@ -2,7 +2,6 @@ export class CloudEnemy extends GameObject
   new: (x, y) =>
     sprite = Sprite "enemy/cloud.tga", 32, 32, 1, 1.25
     super x, y, sprite
-    @id = EntityTypes.enemy
     @value = 1
     @item_drop_chance = 0.10
     @solid = false

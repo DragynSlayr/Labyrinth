@@ -4,7 +4,6 @@ export class HomingProjectile extends GameObject
     @target = target
     @attack_range = 15 * Scale.diag
     @damage = 1 / 10
-    @id = EntityTypes.bullet
     @draw_health = false
     @solid = false
     @speed_multiplier = 500

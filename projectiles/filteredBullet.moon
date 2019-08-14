@@ -6,7 +6,6 @@ export class FilteredBullet extends GameObject
     @damage = damage
     @attack_range = 15 * Scale.diag
     @speed = speed
-    @id = EntityTypes.bullet
     @draw_health = false
     @solid = false
     @target_hit = false

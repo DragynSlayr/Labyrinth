@@ -8,7 +8,6 @@ export class GameObject
     @max_health = @health
     @damage = 1
     @alive = true
-    @id = nil
     @draw_health = true
     @score_value = 0
     @exp_given = 0

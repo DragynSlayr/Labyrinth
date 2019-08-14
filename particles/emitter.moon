@@ -10,7 +10,6 @@ export class ParticleEmitter extends GameObject
     @emitting = true
     @delay = delay
     @life_time = life_time
-    @id = EntityTypes.particle
     @draw_health = false
     @parent = parent
     @shader = nil

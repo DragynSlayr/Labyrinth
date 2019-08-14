@@ -8,7 +8,6 @@ export class Item extends GameObject
     @collectable = true
     @draw_health = false
     @contact_damage = true
-    @id = EntityTypes.item
     @player = nil
     @timer = 0
     @solid = true

@@ -5,7 +5,6 @@ export class Particle extends GameObject
     @alpha_start = alpha_start
     @alpha_end = alpha_end
     @draw_health = false
-    @id = EntityTypes.particle
     @sprite.color[4] = @alpha
     @solid = false
     @count = 0
