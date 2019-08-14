@@ -13,7 +13,7 @@ export class Handler
             player\onKill v
           v\kill!
           World\entityKilled v
-        table.remove @objects, object
+        table.remove @objects, k
         return
 
   clear: =>
