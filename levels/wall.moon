@@ -12,6 +12,8 @@ export class Wall extends GameObject
     @position\add Vector @sprite.scaled_width / 2, @sprite.scaled_height / 2
     @position\add Vector -16, -16
 
+    WallHandler\add @
+
   getHitBox: =>
     return Rectangle @position.x - @sprite.scaled_width / 2, @position.y - @sprite.scaled_height / 2, @sprite.scaled_width, @sprite.scaled_height
 

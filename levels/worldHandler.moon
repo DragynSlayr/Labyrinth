@@ -9,10 +9,6 @@ export class WorldHandler
     wbot = Wall -64, 3200, 3200 + 128, 64, wallColor
     wlft = Wall -64, -64, 64, 3200 + 128, wallColor
     wrgt = Wall 3200, -64, 64, 3200 + 128, wallColor
-    Driver\addObject wtop, EntityTypes.wall
-    Driver\addObject wbot, EntityTypes.wall
-    Driver\addObject wlft, EntityTypes.wall
-    Driver\addObject wrgt, EntityTypes.wall
 
     -- Combine horizontally
     for rowIdx, row in pairs @map
@@ -33,7 +29,6 @@ export class WorldHandler
             x = (startCol - 1) * 32
             y = (rowIdx - 1) * 32
             w = Wall x, y, delta * 32, 32, wallColor
-            Driver\addObject w, EntityTypes.wall
         else
           colIdx += 1
 
@@ -56,7 +51,6 @@ export class WorldHandler
             x = (colIdx - 1) * 32
             y = (startRow - 1) * 32
             w = Wall x, y, 32, delta * 32, wallColor
-            Driver\addObject w, EntityTypes.wall
         else
           rowIdx += 1
 
@@ -67,7 +61,6 @@ export class WorldHandler
           x = (colIdx - 1) * 32
           y = (rowIdx - 1) * 32
           w = Wall x, y, 32, 32, wallColor
-          Driver\addObject w, EntityTypes.wall
           @map[rowIdx][colIdx] = 0
 
   loadMap: =>

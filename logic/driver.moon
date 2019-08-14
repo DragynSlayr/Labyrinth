@@ -324,6 +324,7 @@ export class Driver
       --export Levels = LevelHandler!
       export ParticleHandler = Handler!
       export TimerHandler = Handler!
+      export WallHandler = Handler!
       export NPCHandler = Handler!
       export World = WorldHandler!
 
@@ -419,6 +420,7 @@ export class Driver
               MainPlayer\postUpdate dt
             else
               TimerHandler\update dt
+              WallHandler\update dt
               ParticleHandler\update dt
               for k, v in pairs Driver.objects
                 for k2, o in pairs v
@@ -483,6 +485,7 @@ export class Driver
         when Game_State.playing
           World\draw!
           --Levels\draw!
+          WallHandler\draw!
           ParticleHandler\draw!
           Renderer\drawAll!
           NPCHandler\draw!
