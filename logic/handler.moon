@@ -37,7 +37,10 @@ export class Handler
     for k, v in pairs @objects
       v\update dt
     for k, v in pairs @objects
-      if v.health <= 0 or not v.alive
+      if v.done != nil
+        if v.done
+          @remove v
+      else if v.health <= 0 or not v.alive
         @remove v
 
   draw: =>

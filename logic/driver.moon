@@ -128,15 +128,6 @@ export class Driver
     addObject: (object, layer) =>
       table.insert @objects[layer], object
 
-    addTimer: (timer) =>
-      table.insert @timers, timer
-
-    removeTimer: (timer) =>
-      for k, v in pairs @timers
-        if v == timer
-          table.remove @timers, k
-          break
-
     removeObject: (object, player_kill = true) =>
       for k, v in pairs Driver.objects
         for k2, o in pairs v
@@ -331,12 +322,12 @@ export class Driver
       export Pause = PauseScreen!
       export GameOver = GameOverScreen!
       --export Levels = LevelHandler!
-      export NPCHandler = Handler!
       export ParticleHandler = Handler!
+      export TimerHandler = Handler!
+      export NPCHandler = Handler!
       export World = WorldHandler!
 
     intializeDriverVars: =>
-      Driver.timers = {}
       Driver.objects = {}
       for k, v in pairs EntityTypes.layers
         Driver.objects[k] = {}
@@ -427,8 +418,7 @@ export class Driver
               World\update dt
               MainPlayer\postUpdate dt
             else
-              for k, v in pairs Driver.timers
-                v\update dt
+              TimerHandler\update dt
               ParticleHandler\update dt
               for k, v in pairs Driver.objects
                 for k2, o in pairs v
@@ -471,7 +461,7 @@ export class Driver
         camera_pos = (Camera.position.x - Screen_Size.half_width) .. ", " .. (Camera.position.y - Screen_Size.half_height)
         Renderer\drawAlignedMessage ("Camera: " .. camera_pos), y, "left", font, white_color
         y += 25
-        Renderer\drawAlignedMessage "Timers: " .. #Driver.timers, y, "left", font, white_color
+        Renderer\drawAlignedMessage "Timers: " .. #TimerHandler.objects, y, "left", font, white_color
 
         cursor_x, cursor_y = love.mouse.getPosition!
         cursor_pos = (cursor_x + Camera.position.x - Screen_Size.width) .. ", " .. (cursor_y + Camera.position.y - Screen_Size.height)
