@@ -12,8 +12,6 @@ export class BossWave extends Wave
 
   start: =>
     @boss = Objectives\spawn (@boss), EntityTypes.boss
-    if @boss.trail
-      Driver\addObject @boss.trail, EntityTypes.particle
     if @boss.shader
       Objectives.shader = @boss.shader
 

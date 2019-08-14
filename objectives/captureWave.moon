@@ -17,8 +17,6 @@ export class CaptureWave extends Wave
     @trail\setLifeTimeRange {0.25, 0.75}
     @trail.solid = false
 
-    Driver\addObject @trail, EntityTypes.particle
-
     @timer = 0
     @movement_delay = math.random 3, 8
 
