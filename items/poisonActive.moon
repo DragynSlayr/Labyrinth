@@ -5,7 +5,6 @@ export class PoisonFieldActive extends ActiveItem
     sprite = Sprite "background/poisonField.tga", 32, 32, 2, 1.75
     effect = (player) =>
       field = PoisonField player.position.x - Screen_Size.half_width, player.position.y - Screen_Size.half_height
-      Driver\addObject field, EntityTypes.background
     super sprite, cd, effect
     @name = "Toxic Patch"
     @description = "Place a poison field"

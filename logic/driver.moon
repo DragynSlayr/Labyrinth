@@ -322,6 +322,7 @@ export class Driver
       export Pause = PauseScreen!
       export GameOver = GameOverScreen!
       --export Levels = LevelHandler!
+      export BackgroundHandler = Handler!
       export ParticleHandler = Handler!
       export TimerHandler = Handler!
       export WallHandler = Handler!
@@ -383,7 +384,6 @@ export class Driver
 
       item = BlackHoleActive 5
       ped = ItemPedestal 1586, 2200, item
-      Driver\addObject ped, EntityTypes.background
 
       @dialog = Dialog!
 
@@ -421,6 +421,7 @@ export class Driver
             else
               TimerHandler\update dt
               WallHandler\update dt
+              BackgroundHandler\update dt
               ParticleHandler\update dt
               for k, v in pairs Driver.objects
                 for k2, o in pairs v
@@ -485,10 +486,7 @@ export class Driver
         when Game_State.playing
           World\draw!
           --Levels\draw!
-          WallHandler\draw!
-          ParticleHandler\draw!
           Renderer\drawAll!
-          NPCHandler\draw!
           Driver.drawMoney!
           Driver.drawDebugInfo!
           Driver.dialog\draw!

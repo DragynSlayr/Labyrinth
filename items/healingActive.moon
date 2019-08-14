@@ -5,7 +5,6 @@ export class HealingFieldActive extends ActiveItem
     sprite = Sprite "background/healingField.tga", 32, 32, 2, 1.75
     effect = (player) =>
       field = HealingField player.position.x - Screen_Size.half_width, player.position.y - Screen_Size.half_height
-      Driver\addObject field, EntityTypes.background
     super sprite, cd, effect
     @name = "Good Juice"
     @description = "Place a healing field"

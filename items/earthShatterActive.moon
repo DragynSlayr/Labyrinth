@@ -34,4 +34,3 @@ export class EarthShatterActive extends ActiveItem
     shatter.sprite.rotation = angle
     shatter.life_time = 6
     shatter.frost_delay = 0.2
-    Driver\addObject shatter, EntityTypes.background

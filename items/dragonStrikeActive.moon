@@ -40,4 +40,3 @@ export class DragonStrikeActive extends ActiveItem
       dragon.sprite.x_scale *= -1
     dragon.life_time = 6
     dragon.poison_amount = 1
-    Driver\addObject dragon, EntityTypes.background
