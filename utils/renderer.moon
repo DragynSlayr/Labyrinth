@@ -19,11 +19,17 @@ export class ObjectRenderer
 
   -- Draw everything in the layers
   drawAll: =>
+    WallHandler\draw!
+    BackgroundHandler\draw!
+    ParticleHandler\draw!
+    
     -- Draw each GameObject in the layers
     for k, layer in pairs EntityTypes.order
       for i, object in pairs Driver.objects[layer]
         if object.draw
           object\draw!
+
+    NPCHandler\draw!
 
     -- Call each function in the queue
     for k, func in pairs @queue
