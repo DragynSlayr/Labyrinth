@@ -13,6 +13,8 @@ export class Particle extends GameObject
 
     @setShader love.graphics.newShader "shaders/normal.fs"
 
+    ParticleHandler\add @
+
   setShader: (shader, apply = false) =>
     @sprite\setShader shader
     @block_shader = apply

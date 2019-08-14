@@ -41,7 +41,7 @@ export class SummonCrystal extends Weapon
               o\onCollide @
               @elapsed = 0
               @sprite.color = @attack_color
-    Driver\addObject orb, EntityTypes.particle
+    ParticleHandler\add orb
     Timer 3, @, (() =>
       @parent.used = false
     ), false

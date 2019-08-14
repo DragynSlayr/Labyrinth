@@ -44,7 +44,6 @@ export class FilteredBullet extends GameObject
       sprite = Sprite "particle/blip.tga", 16, 16, 1, 0.5
       sprite\setColor {50, 100, 100, 0}
       particle = Particle @position.x - Screen_Size.half_width, @position.y - Screen_Size.half_height, sprite, 127, 15, 0.5
-      Driver\addObject particle, EntityTypes.particle
       @health = 0
       return
 

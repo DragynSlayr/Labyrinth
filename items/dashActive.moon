@@ -11,14 +11,12 @@ export class DashActive extends ActiveItem
       sum = (math.abs x) + (math.abs y)
       if sum > 0
         p1 = Particle player.position.x - Screen_Size.half_width, player.position.y - Screen_Size.half_height, effect_sprite, 255, 127, delay
-        Driver\addObject p1, EntityTypes.particle
 
         speed = Vector x, y, true
         player.position\add speed\multiply (Scale.diag * 350)
 
         Timer delay, @, (() =>
           p2 = Particle player.position.x - Screen_Size.half_width, player.position.y - Screen_Size.half_height, effect_sprite, 127, 255, delay
-          Driver\addObject p2, EntityTypes.particle
         ), false
     super sprite, cd, effect
     @name = "Insain Bolt"

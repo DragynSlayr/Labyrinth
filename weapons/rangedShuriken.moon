@@ -2,7 +2,7 @@ export class RangedShuriken extends Weapon
   new: (player) =>
     sprite = Sprite "weapon/shurikenMini.tga", 62, 62
     super player, sprite
-    
+
   calcDamage: =>
     return @player.stats.dexterity * 0.6
 
@@ -23,7 +23,6 @@ export class RangedShuriken extends Weapon
     trail_sprite = bullet.sprite\getCopy!
     bullet.trail = ParticleTrail bullet.position.x - Screen_Size.half_width, bullet.position.y - Screen_Size.half_height, trail_sprite, bullet
     Driver\addObject bullet, EntityTypes.bullet
-    Driver\addObject bullet.trail, EntityTypes.particle
     Timer 0.5, @, (() =>
       @parent.used = false
     ), false

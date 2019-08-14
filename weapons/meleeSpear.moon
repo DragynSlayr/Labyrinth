@@ -23,7 +23,6 @@ export class MeleeSpear extends Weapon
       protrusion = (7.5 * (math.sin (math.pi * (@activations / num_steps)))) + 1.0
       particle.position\add (@start_direction\multiply (radius * protrusion))
       particle.damage = @parent.damage
-      Driver\addObject particle, EntityTypes.particle
       @activations += 1
       if @activations >= num_steps
         @done = true

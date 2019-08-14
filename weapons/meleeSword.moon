@@ -24,7 +24,6 @@ export class MeleeSword extends Weapon
       particle.position\add offset
       particle.position\add (@start_rotation\multiply (radius * 4))
       particle.damage = @parent.damage
-      Driver\addObject particle, EntityTypes.particle
       @start_rotation\rotate rotation_step
       @activations += 1
       if @activations >= num_steps

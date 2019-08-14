@@ -21,11 +21,9 @@ export class MagicFireball extends Weapon
       sprite = Sprite "weapon/fireball.tga", 32, 32, 1, 5
       particle = EnemyPoisonParticle @position.x - Screen_Size.half_width, @position.y - Screen_Size.half_height, sprite, 255, 0, 1
       particle.damage = @damage / 2
-      Driver\addObject particle, EntityTypes.particle
     trail_sprite = bullet.sprite\getCopy!
     bullet.trail = ParticleTrail bullet.position.x - Screen_Size.half_width, bullet.position.y - Screen_Size.half_height, trail_sprite, bullet
     Driver\addObject bullet, EntityTypes.bullet
-    Driver\addObject bullet.trail, EntityTypes.particle
     Timer 0.5, @, (() =>
       @parent.used = false
     ), false

@@ -332,6 +332,7 @@ export class Driver
       export GameOver = GameOverScreen!
       --export Levels = LevelHandler!
       export NPCHandler = Handler!
+      export ParticleHandler = Handler!
       export World = WorldHandler!
 
     intializeDriverVars: =>
@@ -428,6 +429,7 @@ export class Driver
             else
               for k, v in pairs Driver.timers
                 v\update dt
+              ParticleHandler\update dt
               for k, v in pairs Driver.objects
                 for k2, o in pairs v
                   o\update dt
@@ -491,6 +493,7 @@ export class Driver
         when Game_State.playing
           World\draw!
           --Levels\draw!
+          ParticleHandler\draw!
           Renderer\drawAll!
           NPCHandler\draw!
           Driver.drawMoney!

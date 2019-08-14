@@ -21,6 +21,8 @@ export class ParticleEmitter extends GameObject
     @speed_range = {250, 250}
     @velocity = Vector 0, 0
 
+    ParticleHandler\add @
+
   resetProperties: =>
     @properties.max_particles = 50
 

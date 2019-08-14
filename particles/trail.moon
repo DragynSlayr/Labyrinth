@@ -11,6 +11,8 @@ export class ParticleTrail extends GameObject
     @particle_type = ParticleTypes.normal
     @damage = 0.01
 
+    ParticleHandler\add @
+
   kill: =>
     super!
     @objects = {}

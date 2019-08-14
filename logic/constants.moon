@@ -7,15 +7,14 @@ EntityTypes.health     = "Health"
 EntityTypes.coin       = "Coin"
 EntityTypes.bullet     = "Bullet"
 EntityTypes.background = "Background"
-EntityTypes.particle   = "Particle"
 EntityTypes.boss       = "Boss"
 EntityTypes.wall       = "Wall"
+EntityTypes.particle = "Particle"
 
 EntityTypes.layers = {}
 
 EntityTypes.layers[EntityTypes.wall]       = 1
 EntityTypes.layers[EntityTypes.background] = 2
-EntityTypes.layers[EntityTypes.particle]   = 3
 EntityTypes.layers[EntityTypes.bullet]     = 4
 EntityTypes.layers[EntityTypes.coin]       = 5
 EntityTypes.layers[EntityTypes.item]       = 5
@@ -27,7 +26,7 @@ EntityTypes.layers[EntityTypes.player]     = 7
 EntityTypes.order = {
   EntityTypes.wall,
   EntityTypes.background,
-  EntityTypes.particle,
+  -- EntityTypes.particle,
   EntityTypes.bullet,
   EntityTypes.coin,
   EntityTypes.item,

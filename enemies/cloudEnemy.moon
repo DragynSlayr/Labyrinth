@@ -33,8 +33,6 @@ export class CloudEnemy extends GameObject
     @trail\setLifeTimeRange {0.3, 0.7}
     @trail.solid = false
 
-    Driver\addObject @trail, EntityTypes.particle
-
   kill: =>
     super!
     @trail.health = 0
