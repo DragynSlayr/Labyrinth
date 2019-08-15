@@ -15,19 +15,6 @@ export class PlayerEnemy extends Enemy
 
     sound = Sound "player_enemy_death.ogg", 2.0, false, 1.25, true
     @death_sound = MusicPlayer\add sound
-    @attack_filters = {EntityTypes.player}
 
   __tostring: =>
     return "T: " .. @enemyType .. "\tH: " .. @max_health .. "\tD: " .. @damage .. "\tS: " .. @max_speed
-
-  -- findNearestTarget: =>
-  --   closest = nil
-  --   closest_distance = math.max Screen_Size.width * 2, Screen_Size.height * 2
-  --   for k, v in pairs Driver.objects[EntityTypes.player]
-  --     player = v\getHitBox!
-  --     enemy = @getHitBox!
-  --     dist = Vector enemy.center.x - player.center.x, enemy.center.y - player.center.y
-  --     if dist\getLength! < closest_distance
-  --       closest_distance = dist\getLength!
-  --       closest = v
-  --   @target = closest

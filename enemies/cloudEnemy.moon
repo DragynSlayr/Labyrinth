@@ -11,11 +11,7 @@ export class CloudEnemy extends GameObject
     @max_speed = math.min 500 * Scale.diag, (175 + (54 * Objectives\getScaling!)) * Scale.diag
     @speed_multiplier = @max_speed
 
-    if #Driver.objects[EntityTypes.player] > 0
-      @target = Driver.objects[EntityTypes.player][1]
-    else
-      @health = 0
-      return
+    @target = MainPlayer
 
     @end_delay = 1.5
     @wait_time = 4
@@ -31,6 +27,8 @@ export class CloudEnemy extends GameObject
     @trail\setSpeedRange {200, 200}
     @trail\setLifeTimeRange {0.3, 0.7}
     @trail.solid = false
+
+    EnemyHandler\add @
 
   kill: =>
     super!
@@ -64,7 +62,6 @@ export class CloudEnemy extends GameObject
           te.update = (dt) =>
             @health = @max_health
             super dt
-          Driver\addObject te, EntityTypes.enemy
           table.insert @children, te
           @ai_phase = 1
     --@sprite.rotation = @target.position\getAngleBetween @position

@@ -6,16 +6,15 @@ export class Bomb extends BackgroundObject
     @max_time = 0
     @attack_range = 100 * Scale.diag
     @action_sprite = ActionSprite "background/bombAction.tga", 32, 32, 3, 2, @, () =>
-      filters = {EntityTypes.enemy, EntityTypes.boss, EntityTypes.goal}
+      filters = {EnemyHandler, BossHandler}
       for k2, filter in pairs filters
-        for k, e in pairs Driver.objects[filter]
-          if filter != EntityTypes.goal or e.goal_type == GoalTypes.attack
-            target = e\getHitBox!
-            bomb = @parent\getHitBox!
-            bomb.radius += @parent.attack_range
-            if target\contains bomb
-              @parent.damage = e.max_health / 2
-              e\onCollide @parent
+        for k, e in pairs filter.objects
+          target = e\getHitBox!
+          bomb = @parent\getHitBox!
+          bomb.radius += @parent.attack_range
+          if target\contains bomb
+            @parent.damage = e.max_health / 2
+            e\onCollide @parent
       @parent\kill!
 
   update: (dt) =>

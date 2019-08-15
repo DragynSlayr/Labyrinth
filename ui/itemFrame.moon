@@ -21,11 +21,9 @@ export class ItemFrame extends UIElement
         return
       if @master.item.item_type == ItemTypes.active
         frame = @master.active_frame
-        for k, p in pairs Driver.objects[EntityTypes.player]
-          frame.item\unequip p
+        frame.item\unequip MainPlayer
         frame\setItem @master.item
-        for k, p in pairs Driver.objects[EntityTypes.player]
-          frame.item\pickup p
+        frame.item\pickup MainPlayer
       else
         @master.passive_grid\addItem @master.item
       @master\setItem (NullItem 0, 0)

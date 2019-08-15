@@ -22,13 +22,12 @@ export class ItemPedestal extends BackgroundObject
         @refill_started = false
         @refill_timer = 0
     if not @item return
-    for k, p in pairs Driver.objects[EntityTypes.player]
-      player = p\getHitBox!
-      box = @getHitBox!
-      if player\contains box
-        if p.coins >= @cost
-          p.coins -= @cost
-          @pickup p
+    player = MainPlayer\getHitBox!
+    box = @getHitBox!
+    if player\contains box
+      if MainPlayer.coins >= @cost
+        MainPlayer.coins -= @cost
+        @pickup MainPlayer
 
   pickup: (player) =>
     @item\pickup player

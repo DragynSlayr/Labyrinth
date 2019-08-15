@@ -8,9 +8,8 @@ export class RoomDoor extends BackgroundObject
 
   update: (dt) =>
     super dt
-    if not @active return
-    for k, p in pairs Driver.objects[EntityTypes.player]
-      target = p\getHitBox!
+    if @active
+      target = MainPlayer\getHitBox!
       door = @getHitBox!
       if door\contains target
         x, y = unpack @exitLocation

@@ -6,9 +6,8 @@ export class Coin extends BackgroundObject
 
   update: (dt) =>
     super dt
-    for k, p in pairs Driver.objects[EntityTypes.player]
-      player = p\getHitBox!
-      box = @getHitBox!
-      if player\contains box
-        p.coins += @value
-        @health = 0
+    player = MainPlayer\getHitBox!
+    box = @getHitBox!
+    if player\contains box
+      MainPlayer.coins += @value
+      @health = 0

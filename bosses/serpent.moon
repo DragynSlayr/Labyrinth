@@ -26,7 +26,7 @@ export class BossSerpent extends Boss
     @colliders = {}
     @attack_range = 50 * Scale.diag
 
-    @target = Driver.objects[EntityTypes.player][1]
+    @target = MainPlayer
 
     @parts = {}
 
@@ -75,15 +75,13 @@ export class BossSerpent extends Boss
 
     boss = @getHitBox!
     boss.radius += @attack_range
-    for k, layer in pairs @colliders2
-      for k2, v in pairs Driver.objects[layer]
-        for k3, part in pairs @allParts
-          enemy = v\getHitBox!
-          if v.getAttackHitBox
-            enemy = v\getAttackHitBox!
-          boss.center = Point part.position\getComponents!
-          if boss\contains enemy
-            v\onCollide @
+    for k, part in pairs @allParts
+      enemy = MainPlayer\getHitBox!
+      if MainPlayer.getAttackHitBox
+        enemy = MainPlayer\getAttackHitBox!
+      boss.center = Point part.position\getComponents!
+      if boss\contains enemy
+        MainPlayer\onCollide @
 
   draw: =>
     for i = @num_parts, 1, -1

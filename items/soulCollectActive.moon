@@ -5,7 +5,7 @@ export class SoulCollectActive extends ActiveItem
     cd = ({8, 9, 10, 11, 12})[@rarity]
     sprite = Sprite "item/soulCollectActive.tga", 32, 32, 1, 1.75
     effect = (player) =>
-      for k, v in pairs Driver.objects[EntityTypes.enemy]
+      for k, v in pairs EnemyHandler.objects
         v.old = {}
         v.old[1] = v.sprite
         v.old[2] = v.update
@@ -36,7 +36,7 @@ export class SoulCollectActive extends ActiveItem
     @description = "Turn enemies into collectable souls"
     @effect_time = ({2, 4, 6, 8, 10})[@rarity]
     @onEnd = () ->
-      for k, v in pairs Driver.objects[EntityTypes.enemy]
+      for k, v in pairs EnemyHandler.objects
         if v.is_soul
           v.sprite = v.old[1]
           v.update = v.old[2]

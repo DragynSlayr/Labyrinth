@@ -14,6 +14,6 @@ export class Missile extends HomingProjectile
 
   findTarget: =>
     targets = {}
-    targets = concatTables targets, Driver.objects[EntityTypes.enemy]
-    targets = concatTables targets, Driver.objects[EntityTypes.boss]
-    return pick targets
+    targets = concatTables targets, EnemyHandler.objects
+    targets = concatTables targets, BossHandler.objects
+    return (pick targets)

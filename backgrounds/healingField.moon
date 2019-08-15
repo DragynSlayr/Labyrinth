@@ -12,11 +12,10 @@ export class HealingField extends BackgroundObject
     @timer += dt
     if @timer >= @heal_delay
       @timer = 0
-      for k, p in pairs Driver.objects[EntityTypes.player]
-        target = p\getHitBox!
-        healer = @getHitBox!
-        if target\contains healer
-          p.health = clamp p.health + @healing_amount, 0, p.max_health
+      target = MainPlayer\getHitBox!
+      healer = @getHitBox!
+      if target\contains healer
+        MainPlayer.health = clamp MainPlayer.health + @healing_amount, 0, MainPlayer.max_health
     @life_time -= dt
     if @life_time <= 0
       @health = 0

@@ -53,7 +53,7 @@ export class FilteredBullet extends GameObject
       return
 
     for k, filter in pairs @filter
-      for k2, o in pairs Driver.objects[filter]
+      for k2, o in pairs filter.objects
         target = o\getHitBox!
         bullet = @getHitBox!
         bullet.radius += @attack_range

@@ -22,22 +22,14 @@ export class SpawnerEnemy extends Enemy
   kill: =>
     super!
 
-    enemy = PlayerEnemy @position.x - 10, @position.y
-    enemy.solid = false
-    enemy.value = 0.25
-    Driver\addObject enemy, EntityTypes.enemy
+    positions = {
+      {-10, 0},
+      {10, 0},
+      {0, -10},
+      {0, 10}
+    }
 
-    enemy = PlayerEnemy @position.x + 10, @position.y
-    enemy.solid = false
-    enemy.value = 0.25
-    Driver\addObject enemy, EntityTypes.enemy
-
-    enemy = PlayerEnemy @position.x, @position.y - 10
-    enemy.solid = false
-    enemy.value = 0.25
-    Driver\addObject enemy, EntityTypes.enemy
-
-    enemy = PlayerEnemy @position.x, @position.y + 10
-    enemy.solid = false
-    enemy.value = 0.25
-    Driver\addObject enemy, EntityTypes.enemy
+    for k, v in pairs positions
+      enemy = PlayerEnemy @position.x + v[1], @position.y + v[2]
+      enemy.solid = false
+      enemy.value = 0.25

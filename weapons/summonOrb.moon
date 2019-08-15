@@ -30,9 +30,9 @@ export class SummonOrb extends Weapon
       @elapsed += dt
       if @elapsed >= @delay
         @sprite.color = @base_color
-        filters = {EntityTypes.enemy, EntityTypes.boss}
+        filters = {EnemyHandler, BossHandler}
         for k, filter in pairs filters
-          for k2, o in pairs Driver.objects[filter]
+          for k2, o in pairs filter.objects
             target = o\getHitBox!
             bullet = @getHitBox!
             bullet.radius *= 5

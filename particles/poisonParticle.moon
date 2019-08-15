@@ -6,8 +6,7 @@ export class PoisonParticle extends Particle
   update: (dt) =>
     super dt
     if @alive
-      for k, v in pairs Driver.objects[EntityTypes.player]
-        other = v\getHitBox!
-        this = @getHitBox!
-        if other\contains this
-          v\onCollide @
+      other = MainPlayer\getHitBox!
+      this = @getHitBox!
+      if other\contains this
+        MainPlayer\onCollide @

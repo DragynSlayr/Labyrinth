@@ -1,34 +1,3 @@
-export EntityTypes = {}
-
-EntityTypes.player     = "Player"
-EntityTypes.enemy      = "Enemy"
-EntityTypes.item       = "Item"
-EntityTypes.health     = "Health"
-EntityTypes.coin       = "Coin"
-EntityTypes.boss       = "Boss"
-
-EntityTypes.layers = {}
-
-EntityTypes.layers[EntityTypes.coin]       = 5
-EntityTypes.layers[EntityTypes.item]       = 5
-EntityTypes.layers[EntityTypes.health]     = 5
-EntityTypes.layers[EntityTypes.boss]       = 6
-EntityTypes.layers[EntityTypes.enemy]      = 6
-EntityTypes.layers[EntityTypes.player]     = 7
-
-EntityTypes.order = {
-  -- EntityTypes.wall,
-  -- EntityTypes.background,
-  -- EntityTypes.particle,
-  -- EntityTypes.bullet,
-  EntityTypes.coin,
-  EntityTypes.item,
-  EntityTypes.health,
-  EntityTypes.boss,
-  EntityTypes.enemy,
-  EntityTypes.player
-}
-
 export EnemyTypes = {}
 
 EnemyTypes.player  = "PlayerEnemy"

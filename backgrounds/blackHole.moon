@@ -8,19 +8,19 @@ export class BlackHole extends BackgroundObject
 
   kill: =>
     super!
-    for k, e in pairs Driver.objects[EntityTypes.enemy]
+    for k, e in pairs EnemyHandler.objects
       e.speed_override = false
-    for k, b in pairs Driver.objects[EntityTypes.boss]
+    for k, b in pairs BossHandler.objects
       b.speed_override = false
 
   update: (dt) =>
     ratio = (7.5 - @life_time) / 7.5
     @sprite\setRotationSpeed (ratio * -2 * math.pi)
     super dt
-    for k, e in pairs Driver.objects[EntityTypes.enemy]
+    for k, e in pairs EnemyHandler.objects
       @applyPull e, dt
       @applyDamage e
-    for k, b in pairs Driver.objects[EntityTypes.boss]
+    for k, b in pairs BossHandler.objects
       @applyPull b, dt
       @applyDamage b
     @life_time -= dt
@@ -39,13 +39,7 @@ export class BlackHole extends BackgroundObject
     x = @position.x - entity.position.x
     y = @position.y - entity.position.y
     vec = Vector x, y
-    damage = 0
-    num = 0
-    for k, p in pairs Driver.objects[EntityTypes.player]
-      damage += p.damage
-      num += 1
-    damage /= num
     ratio = vec\getLength! / @diag
     ratio *= 300
-    @damage = (1 / ratio) * damage
+    @damage = 1 / ratio
     entity\onCollide @

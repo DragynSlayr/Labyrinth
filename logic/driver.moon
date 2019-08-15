@@ -112,77 +112,21 @@ export class Driver
     spawn: (typeof, layer, x = (math.random Screen_Size.width), y = (math.random Screen_Size.height), i = 0) ->
       enemy = typeof x, y
       touching = false
-      for k, v in pairs Driver.objects
-        for k2, o in pairs v
-          object = o\getHitBox!
-          e = enemy\getHitBox!
-          if object\contains e
-            --touching = true
-            break
+      for k, o in pairs layer.objects
+        object = o\getHitBox!
+        e = enemy\getHitBox!
+        if object\contains e
+          --touching = true
+          break
       if touching --or not enemy\isOnScreen Screen_Size.border
         Driver.spawn typeof, layer, x, y, i + 1
       else
-        Driver\addObject enemy, layer
+        layer\add enemy
         return enemy
 
-    addObject: (object, layer) =>
-      table.insert @objects[layer], object
-
-    removeObject: (object, player_kill = true) =>
-      for k, v in pairs Driver.objects
-        for k2, o in pairs v
-          if object == o
-            if player_kill
-              for k, player in pairs Driver.objects[EntityTypes.player]
-                player\onKill o
-              v[k2]\kill!
-              --Levels\entityKilled v[k2]
-              World\entityKilled v[k2]
-            table.remove Driver.objects[k], k2
-            return
-
-    clearObjects: (typeof) =>
-      objects = {}
-      for k, o in pairs Driver.objects[typeof]
-        objects[#objects + 1] = o
-      for k, o in pairs objects
-        Driver\removeObject o, false
-
-    clearAll: (excluded = {EntityTypes.player}) =>
-      for k, v in pairs Driver.objects
-        if not tableContains excluded, k
-          Driver\clearObjects k
-
     killEnemies: =>
-      Driver\clearObjects EntityTypes.enemy
+      EnemyHandler\clear!
       BulletHandler\clear!
-
-    respawnPlayers: =>
-      for k, p in pairs Driver.objects[EntityTypes.player]
-        p2 = Player Screen_Size.half_width, Screen_Size.half_height--p.position.x, p.position.y
-        for k, i in pairs p.equipped_items
-          if i.item_type == ItemTypes.active and i.used
-            i.effect_timer = 0
-            i.used = false
-            i\onEnd!
-          i\pickup p2
-        p2.exp = p.exp
-        p2.exp_lerp = p.exp_lerp
-        p2.level = p.level
-        Driver\removeObject p, false
-        Driver\addObject p2, EntityTypes.player
-
-    isClear: (count_enemies = true, count_bullets = true) =>
-      sum = 0
-      if count_enemies
-        for k, v in pairs Driver.objects[EntityTypes.enemy]
-          if v.alive
-            sum += 1
-      if count_bullets
-        for k, b in pairs BulletHandler.objects
-          if b.alive
-            sum += 1
-      return sum == 0
 
     getRandomPosition: =>
       x = math.random Screen_Size.border[1], Screen_Size.border[3]
@@ -296,8 +240,7 @@ export class Driver
     pause: ->
       Driver.state_stack\add Driver.game_state
       Driver.game_state = Game_State.paused
-      for k, o in pairs Driver.objects[EntityTypes.player]
-        o.keys_pushed = 0
+      MainPlayer.keys_pushed = 0
       UI.state_stack\add UI.current_screen
       UI\set_screen Screen_State.pause_menu
 
@@ -325,15 +268,14 @@ export class Driver
       export BackgroundHandler = Handler!
       export ParticleHandler = Handler!
       export BulletHandler = Handler!
+      export EnemyHandler = Handler!
       export TimerHandler = Handler!
+      export BossHandler = Handler!
       export WallHandler = Handler!
       export NPCHandler = Handler!
       export World = WorldHandler!
 
     intializeDriverVars: =>
-      Driver.objects = {}
-      for k, v in pairs EntityTypes.layers
-        Driver.objects[k] = {}
       Driver.game_state = Game_State.none
       Driver.state_stack = Stack!
       Driver.state_stack\add Game_State.main_menu
@@ -354,7 +296,6 @@ export class Driver
       export MainPlayer = Player 1586, 2350
       MainPlayer\pickClass 0
       MainPlayer\updateStats true
-      Driver\addObject MainPlayer, EntityTypes.player
 
       -- positions = {
       --   (Vector 450, 2340),
@@ -372,9 +313,9 @@ export class Driver
       --   coin = Coin 1650, y, (i * 2)
       --   y += 75
 
-      -- Timer 1, @, (() =>
-      --   Driver.spawn (BasicEnemy), EntityTypes.enemy
-      -- ), true
+      Timer 1, @, (() =>
+        Driver.spawn (BasicEnemy), EnemyHandler
+      ), true
 
       love.mouse.setVisible false
 
@@ -423,16 +364,14 @@ export class Driver
               BackgroundHandler\update dt
               ParticleHandler\update dt
               BulletHandler\update dt
-              for k, v in pairs Driver.objects
-                for k2, o in pairs v
-                  o\update dt
-              for k, v in pairs Driver.objects
-                for k2, o in pairs v
-                  if o.health <= 0 or not o.alive
-                    Driver\removeObject o
+              BossHandler\update dt
+              EnemyHandler\update dt
+              MainPlayer\update dt
+              if MainPlayer.health <= 0 or not MainPlayer.alive
+                MainPlayer\kill!
               NPCHandler\update dt
-              Collision\update dt
-              --Levels\update dt
+              -- Collision\update dt
+              -- Levels\update dt
               World\update dt
               MainPlayer\postUpdate dt
         UI\update dt
@@ -457,10 +396,10 @@ export class Driver
         y = 75
         font = Renderer\newFont 20
         white_color = Color 255, 255, 255
-        for k, layer in pairs EntityTypes.order
-          message = layer .. ": " .. #Driver.objects[layer]
-          Renderer\drawAlignedMessage message, y, "left", font, white_color
-          y += 25
+        -- for k, layer in pairs EntityTypes.order
+        --   message = layer .. ": " .. #Driver.objects[layer]
+        --   Renderer\drawAlignedMessage message, y, "left", font, white_color
+        --   y += 25
         camera_pos = (Camera.position.x - Screen_Size.half_width) .. ", " .. (Camera.position.y - Screen_Size.half_height)
         Renderer\drawAlignedMessage ("Camera: " .. camera_pos), y, "left", font, white_color
         y += 25

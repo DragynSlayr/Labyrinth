@@ -11,7 +11,7 @@ export class RangedShuriken extends Weapon
     @used = true
     bullet_speed = Vector x - @player.position.x, y - @player.position.y, true
     bullet_speed = bullet_speed\multiply 400
-    bullet = FilteredBullet @player.position.x, @player.position.y, @damage, bullet_speed, {EntityTypes.enemy, EntityTypes.boss}
+    bullet = FilteredBullet @player.position.x, @player.position.y, @damage, bullet_speed, {EnemyHandler, BossHandler}
     bullet.fix_rotation = false
     bullet.sprite = Sprite "weapon/shuriken.tga", 62, 62, 1, 0.75
     bullet.sprite\setRotationSpeed math.pi

@@ -192,7 +192,6 @@ export class Player extends GameObject
     else
       @health = @max_health
       @shielded = true
-      Driver\addObject @, EntityTypes.player
 
   onKill: (entity) =>
     for k, i in pairs @equipped_items

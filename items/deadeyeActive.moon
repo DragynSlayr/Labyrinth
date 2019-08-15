@@ -22,9 +22,9 @@ export class DeadEyeActive extends ActiveItem
     return stats
 
   fire: =>
-    filters = {EntityTypes.enemy, EntityTypes.boss}
+    filters = {EnemyHandler, BossHandler}
     for k2, filter in pairs filters
-      for k, v in pairs Driver.objects[filter]
+      for k, v in pairs filter.objects
         if v\isOnScreen!
           v\onCollide @
     @effect_timer = 0
@@ -71,9 +71,9 @@ export class DeadEyeActive extends ActiveItem
       love.graphics.push "all"
       love.graphics.setShader Driver.shader
 
-      filters = {EntityTypes.enemy, EntityTypes.boss}
+      filters = {EnemyHandler, BossHandler}
       for k2, filter in pairs filters
-        for k, v in pairs Driver.objects[filter]
+        for k, v in pairs filter.objects
           if v.health + v.armor <= @damage
             @effect_sprite\draw v.position.x, v.position.y
 

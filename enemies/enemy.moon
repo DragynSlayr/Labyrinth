@@ -12,8 +12,6 @@ export class Enemy extends GameObject
     @corner_target = true
     @item_drop_chance = 0.10
 
-    @colliders = {EntityTypes.enemy, EntityTypes.player, EntityTypes.goal}
-
     sprite_copy = sprite\getCopy!
     sprite_copy\setColor {50, 50, 50, 255}
     @trail = nil--ParticleTrail x, y, sprite_copy, @
@@ -36,7 +34,8 @@ export class Enemy extends GameObject
           @parent\findNearestTarget!
 
     @death_sound = 0
-    @attack_filters = {EntityTypes.player, EntityTypes.goal}
+
+    EnemyHandler\add @
 
   kill: =>
     super!
@@ -104,34 +103,4 @@ export class Enemy extends GameObject
     super!
 
   findNearestTarget: (all = false) =>
-    closest = nil
-    closest_distance = math.max Screen_Size.width * 2, Screen_Size.height * 2
-    for k, filter in pairs @attack_filters
-      for k2, v in pairs Driver.objects[filter]
-        if v ~= @
-          if (filter ~= EntityTypes.goal) or (v.goal_type and v.goal_type == GoalTypes.defend)
-            other = v\getHitBox!
-            if v.getAttackHitBox
-              other = v\getAttackHitBox!
-            enemy = @getHitBox!
-            sep = Vector enemy.center.x - other.center.x, enemy.center.y - other.center.y
-            dist = sep\getLength!
-            if dist < closest_distance
-              closest_distance = dist
-              closest = v
-    -- for k, v in pairs Driver.objects[EntityTypes.player]
-    --   player = v\getHitBox!
-    --   enemy = @getHitBox!
-    --   dist = Vector enemy.center.x - player.center.x, enemy.center.y - player.center.y
-    --   if dist\getLength! < closest_distance
-    --     closest_distance = dist\getLength!
-    --     closest = v
-    -- for k, v in pairs Driver.objects[EntityTypes.goal]
-    --   if v.goal_type == GoalTypes.defend
-    --     goal = v\getHitBox!
-    --     enemy = @getHitBox!
-    --     dist = Vector enemy.center.x - goal.center.x, enemy.center.y - goal.center.y
-    --     if dist\getLength! < closest_distance
-    --       closest_distance = dist\getLength!
-    --       closest = v
-    @target = closest
+    @target = MainPlayer

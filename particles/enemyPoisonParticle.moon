@@ -6,9 +6,9 @@ export class EnemyPoisonParticle extends Particle
   update: (dt) =>
     super dt
     if @alive
-      filters = {EntityTypes.enemy, EntityTypes.boss}
+      filters = {EnemyHandler, BossHandler}
       for k2, filter in pairs filters
-        for k, v in pairs Driver.objects[filter]
+        for k, v in pairs filter.objects
           other = v\getHitBox!
           this = @getHitBox!
           if other\contains this

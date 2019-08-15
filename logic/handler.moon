@@ -5,14 +5,14 @@ export class Handler
   add: (object) =>
     table.insert @objects, object
 
-  remove: (object, player_kill) =>
+  remove: (object, player_kill = true) =>
     for k, v in pairs @objects
       if v == object
         if player_kill
-          for k, player in Driver.objects[EntityTypes.player]
-            player\onKill v
+          MainPlayer\onKill v
+        if v.kill
           v\kill!
-          World\entityKilled v
+        World\entityKilled v
         table.remove @objects, k
         return
 

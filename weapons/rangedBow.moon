@@ -11,7 +11,7 @@ export class RangedBow extends Weapon
     @used = true
     bullet_speed = Vector x - @player.position.x, y - @player.position.y, true
     bullet_speed = bullet_speed\multiply 400
-    bullet = FilteredBullet @player.position.x, @player.position.y, @damage, bullet_speed, {EntityTypes.enemy, EntityTypes.boss}
+    bullet = FilteredBullet @player.position.x, @player.position.y, @damage, bullet_speed, {EnemyHandler, BossHandler}
     bullet.sprite = Sprite "weapon/arrow.tga", 27, 28, 1, 1
     bullet.sprite\setScale 1.2, 2
     bullet.bow = @

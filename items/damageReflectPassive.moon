@@ -13,7 +13,7 @@ export class DamageReflectPassive extends PassiveItem
         if math.random! >= ((100 - @chance) / 100)
           num_bullets = (math.ceil difference) * 20
           pos = player.position\getCopy!
-          filters = {EntityTypes.enemy, EntityTypes.boss}
+          filters = {EnemyHandler, BossHandler}
           angle = (2 * math.pi) / (num_bullets + 1)
           bullet_speed = Vector 0, 150
           for i = 1, num_bullets
