@@ -15,6 +15,8 @@ export class HomingProjectile extends GameObject
 
     @death_sound = 0
 
+    BulletHandler\add @
+
   update: (dt) =>
     if not @alive
       return

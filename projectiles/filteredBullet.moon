@@ -21,6 +21,8 @@ export class FilteredBullet extends GameObject
     @fix_rotation = true
     @kill_trail = true
 
+    BulletHandler\add @
+
   update: (dt) =>
     if not @alive
       return

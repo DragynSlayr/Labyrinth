@@ -8,7 +8,6 @@ export class Wall extends GameObject
     @damage = 0
     @solid = true
     @draw_health = false
-    @colliders = {EntityTypes.player, EntityTypes.bullet}
     @position\add Vector @sprite.scaled_width / 2, @sprite.scaled_height / 2
     @position\add Vector -16, -16
 

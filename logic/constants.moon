@@ -5,12 +5,10 @@ EntityTypes.enemy      = "Enemy"
 EntityTypes.item       = "Item"
 EntityTypes.health     = "Health"
 EntityTypes.coin       = "Coin"
-EntityTypes.bullet     = "Bullet"
 EntityTypes.boss       = "Boss"
 
 EntityTypes.layers = {}
 
-EntityTypes.layers[EntityTypes.bullet]     = 4
 EntityTypes.layers[EntityTypes.coin]       = 5
 EntityTypes.layers[EntityTypes.item]       = 5
 EntityTypes.layers[EntityTypes.health]     = 5
@@ -22,7 +20,7 @@ EntityTypes.order = {
   -- EntityTypes.wall,
   -- EntityTypes.background,
   -- EntityTypes.particle,
-  EntityTypes.bullet,
+  -- EntityTypes.bullet,
   EntityTypes.coin,
   EntityTypes.item,
   EntityTypes.health,

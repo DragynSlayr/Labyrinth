@@ -63,7 +63,6 @@ export class BossTest extends Boss
             b.sprite\setShader love.graphics.newShader "shaders/normal.fs"
             b.sprite\setColor {255, 0, 0, 127}
             b.sprite\setRotationSpeed math.pi * 1.5
-            Driver\addObject b, EntityTypes.bullet
       when 2
         super dt
         if @ai_time >= 7

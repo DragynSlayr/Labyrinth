@@ -24,4 +24,3 @@ export class SplitShot extends LinearProjectile
           b.depth = @depth + 1
           b.speed_multiplier = @speed_multiplier * 1.5
           b.damage = @damage / 2
-          Driver\addObject b, EntityTypes.bullet

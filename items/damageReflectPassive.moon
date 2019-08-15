@@ -18,7 +18,6 @@ export class DamageReflectPassive extends PassiveItem
           bullet_speed = Vector 0, 150
           for i = 1, num_bullets
             bullet = FilteredBullet pos.x, pos.y, 0.5, bullet_speed, filters
-            Driver\addObject bullet, EntityTypes.bullet
             bullet_speed\rotate angle
     super sprite, 0, effect
     @name = "Vary Parry"

@@ -23,7 +23,6 @@ export class MagicFireball extends Weapon
       particle.damage = @damage / 2
     trail_sprite = bullet.sprite\getCopy!
     bullet.trail = ParticleTrail bullet.position.x - Screen_Size.half_width, bullet.position.y - Screen_Size.half_height, trail_sprite, bullet
-    Driver\addObject bullet, EntityTypes.bullet
     Timer 0.5, @, (() =>
       @parent.used = false
     ), false

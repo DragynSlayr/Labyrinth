@@ -22,7 +22,8 @@ export class ObjectRenderer
     WallHandler\draw!
     BackgroundHandler\draw!
     ParticleHandler\draw!
-    
+    BulletHandler\draw!
+
     -- Draw each GameObject in the layers
     for k, layer in pairs EntityTypes.order
       for i, object in pairs Driver.objects[layer]

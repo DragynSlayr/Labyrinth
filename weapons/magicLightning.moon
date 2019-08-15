@@ -47,4 +47,3 @@ export class MagicLightning extends Weapon
       bullet.trail.life_time = 5
       bullet.trail.damage = @damage * depth
       bullet.kill_trail = false
-      Driver\addObject bullet, EntityTypes.bullet

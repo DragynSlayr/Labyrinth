@@ -155,7 +155,7 @@ export class Driver
 
     killEnemies: =>
       Driver\clearObjects EntityTypes.enemy
-      Driver\clearObjects EntityTypes.bullet
+      BulletHandler\clear!
 
     respawnPlayers: =>
       for k, p in pairs Driver.objects[EntityTypes.player]
@@ -179,7 +179,7 @@ export class Driver
           if v.alive
             sum += 1
       if count_bullets
-        for k, b in pairs Driver.objects[EntityTypes.bullet]
+        for k, b in pairs BulletHandler.objects
           if b.alive
             sum += 1
       return sum == 0
@@ -324,6 +324,7 @@ export class Driver
       --export Levels = LevelHandler!
       export BackgroundHandler = Handler!
       export ParticleHandler = Handler!
+      export BulletHandler = Handler!
       export TimerHandler = Handler!
       export WallHandler = Handler!
       export NPCHandler = Handler!
@@ -365,12 +366,10 @@ export class Driver
       --   vec = positions[i]
       --   ped = ItemPedestal vec.x, vec.y, item, item.rarity * 10
       --   ped.refilling = true
-      --   Driver\addObject ped, EntityTypes.background
 
       -- y = 1600
       -- for i = 1, 10
       --   coin = Coin 1650, y, (i * 2)
-      --   Driver\addObject coin, EntityTypes.background
       --   y += 75
 
       -- Timer 1, @, (() =>
@@ -423,6 +422,7 @@ export class Driver
               WallHandler\update dt
               BackgroundHandler\update dt
               ParticleHandler\update dt
+              BulletHandler\update dt
               for k, v in pairs Driver.objects
                 for k2, o in pairs v
                   o\update dt
