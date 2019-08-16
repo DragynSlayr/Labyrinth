@@ -338,6 +338,23 @@ export class Driver
       -- Start game
       --Levels\nextLevel!
 
+    updateHandlers: (dt) ->
+      TimerHandler\update dt
+      WallHandler\update dt
+      BackgroundHandler\update dt
+      ParticleHandler\update dt
+      BulletHandler\update dt
+      BossHandler\update dt
+      EnemyHandler\update dt
+      MainPlayer\update dt
+      if MainPlayer.health <= 0 or not MainPlayer.alive
+        MainPlayer\kill!
+      NPCHandler\update dt
+      -- Collision\update dt
+      -- Levels\update dt
+      World\update dt
+      MainPlayer\postUpdate dt
+
     update: (dt) ->
       Driver.cursor_sprite\update dt
       --if not KEY_PUSHED
@@ -359,21 +376,7 @@ export class Driver
               World\update dt
               MainPlayer\postUpdate dt
             else
-              TimerHandler\update dt
-              WallHandler\update dt
-              BackgroundHandler\update dt
-              ParticleHandler\update dt
-              BulletHandler\update dt
-              BossHandler\update dt
-              EnemyHandler\update dt
-              MainPlayer\update dt
-              if MainPlayer.health <= 0 or not MainPlayer.alive
-                MainPlayer\kill!
-              NPCHandler\update dt
-              -- Collision\update dt
-              -- Levels\update dt
-              World\update dt
-              MainPlayer\postUpdate dt
+              Driver.updateHandlers dt
         UI\update dt
         ScoreTracker\update dt
 
