@@ -9,6 +9,7 @@ export class FilteredBullet extends GameObject
     @draw_health = false
     @solid = false
     @target_hit = false
+    @hit_target = nil
 
     @max_dist = 2 * (math.max Screen_Size.width, Screen_Size.height)
     @dist_travelled = 0
@@ -20,6 +21,7 @@ export class FilteredBullet extends GameObject
 
     @fix_rotation = true
     @kill_trail = true
+    @cant_hit = nil
 
     BulletHandler\add @
 
@@ -58,10 +60,12 @@ export class FilteredBullet extends GameObject
         bullet = @getHitBox!
         bullet.radius += @attack_range
         if target\contains bullet
-          o\onCollide @
-          MusicPlayer\play @death_sound
-          @health = 0
-          @target_hit = true
+          if (@cant_hit and @cant_hit != o) or not @cant_hit
+            o\onCollide @
+            MusicPlayer\play @death_sound
+            @health = 0
+            @target_hit = true
+            @hit_target = o
 
   kill: =>
     super!
