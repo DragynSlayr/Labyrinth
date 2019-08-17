@@ -10,11 +10,14 @@ export class ParticleTrail extends GameObject
     @average_size = (@sprite.scaled_width + @sprite.scaled_height) / 8
     @particle_type = ParticleTypes.normal
     @damage = 0.01
+    @draw_health = false
 
     ParticleHandler\add @
 
   kill: =>
     super!
+    for k, v in pairs @objects
+      v.health = 0
     @objects = {}
 
   update: (dt) =>
@@ -23,10 +26,6 @@ export class ParticleTrail extends GameObject
     else
       @position = @parent.position
     @sprite.rotation = @parent.sprite.rotation
-    for k, v in pairs @objects
-      v\update dt
-      if v.health <= 0
-        table.remove @objects, k
     change = Vector @last_position.x - @position.x, @last_position.y - @position.y
     if change\getLength! >= @average_size
       @last_position = Vector @parent.position\getComponents!
@@ -41,7 +40,3 @@ export class ParticleTrail extends GameObject
           EnemyPoisonParticle x, y, @sprite, 255, 0, @life_time
       particle.damage = @damage
       table.insert @objects, particle
-
-  draw: =>
-    for k, v in pairs @objects
-      v\draw!
