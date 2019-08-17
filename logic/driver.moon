@@ -119,9 +119,9 @@ export class Driver
           --touching = true
           break
       if touching --or not enemy\isOnScreen Screen_Size.border
+        layer\remove enemy
         Driver.spawn typeof, layer, x, y, i + 1
       else
-        layer\add enemy
         return enemy
 
     killEnemies: =>
@@ -386,9 +386,13 @@ export class Driver
     drawBackground: ->
       if Driver.game_state == Game_State.playing or UI.current_screen == Screen_State.none
         love.graphics.setShader Driver.shader
-      --setColor 75, 163, 255, 255
       Camera\unset!
-      setColor 121, 128, 134, 255
+      switch Driver.game_state
+        when Game_State.playing
+          setColor 106, 190, 48, 255
+        else
+          setColor 121, 128, 134, 255
+      --setColor 75, 163, 255, 255
       love.graphics.rectangle "fill", 0, 0, Screen_Size.width, Screen_Size.height
       Camera\set!
       if Driver.game_state == Game_State.playing or UI.current_screen == Screen_State.none
@@ -396,20 +400,30 @@ export class Driver
 
     drawDebugInfo: ->
       if DEBUGGING
-        y = 75
+        y = 100
         font = Renderer\newFont 20
         white_color = Color 255, 255, 255
-        -- for k, layer in pairs EntityTypes.order
-        --   message = layer .. ": " .. #Driver.objects[layer]
-        --   Renderer\drawAlignedMessage message, y, "left", font, white_color
-        --   y += 25
-        camera_pos = (Camera.position.x - Screen_Size.half_width) .. ", " .. (Camera.position.y - Screen_Size.half_height)
+        handlers = {
+          BackgroundHandler, ParticleHandler, BulletHandler, EnemyHandler,
+          TimerHandler, BossHandler, WallHandler, NPCHandler
+        }
+        names = {
+          "Backgrounds", "Particles", "Bullets", "Enemies", "Timers",
+          "Bosses", "Walls", "NPCs"
+        }
+        for k, handler in pairs handlers
+          message = names[k] .. ": " .. #handler.objects
+          Renderer\drawAlignedMessage message, y, "left", font, white_color
+          y += 25
+
+        format = (x) -> return string.format "%.0f", x
+        camera_pos = format(Camera.position.x - Screen_Size.half_width) .. ", " .. format(Camera.position.y - Screen_Size.half_height)
         Renderer\drawAlignedMessage ("Camera: " .. camera_pos), y, "left", font, white_color
         y += 25
         Renderer\drawAlignedMessage "Timers: " .. #TimerHandler.objects, y, "left", font, white_color
 
         cursor_x, cursor_y = love.mouse.getPosition!
-        cursor_pos = (cursor_x + Camera.position.x - Screen_Size.width) .. ", " .. (cursor_y + Camera.position.y - Screen_Size.height)
+        cursor_pos = format(cursor_x + Camera.position.x - Screen_Size.width) .. ", " .. format(cursor_y + Camera.position.y - Screen_Size.height)
         Renderer\drawAlignedMessage ("Cursor: " .. cursor_pos), y + 25, "left", font, white_color
 
     drawMoney: ->
