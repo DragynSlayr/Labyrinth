@@ -4,46 +4,47 @@ export class MagicLightning extends Weapon
     super player, sprite
 
   calcDamage: =>
-    return @player.stats.wisdom / 75.0
+    return @player.stats.wisdom / 50.0
 
   action: (x, y, button, isTouch) =>
     if button != 1 return
     @used = true
     bullet_speed = Vector x - @player.position.x, y - @player.position.y, true
-    @make_lightning @player.position, bullet_speed, 3
-    Timer 5, @, (() =>
+    @make_lightning @player.position, bullet_speed, nil
+    Timer 0.5, @, (() =>
       @parent.used = false
     ), false
 
-  make_lightning: (position, speed, depth) =>
-    if depth <= 0 return
-    new_positions = {}
-    spread = ({math.pi / 7, math.pi / 8, math.pi / 6})[depth]
-    dist = ({60, 100, 200})[depth] * Scale.diag
-    rotations = {-spread, spread, spread}
-    if depth != 3
-      rotations = {-spread, spread * 2}
-    speed_copy = speed\getCopy!
+  make_lightning: (position, speed, cant_hit) =>
     sprite = Sprite "weapon/lightning.tga", 32, 18, 1, 1
-    sprite\setScale 0.5, 1.3
-    for j, rotation in pairs rotations
-      speed_copy\rotate rotation
-      position_copy = position\getCopy!
-      bullet = FilteredBullet position_copy.x, position_copy.y, 0, (speed_copy\multiply 200), {}
-      sprite\setRotation (speed_copy\getAngle! + (math.pi / 2))
-      bullet.sprite = sprite\getCopy!
-      bullet.parent = @
-      bullet.max_dist = dist
-      bullet.old_kill = bullet.kill
-      bullet.depth = depth
-      bullet.speed_copy = speed\getCopy!
-      bullet.kill = () =>
-        if @depth != 1
-          @parent\make_lightning @position, @speed_copy, (@depth - 1)
-        @old_kill!
-      trail_sprite = bullet.sprite\getCopy!
-      bullet.trail = ParticleTrail bullet.position.x - Screen_Size.half_width, bullet.position.y - Screen_Size.half_height, trail_sprite, bullet
-      bullet.trail.particle_type = ParticleTypes.enemy_poison
-      bullet.trail.life_time = 5
-      bullet.trail.damage = @damage * depth
-      bullet.kill_trail = false
+    sprite\setScale 0.5, 1.2
+    sprite\setRotation (speed\getAngle! + (math.pi / 2))
+
+    bullet = FilteredBullet position.x, position.y, 0, (speed\multiply 1000), {EnemyHandler, BossHandler}
+    bullet.sprite = sprite\getCopy!
+    bullet.old_kill = bullet.kill
+    bullet.cant_hit = cant_hit
+    bullet.parent = @
+    bullet.max_dist = 800 * Scale.diag
+    bullet.kill = () =>
+      @old_kill!
+      if @target_hit
+        dist = @max_dist
+        closest = nil
+        for k, filter in pairs @filter
+          for k2, o in pairs filter.objects
+            if o != @hit_target
+              temp_dist = (Vector o.position.x - @hit_target.position.x, o.position.y - @hit_target.position.y)\getLength!
+              if temp_dist < dist
+                dist = temp_dist
+                closest = o
+        if closest
+          speed = Vector closest.position.x - @hit_target.position.x, closest.position.y - @hit_target.position.y, true
+          @parent\make_lightning @hit_target.position, speed, @hit_target
+
+    trail_sprite = bullet.sprite\getCopy!
+    bullet.trail = ParticleTrail bullet.position.x - Screen_Size.half_width, bullet.position.y - Screen_Size.half_height, trail_sprite, bullet
+    bullet.trail.particle_type = ParticleTypes.enemy_poison
+    bullet.trail.life_time = 10
+    bullet.trail.damage = @damage
+    bullet.kill_trail = true
