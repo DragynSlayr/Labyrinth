@@ -20,7 +20,7 @@ export class MagicLightning extends Weapon
     sprite\setScale 0.5, 1.2
     sprite\setRotation (speed\getAngle! + (math.pi / 2))
 
-    bullet = FilteredBullet position.x, position.y, 0, (speed\multiply 1000), {EnemyHandler, BossHandler}
+    bullet = FilteredBullet position.x, position.y, @damage, (speed\multiply 1000), {EnemyHandler, BossHandler}
     bullet.sprite = sprite\getCopy!
     bullet.old_kill = bullet.kill
     bullet.cant_hit = cant_hit
