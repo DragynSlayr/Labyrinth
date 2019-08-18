@@ -7,7 +7,6 @@ export class Item extends GameObject
     @item_type = nil
     @collectable = true
     @draw_health = false
-    @contact_damage = true
     @player = nil
     @timer = 0
     @solid = true
@@ -27,7 +26,6 @@ export class Item extends GameObject
   pickup: (player) =>
     table.insert player.equipped_items, @
     @collectable = false
-    @contact_damage = false
     @solid = false
     @player = player
     --print "Equipped " .. @name

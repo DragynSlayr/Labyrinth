@@ -98,6 +98,8 @@ export class Player extends GameObject
     super x, y, sprite
     @sprite\setRotationSpeed -math.pi / 2
 
+    @colliders = {EnemyHandler, BossHandler}
+
     @keys_pushed = 0
     @hit = false
 

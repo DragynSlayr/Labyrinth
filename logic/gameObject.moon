@@ -107,8 +107,6 @@ export class GameObject
 
   update: (dt) =>
     if not @alive return
-    -- if not @isOnScreen! return
-    @last_position = Vector @position\getComponents!
     if @shielded
       @shield_timer += dt
       @shield_sprite\update dt

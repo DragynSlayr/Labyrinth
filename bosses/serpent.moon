@@ -22,8 +22,6 @@ export class BossSerpent extends Boss
     @body_sprite = Sprite "boss/serpent/body.tga", 48, 48, 1, 60 / 48
     @tail_sprite = Sprite "boss/serpent/tail.tga", 48, 96, 1, 60 / 48
 
-    @colliders2 = @colliders
-    @colliders = {}
     @attack_range = 50 * Scale.diag
 
     @target = MainPlayer

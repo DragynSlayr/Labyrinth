@@ -350,7 +350,7 @@ export class Driver
       if MainPlayer.health <= 0 or not MainPlayer.alive
         MainPlayer\kill!
       NPCHandler\update dt
-      -- Collision\update dt
+      Collision\update dt
       -- Levels\update dt
       World\update dt
       MainPlayer\postUpdate dt
