@@ -387,12 +387,10 @@ export class Driver
       if Driver.game_state == Game_State.playing or UI.current_screen == Screen_State.none
         love.graphics.setShader Driver.shader
       Camera\unset!
-      switch Driver.game_state
-        when Game_State.playing
-          setColor 106, 190, 48, 255
-        else
-          setColor 121, 128, 134, 255
-      --setColor 75, 163, 255, 255
+      if Driver.game_state == Game_State.playing or (Driver.game_state == Game_State.paused and Driver.state_stack\peekLast! == Game_State.playing)
+        setColor 106, 190, 48, 255
+      else
+        setColor 121, 128, 134, 255
       love.graphics.rectangle "fill", 0, 0, Screen_Size.width, Screen_Size.height
       Camera\set!
       if Driver.game_state == Game_State.playing or UI.current_screen == Screen_State.none
@@ -434,22 +432,28 @@ export class Driver
       love.graphics.printf ("$ " .. MainPlayer.coins), 0, (20 * Scale.width) - (font\getHeight! / 2), Screen_Size.width - (10 * Scale.width), "right"
       Camera\set!
 
+    drawPlaying: ->
+      World\draw!
+      --Levels\draw!
+      Renderer\drawAll!
+      Driver.drawMoney!
+      Driver.drawDebugInfo!
+      Driver.dialog\draw!
+
     draw: ->
       Camera\set!
       Driver.drawBackground!
       UI\draw!
       switch Driver.game_state
         when Game_State.playing
-          World\draw!
-          --Levels\draw!
-          Renderer\drawAll!
-          Driver.drawMoney!
-          Driver.drawDebugInfo!
-          Driver.dialog\draw!
+          Driver.drawPlaying!
         when Game_State.controls
           Controls\draw!
         when Game_State.paused
+          if Driver.state_stack\peekLast! == Game_State.playing
+            Driver.drawPlaying!
           Pause\draw!
+          UI\draw!
         when Game_State.game_over
           GameOver\draw!
 

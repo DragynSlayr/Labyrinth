@@ -155,43 +155,44 @@ export class ScreenCreator
   createPauseMenu: =>
     UI\set_screen Screen_State.pause_menu
 
-    title = Text Screen_Size.width / 2, (Screen_Size.height / 3), "Game Paused"
+    title = Text Screen_Size.width / 2, (Screen_Size.height / 2) + (5 * Scale.height), "Game Paused", (Renderer\newFont 75)
+    title.color = {200, 200, 200, 255}
     UI\add title
 
-    sprite = Sprite "player/test.tga", 16, 16, 2, 50 / 16
-    sprite\setRotationSpeed -math.pi / 2
-    x = Screen_Size.width * 0.05--0.20
-    y = Screen_Size.height * 0.4
-    icon = Icon x, y, sprite
-    UI\add icon
-    bounds = sprite\getBounds x, y
-    font = Renderer\newFont 20
-    width = font\getWidth "Player"
-    text = Text x + (10 * Scale.width) + bounds.radius + (width / 2), y, "Player", font
-    UI\add text
+    -- sprite = Sprite "player/test.tga", 16, 16, 2, 50 / 16
+    -- sprite\setRotationSpeed -math.pi / 2
+    -- x = Screen_Size.width * 0.05--0.20
+    -- y = Screen_Size.height * 0.4
+    -- icon = Icon x, y, sprite
+    -- UI\add icon
+    -- bounds = sprite\getBounds x, y
+    -- font = Renderer\newFont 20
+    -- width = font\getWidth "Player"
+    -- text = Text x + (10 * Scale.width) + bounds.radius + (width / 2), y, "Player", font
+    -- UI\add text
 
-    resume_button = Button Screen_Size.width / 2, (Screen_Size.height / 2) - (32 * Scale.height), 250, 60, "Resume", () ->
+    resume_button = Button Screen_Size.width / 2, (Screen_Size.height / 2) + (70 * Scale.height), 150, 60, "Resume", () ->
       Driver.unpause!
     UI\add resume_button
 
-    restart_button = Button Screen_Size.width / 2, (Screen_Size.height / 2) + (32 * Scale.height), 250, 60, "Restart", () ->
+    restart_button = Button (Screen_Size.width / 2) - (77 * Scale.width), (Screen_Size.height / 2) + (134 * Scale.height), 150, 60, "Restart", () ->
       ScoreTracker\saveScores!
       Driver\restart!
     UI\add restart_button
 
-    quit_button = Button Screen_Size.width / 2, (Screen_Size.height / 2) + (96 * Scale.height), 250, 60, "Quit", () ->
+    quit_button = Button (Screen_Size.width / 2) + (77 * Scale.width), (Screen_Size.height / 2) + (134 * Scale.height), 150, 60, "Quit", () ->
       Driver.quitGame!
     UI\add quit_button
 
-    left_button = Button Screen_Size.width * 0.45, (Screen_Size.height * 0.76), 64, 64, "", () ->
-      Pause\previousLayer!
-    left_button\setSprite (Sprite "ui/button/left_idle.tga", 32, 32, 1, 1), (Sprite "ui/button/left_click.tga", 32, 32, 1, 1)
-    UI\add left_button
-
-    right_button = Button Screen_Size.width * 0.55, (Screen_Size.height * 0.76), 64, 64, "", () ->
-      Pause\nextLayer!
-    right_button\setSprite (Sprite "ui/button/right_idle.tga", 32, 32, 1, 1), (Sprite "ui/button/right_click.tga", 32, 32, 1, 1)
-    UI\add right_button
+    -- left_button = Button Screen_Size.width * 0.45, (Screen_Size.height * 0.76), 64, 64, "", () ->
+    --   Pause\previousLayer!
+    -- left_button\setSprite (Sprite "ui/button/left_idle.tga", 32, 32, 1, 1), (Sprite "ui/button/left_click.tga", 32, 32, 1, 1)
+    -- UI\add left_button
+    --
+    -- right_button = Button Screen_Size.width * 0.55, (Screen_Size.height * 0.76), 64, 64, "", () ->
+    --   Pause\nextLayer!
+    -- right_button\setSprite (Sprite "ui/button/right_idle.tga", 32, 32, 1, 1), (Sprite "ui/button/right_click.tga", 32, 32, 1, 1)
+    -- UI\add right_button
 
   createGameOverMenu: =>
     UI\set_screen Screen_State.game_over

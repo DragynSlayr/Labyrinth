@@ -17,3 +17,8 @@ export class Stack extends LinkedList
       n.next = nil
     @length -= 1
     return data
+
+  peekLast: =>
+    last = @remove!
+    @add last
+    return last

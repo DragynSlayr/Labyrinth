@@ -69,47 +69,61 @@ export class PauseScreen extends Screen
 
   draw: =>
     Camera\unset!
-    stats = {}
-    for j = 1, 1
-      y = Screen_Size.height * 0.4
-      stats = MainPlayer\getStats!
-      x = Screen_Size.width * 0.05
-      icons = @player_icons
-      bounds = @sprites[j]\getBounds x, y
-      for i = 1, #stats
-        y = map i, 1, #stats, (Screen_Size.height * 0.4) + (40 * Scale.height), Screen_Size.height * 0.60
-        Camera\unset!
-        icons[i]\draw x, y + (9 * Scale.height)
-        Camera\set!
-        Renderer\drawHUDMessage (string.format "%.2f", stats[i]), x + (10 * Scale.width) + bounds.radius, y, @font
 
-    -- Draw controls
-    Camera\unset!
-    love.graphics.setFont (Renderer\newFont 20)
-    setColor 0, 0, 0, 255
-    for i = 1, 3
-      y = 0.04
-      if i == 2
-        y /= 2
-      for k, v in pairs @controls[i]
-        love.graphics.printf v, (Screen_Size.width / 3) * (i - 1), Screen_Size.height * y, Screen_Size.width / 3, "center"
-        y += 0.055
-    Camera\set!
+    width = 510
+    height = 210
+    x = Screen_Size.half_width - (width / 2)
+    y = (Screen_Size.half_height + 70) - (height / 2)
+    setColor 0, 0, 0, 200
+    love.graphics.rectangle "fill", x, y, width, height, 10, 10
+    love.graphics.setLineWidth 3
+    setColor 150, 150, 150, 255
+    love.graphics.rectangle "line", x, y, width, height, 10, 10
+    love.graphics.setLineWidth 1
 
-    -- Draw item frames, TODO: Remove this later?
-    love.graphics.setFont (Renderer\newFont 30)
-    setColor 0, 0, 0, 255
-    Camera\unset!
-    love.graphics.printf (@current_layer + 1) .. " / " .. (@layer_idx + 1), 0, Screen_Size.height * 0.74, Screen_Size.width, "center"
     Camera\set!
-    for k, frame in pairs @item_grid.items
-      if k >= @lower_draw and k <= @higher_draw
-        x = ((Screen_Size.width / (@higher_draw - @lower_draw + 2)) * ((k - @lower_draw) + 1))
-        old_x, old_y, old_center = frame.x, frame.y, frame.center
-        frame.x = x - (frame.width / 2)
-        frame.y = Screen_Size.height * 0.8
-        frame.center = Point frame.x + (frame.width / 2), frame.y + (frame.width / 2)
-        frame\draw!
-        frame.x, frame.y, frame.center = old_x, old_y, old_center
-        x += 100
-    Camera\set!
+  --   Camera\unset!
+  --   stats = {}
+  --   for j = 1, 1
+  --     y = Screen_Size.height * 0.4
+  --     stats = MainPlayer\getStats!
+  --     x = Screen_Size.width * 0.05
+  --     icons = @player_icons
+  --     bounds = @sprites[j]\getBounds x, y
+  --     for i = 1, #stats
+  --       y = map i, 1, #stats, (Screen_Size.height * 0.4) + (40 * Scale.height), Screen_Size.height * 0.60
+  --       Camera\unset!
+  --       icons[i]\draw x, y + (9 * Scale.height)
+  --       Camera\set!
+  --       Renderer\drawHUDMessage (string.format "%.2f", stats[i]), x + (10 * Scale.width) + bounds.radius, y, @font
+  --
+  --   -- Draw controls
+  --   Camera\unset!
+  --   love.graphics.setFont (Renderer\newFont 20)
+  --   setColor 0, 0, 0, 255
+  --   for i = 1, 3
+  --     y = 0.04
+  --     if i == 2
+  --       y /= 2
+  --     for k, v in pairs @controls[i]
+  --       love.graphics.printf v, (Screen_Size.width / 3) * (i - 1), Screen_Size.height * y, Screen_Size.width / 3, "center"
+  --       y += 0.055
+  --   Camera\set!
+  --
+  --   -- Draw item frames, TODO: Remove this later?
+  --   love.graphics.setFont (Renderer\newFont 30)
+  --   setColor 0, 0, 0, 255
+  --   Camera\unset!
+  --   love.graphics.printf (@current_layer + 1) .. " / " .. (@layer_idx + 1), 0, Screen_Size.height * 0.74, Screen_Size.width, "center"
+  --   Camera\set!
+  --   for k, frame in pairs @item_grid.items
+  --     if k >= @lower_draw and k <= @higher_draw
+  --       x = ((Screen_Size.width / (@higher_draw - @lower_draw + 2)) * ((k - @lower_draw) + 1))
+  --       old_x, old_y, old_center = frame.x, frame.y, frame.center
+  --       frame.x = x - (frame.width / 2)
+  --       frame.y = Screen_Size.height * 0.8
+  --       frame.center = Point frame.x + (frame.width / 2), frame.y + (frame.width / 2)
+  --       frame\draw!
+  --       frame.x, frame.y, frame.center = old_x, old_y, old_center
+  --       x += 100
+  --   Camera\set!
