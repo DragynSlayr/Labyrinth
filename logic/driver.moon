@@ -349,6 +349,11 @@ export class Driver
           print "B"}
         }
       }
+      buttons[3] = {3, {
+        {"Done", (parent) ->
+          parent\goToNext!}
+        }
+      }
 
       @npc = NPC 2680, 2000, "Ted", text, buttons
       @npc\setPath {
