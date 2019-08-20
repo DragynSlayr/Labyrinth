@@ -15,6 +15,29 @@ export class Dialog extends UIElement
       -- dialog\updateBox {"Endless Loop"}
       return
 
+  addButtons: (idx, buttons) =>
+    box = @boxes[idx]
+    box.hasButtons = true
+    box.shouldGoNext = false
+    box.buttons = {}
+    box.buttons.x = box.x + box.width + 10
+    box.buttons.height = (1 * @textSpacing) + (#buttons * @font\getHeight!) + ((#buttons - 1) * @lineSpacing)
+    box.buttons.y = box.y
+    if box.buttons.y + box.buttons.height >= Screen_Size.height
+      box.buttons.y -= (box.buttons.y + box.buttons.height - Screen_Size.height) + @lineSpacing
+    box.buttons.buttons = {}
+    width = 0
+    for k, button in pairs buttons
+      box.buttons.buttons[k] = {}
+      box.buttons.buttons[k].text = button[1]
+      box.buttons.buttons[k].action = button[2]
+      box.buttons.buttons[k].lit = false
+      box.buttons.buttons[k].selected = false
+      temp = @font\getWidth button[1]
+      if temp > width
+        width = temp
+    box.buttons.width = width + (2 * @textSpacing)
+
   updateBox: (text, name = "...") =>
     @texts = text
     @name = name
@@ -32,6 +55,7 @@ export class Dialog extends UIElement
       @boxes[i].lines = @lines
       @boxes[i].numChars = @countChars @boxes[i].lines
       @boxes[i].textSpeed = @boxes[i].numChars / 2
+      @boxes[i].shouldGoNext = true
 
     @enabled = true
     @selected = false
@@ -66,6 +90,14 @@ export class Dialog extends UIElement
     @x = Screen_Size.half_width - (@width / 2)
     @y = Screen_Size.height - (@height + 20)
 
+  goToNext: =>
+    @idx += 1
+    @elapsed = 0
+    @canClick = false
+    if @idx > #@boxes
+      @enabled = false
+      @doneAction @
+
   isHovering: (x, y) =>
     box = @boxes[@idx]
     xOn = box.x <= x and box.x + box.width >= x
@@ -76,16 +108,27 @@ export class Dialog extends UIElement
     if @canClick and button == 1
       @selected = @isHovering x, y
 
+      box = @boxes[@idx]
+      if box.hasButtons
+        for k, button in pairs box.buttons.buttons
+          button.selected = button.lit
+
   mousereleased: (x, y, button, isTouch) =>
     if @canClick and button == 1
+      box = @boxes[@idx]
+
+      passThrough = true
       if @selected and (@isHovering x, y)
-        @idx += 1
-        @elapsed = 0
-        @canClick = false
-        if @idx > #@boxes
-          @enabled = false
-          @doneAction @
+        if box.shouldGoNext
+          @goToNext!
+          passThrough = false
       @selected = false
+
+      if box.hasButtons and passThrough
+        for k, button in pairs box.buttons.buttons
+          if button.selected and button.lit
+            button.action @
+          button.selected = false
 
   countChars: (texts) =>
     sum = 0
@@ -100,6 +143,25 @@ export class Dialog extends UIElement
       @elapsed += dt * box.textSpeed
       if @elapsed >= box.numChars
         @canClick = true
+    else
+      @checkButtonHovering!
+
+  checkButtonHovering: =>
+    box = @boxes[@idx]
+    if box.hasButtons
+      buttons = box.buttons
+      x, y = love.mouse.getPosition!
+      xOn = buttons.x <= x and buttons.x + buttons.width >= x
+      yOn = buttons.y <= y and buttons.y + buttons.height >= y
+      if xOn and yOn
+        deg =(y - buttons.y) / buttons.height
+        region = (math.floor (deg * #box.buttons.buttons)) + 1
+        for k, button in pairs box.buttons.buttons
+          yOn = buttons.y <= y and buttons.y + buttons.height >= y
+          button.lit = k == region
+      else
+        for k, button in pairs box.buttons.buttons
+          button.lit = false
 
   draw: =>
     if not @enabled return
@@ -138,6 +200,25 @@ export class Dialog extends UIElement
       love.graphics.printf line, box.x + @textSpacing, box.y + @textSpacing + ((i - 1) * (@lineSpacing + @font\getHeight!)), box.width, "left"
       if toDraw <= 0
         break
+
+    if box.hasButtons and @canClick
+      buttons = box.buttons
+      setColor 0, 0, 0, 200
+      love.graphics.rectangle "fill", buttons.x, buttons.y, buttons.width, buttons.height, 10, 10
+      love.graphics.setLineWidth 3
+      setColor 150, 150, 150, 255
+      love.graphics.rectangle "line", buttons.x, buttons.y, buttons.width, buttons.height, 10, 10
+      love.graphics.setLineWidth 1
+
+      buttons2 = box.buttons.buttons
+      for k, button in pairs buttons2
+        if button.lit
+          setColor 127, 127, 127, 127
+          fontHeight = @font\getHeight!
+          y = buttons.y + (0.5 * @textSpacing) + ((k - 1) * (@lineSpacing + @font\getHeight!))
+          love.graphics.rectangle "fill", buttons.x + 5, y - 2, buttons.width - 10, fontHeight + 4, 3, 3
+        setColor 255, 255, 255, 255
+        love.graphics.printf button.text, buttons.x + @textSpacing, buttons.y + (0.5 * @textSpacing) + ((k - 1) * (@lineSpacing + @font\getHeight!)), buttons.width, "left"
 
     if @canClick
       edgeX = box.x + box.width
