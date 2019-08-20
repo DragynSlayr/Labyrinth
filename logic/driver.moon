@@ -313,9 +313,9 @@ export class Driver
       --   coin = Coin 1650, y, (i * 2)
       --   y += 75
 
-      Timer 1, @, (() =>
-        Driver.spawn (BasicEnemy), EnemyHandler
-      ), true
+      -- Timer 1, @, (() =>
+      --   Driver.spawn (BasicEnemy), EnemyHandler
+      -- ), true
 
       love.mouse.setVisible false
 
@@ -327,7 +327,30 @@ export class Driver
 
       @dialog = Dialog!
 
-      @npc = NPC 2680, 2000, "Ted", {"Test Dialog", "this much text should overflow and cause a new line to be added", "but this much might not"}
+      text = {"Test Dialog", "this much text should overflow and cause a new line to be added", "but this much might not"}
+      buttons = {}
+      buttons[1] = {1, {
+        {"Yes", (parent) ->
+          print "Here"},
+        {"No", (parent) ->
+          print "There"
+          parent\goToNext!},
+        {"Three", (parent) ->
+          print "The number three"},
+        {"Four", (parent) ->
+          print "The fourth button"}
+        }
+      }
+      buttons[2] = {2, {
+        {"Option a", (parent) ->
+          print "A"
+          parent\goToNext!},
+        {"Option B", (parent) ->
+          print "B"}
+        }
+      }
+
+      @npc = NPC 2680, 2000, "Ted", text, buttons
       @npc\setPath {
         {(Vector 100, 0), 2.5},
         {(Vector 0, 100), 3},
@@ -452,6 +475,10 @@ export class Driver
         when Game_State.paused
           if Driver.state_stack\peekLast! == Game_State.playing
             Driver.drawPlaying!
+            setColor 50, 50, 50, 127
+            Camera\unset!
+            love.graphics.rectangle "fill", 0, 0, Screen_Size.width, Screen_Size.height
+            Camera\set!
           Pause\draw!
           UI\draw!
         when Game_State.game_over
