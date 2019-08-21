@@ -313,9 +313,10 @@ export class Driver
       --   coin = Coin 1650, y, (i * 2)
       --   y += 75
 
-      -- Timer 1, @, (() =>
-      --   Driver.spawn (BasicEnemy), EnemyHandler
-      -- ), true
+      timer = Timer 1, @, (() =>
+        if @questing
+          Driver.spawn (BasicEnemy), EnemyHandler
+      ), true
 
       love.mouse.setVisible false
 
@@ -337,18 +338,19 @@ export class Driver
         {(Vector 0, -100), 3}
       }
 
-      clickedYes = false
       npc\addButton 2, "Yes", (parent) ->
         parent\goToNext!
-        clickedYes = true
       npc\addButton 2, "No", (parent) ->
         parent\goToNext!
         parent\goToNext!
 
       npc\addButton 3, "Bye", (parent) ->
         parent\goToNext!
-        if clickedYes
-          parent\goToNext!
+        parent\goToNext!
+
+      npc\addButton 4, "Bye", (parent) ->
+        parent\goToNext!
+        timer.questing = true
 
       -- Start game
       --Levels\nextLevel!
