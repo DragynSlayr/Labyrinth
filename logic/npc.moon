@@ -73,7 +73,6 @@ export class NPC extends GameObject
     if (@isHovering x, y) and @clicked
       if #@text > 0
         Driver.dialog\updateBox @text, @name
-        print "Fix add buttons"
         for k, v in pairs @buttons
           Driver.dialog\addButtons k, v
       was_clicked = true
