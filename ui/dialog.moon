@@ -19,10 +19,6 @@ export class Dialog extends UIElement
     else
       @updateBox text
 
-    @doneAction = (dialog) =>
-      -- dialog\updateBox {"Endless Loop"}
-      return
-
   addButtons: (idx, buttons) =>
     box = @boxes[idx]
     box.hasButtons = true
@@ -98,13 +94,16 @@ export class Dialog extends UIElement
     @x = Screen_Size.half_width - (@width / 2)
     @y = Screen_Size.height - (@height + 20)
 
+  goToPrev: =>
+    @idx -= 2
+    @goToNext!
+
   goToNext: =>
     @idx += 1
     @elapsed = 0
     @canClick = false
     if @idx > #@boxes
       @enabled = false
-      @doneAction @
 
   isHovering: (x, y) =>
     box = @boxes[@idx]
