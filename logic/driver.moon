@@ -327,7 +327,7 @@ export class Driver
 
       @dialog = Dialog!
 
-      text = {"Test Dialog", "this much text should overflow and cause a new line to be added", "but this much might not"}
+      text = {"Hello, welcome to the starting area of this game, click to continue", "Would you like to take a quest?", "Nice, too bad I don't have one", "Come back later then"}
       npc = NPC 2680, 2000, "Ted", text
 
       npc\setPath {
@@ -337,25 +337,18 @@ export class Driver
         {(Vector 0, -100), 3}
       }
 
-      flag = false
-      npc\addButton 1, "Yes", (_) ->
-        print "Yes"
-        flag = true
-      npc\addButton 1, "No", (parent) ->
-        print "No"
-        if flag
+      clickedYes = false
+      npc\addButton 2, "Yes", (parent) ->
+        parent\goToNext!
+        clickedYes = true
+      npc\addButton 2, "No", (parent) ->
+        parent\goToNext!
+        parent\goToNext!
+
+      npc\addButton 3, "Bye", (parent) ->
+        parent\goToNext!
+        if clickedYes
           parent\goToNext!
-      npc\addButton 1, "Three", (_) ->
-        print "Three"
-      npc\addButton 1, "Four", (_) ->
-        print "The fourth button"
-      npc\addButton 2, "Option A", (parent) ->
-        print "A"
-        parent\goToNext!
-      npc\addButton 2, "Option B", (_) ->
-        print "B"
-      npc\addButton 3, "Done", (parent) ->
-        parent\goToNext!
 
       -- Start game
       --Levels\nextLevel!
