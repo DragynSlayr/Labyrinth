@@ -1,3 +1,11 @@
+export class DialogButton
+  new: (text, action) =>
+    @text = text
+    @action = action
+
+  __tostring: =>
+    return "DialogButton: " .. @text
+
 export class Dialog extends UIElement
   new: (text = nil) =>
     super 0, 0, "", (Renderer\newFont 20)
@@ -29,11 +37,11 @@ export class Dialog extends UIElement
     width = 0
     for k, button in pairs buttons
       box.buttons.buttons[k] = {}
-      box.buttons.buttons[k].text = button[1]
-      box.buttons.buttons[k].action = button[2]
+      box.buttons.buttons[k].text = button.text
+      box.buttons.buttons[k].action = button.action
       box.buttons.buttons[k].lit = false
       box.buttons.buttons[k].selected = false
-      temp = @font\getWidth button[1]
+      temp = @font\getWidth button.text
       if temp > width
         width = temp
     box.buttons.width = width + (2 * @textSpacing)

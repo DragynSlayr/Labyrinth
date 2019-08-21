@@ -40,13 +40,13 @@ class NPCPath
       @npc.speed = node.speed
 
 export class NPC extends GameObject
-  new: (x, y, name = "", text = {}, buttons = {}) =>
+  new: (x, y, name = "", text = {}) =>
     sprite = Sprite "npc/npc.tga", 48, 26, 1, 2
     super x, y, sprite
 
     @name = name
     @text = text
-    @buttons = buttons
+    @buttons = {}
     @draw_health = false
     @clicked = false
 
@@ -59,6 +59,11 @@ export class NPC extends GameObject
     for k, v in pairs path
       @path\addNode v[1], v[2]
 
+  addButton: (idx, text, action) =>
+    if not @buttons[idx]
+      @buttons[idx] = {}
+    table.insert @buttons[idx], (DialogButton text, action)
+
   mousepressed: (x, y, button, isTouch) =>
     @clicked = @isHovering x, y
     return @clicked
@@ -68,8 +73,9 @@ export class NPC extends GameObject
     if (@isHovering x, y) and @clicked
       if #@text > 0
         Driver.dialog\updateBox @text, @name
+        print "Fix add buttons"
         for k, v in pairs @buttons
-          Driver.dialog\addButtons v[1], v[2]
+          Driver.dialog\addButtons k, v
       was_clicked = true
     @clicked = false
     return was_clicked
