@@ -55,6 +55,7 @@ export class GameOverScreen extends Screen
       v\draw!
 
     font = Renderer\newFont 30
+    oldFont = love.graphics.getFont!
     num_rows = 15
     gap = 20 * Scale.width
     row_height = font\getHeight!
@@ -82,5 +83,7 @@ export class GameOverScreen extends Screen
         name ..= " "
       love.graphics.printf name .. node.name, x + gap, row_y, width - (2 * gap), "left"
       love.graphics.printf node.score, x + gap, row_y, width - (2 * gap), "right"
+
+    love.graphics.setFont oldFont
 
     Camera\set!

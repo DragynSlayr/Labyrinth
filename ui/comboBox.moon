@@ -64,6 +64,8 @@ export class ComboBox extends Button
       setColor 127, 127, 127, 255
       love.graphics.rectangle "fill", @x, @y, @width, @height
 
+    font = love.graphics.getFont!
+
     love.graphics.setFont @font
     setColor 0, 0, 0
     height = @font\getHeight!
@@ -73,5 +75,7 @@ export class ComboBox extends Button
         love.graphics.printf v, @x, @y + ((@height - height) / 2) + ((k - 1) * @option_height), @width, "center"
     else
       love.graphics.printf @text, @x, @y + ((@height - height) / 2), @width, "center"
+
+    love.graphics.setFont font
 
     Camera\set!

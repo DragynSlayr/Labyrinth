@@ -23,5 +23,7 @@ export class TooltipBox extends Tooltip
       setColor @box_color[1], @box_color[2], @box_color[3], @alpha
       love.graphics.rectangle "fill", x, y, @width, @height
       setColor @color[1], @color[2], @color[3], @color[4]
+      font = love.graphics.getFont!
       love.graphics.setFont @font
       love.graphics.printf @text, x, @y - (@font\getHeight! / 2), @width, @alignment
+      love.graphics.setFont font

@@ -199,8 +199,10 @@ export class TextBox extends UIElement
     height = @font\getHeight!-- * Scale.height
     width = @font\getWidth (@getLine @lines_index, @char_index)
     --width = (@font\getWidth text) * Scale.width
+    font = love.graphics.getFont!
     love.graphics.setFont @font--(love.graphics.newFont height)
     love.graphics.printf text, @x + (10 * Scale.width), @y + (height / 2), @width, "left"
+    love.graphics.setFont font
 
     @cursor.position = Point @x + (12 * Scale.width) + width, @y + (height / 2) + ((@lines_index - 1) * height)
 

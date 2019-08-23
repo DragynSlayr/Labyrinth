@@ -60,6 +60,8 @@ export class AutoComplete
   draw: =>
     Camera\unset!
 
+    font = love.graphics.getFont!
+
     setColor 0, 255, 255, 255
     love.graphics.setFont @font
 
@@ -73,5 +75,7 @@ export class AutoComplete
         y += height * 1.25
       else
         break
+
+    love.graphics.setFont font
 
     Camera\set!

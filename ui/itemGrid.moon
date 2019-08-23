@@ -58,7 +58,9 @@ export class ItemGrid extends UIElement
       if v.draw_layer == @current_layer
         v\draw!
     Camera\unset!
+    font = love.graphics.getFont!
     love.graphics.setFont (Renderer\newFont 30)
     setColor 0, 0, 0, 255
     love.graphics.printf (@current_layer + 1) .. " / " .. (@layer_idx + 1), Screen_Size.width * 0.8, Screen_Size.height * 0.58, Screen_Size.width * 0.2, "center"
+    love.graphics.setFont font
     Camera\set!

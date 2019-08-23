@@ -26,6 +26,7 @@ export class ObjectRenderer
     BossHandler\draw!
     EnemyHandler\draw!
     NPCHandler\draw!
+    QuestHandler\draw!
     MainPlayer\draw!
 
     -- Call each function in the queue
@@ -46,12 +47,16 @@ export class ObjectRenderer
     -- Clear shader
     love.graphics.setShader!
 
+    oldFont = love.graphics.getFont!
+
     -- Apply new transforms
     setColor color\get!
     love.graphics.setFont font
 
     -- Display the message
     love.graphics.print message, x, y
+
+    love.graphics.setFont oldFont
 
     Camera\set!
 

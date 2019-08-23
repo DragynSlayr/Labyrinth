@@ -109,6 +109,8 @@ export class Button extends UIElement
       setColor 127, 127, 127, 255
       love.graphics.rectangle "fill", @x, @y, @width, @height
 
+    font = love.graphics.getFont!
+
     -- Draw centered text
     love.graphics.setFont @font
     setColor 0, 0, 0, 255
@@ -116,5 +118,7 @@ export class Button extends UIElement
       setColor @font_color\get!
     height = @font\getHeight!
     love.graphics.printf @text, @x, @y + ((@height - height) / 2), @width, "center"
+
+    love.graphics.setFont font
 
     Camera\set!

@@ -37,8 +37,10 @@ export class ControlsHandler extends Screen
     if @selected ~= "" and @button
       @button.selected = true
       Camera\unset!
+      font = love.graphics.getFont!
       love.graphics.setFont (Renderer\newFont 30)
       setColor 0, 0, 0, 255
       text = "Press a button for " .. @selected_text .. " or 'Backspace' to cancel"
       love.graphics.printf text, 0, Screen_Size.height * 0.835, Screen_Size.width, "center"
+      love.graphics.setFont font
       Camera\set!
