@@ -1,3 +1,7 @@
+export QuestTypes = {}
+
+QuestTypes.kill = "Kill"
+
 export EnemyTypes = {}
 
 EnemyTypes.player  = "PlayerEnemy"

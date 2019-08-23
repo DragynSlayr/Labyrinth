@@ -133,9 +133,9 @@ export class Player extends GameObject
     @hearts = HeartContainer @
     @popup = nil
 
-    Timer 1, @, () =>
-      if Driver.game_state == Game_State.playing
-        @parent\addExp 20
+    -- Timer 1, @, () =>
+    --   if Driver.game_state == Game_State.playing
+    --     @parent\addExp 20
 
   pickClass: (num) =>
     switch num
@@ -198,6 +198,8 @@ export class Player extends GameObject
   onKill: (entity) =>
     for k, i in pairs @equipped_items
       i\onKill entity
+
+    QuestHandler\onKill entity
 
   onCollide: (object) =>
     if not @alive return

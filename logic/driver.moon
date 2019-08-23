@@ -265,6 +265,7 @@ export class Driver
       export Pause = PauseScreen!
       export GameOver = GameOverScreen!
       --export Levels = LevelHandler!
+      export QuestHandler = QuestDriver!
       export BackgroundHandler = Handler!
       export ParticleHandler = Handler!
       export BulletHandler = Handler!
@@ -313,10 +314,6 @@ export class Driver
       --   coin = Coin 1650, y, (i * 2)
       --   y += 75
 
-      timer = Timer 1, @, (() =>
-        if @questing
-          Driver.spawn (BasicEnemy), EnemyHandler
-      ), true
 
       love.mouse.setVisible false
 
@@ -328,7 +325,7 @@ export class Driver
 
       @dialog = Dialog!
 
-      text = {"Hello, welcome to the starting area of this game, click to continue", "Would you like to take a quest?", "Nice, too bad I don't have one", "Come back later then"}
+      text = {"Hello, welcome to the starting area of this game, click to continue", "Would you like to take a quest?", "Nice, go kill 2 of these basic enemies", "Come back later then"}
       npc = NPC 2680, 2000, "Ted", text
 
       npc\setPath {
@@ -345,17 +342,20 @@ export class Driver
         parent\goToNext!
 
       npc\addButton 3, "Bye", (parent) ->
+        timer = Timer 1, @, (() =>
+          Driver.spawn (BasicEnemy), EnemyHandler
+        ), true
+        q = Quest QuestTypes.kill, (BasicEnemy), 2
+        q.callback = () =>
+          timer.done = true
         parent\goToNext!
         parent\goToNext!
 
       npc\addButton 4, "Bye", (parent) ->
         parent\goToNext!
-        timer.questing = true
-
-      -- Start game
-      --Levels\nextLevel!
 
     updateHandlers: (dt) ->
+      QuestHandler\update dt
       TimerHandler\update dt
       WallHandler\update dt
       BackgroundHandler\update dt
@@ -444,9 +444,11 @@ export class Driver
     drawMoney: ->
       Camera\unset!
       font = Renderer\newFont 30
+      oldFont = love.graphics.getFont!
       love.graphics.setFont font
       setColor 255, 215, 0, 255
       love.graphics.printf ("$ " .. MainPlayer.coins), 0, (20 * Scale.width) - (font\getHeight! / 2), Screen_Size.width - (10 * Scale.width), "right"
+      love.graphics.setFont oldFont
       Camera\set!
 
     drawPlaying: ->
@@ -479,11 +481,13 @@ export class Driver
           GameOver\draw!
 
       Camera\unset!
+      font = love.graphics.getFont!
       setColor 0, 0, 0, 127
       love.graphics.setFont (Renderer\newFont 20)
       love.graphics.printf VERSION, 0, Screen_Size.height - (25 * Scale.height), Screen_Size.width - (10 * Scale.width), "right"
       if SHOW_FPS
         love.graphics.printf love.timer.getFPS! .. " FPS", 0, Screen_Size.height - (50 * Scale.height), Screen_Size.width - (10 * Scale.width), "right"
+      love.graphics.setFont font
       Camera\set!
 
       if DEBUG_MENU
