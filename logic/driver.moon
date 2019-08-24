@@ -347,6 +347,7 @@ export class Driver
         q = Quest QuestTypes.kill, (BasicEnemy), 2
         q.callback = () =>
           timer.done = true
+          MainPlayer\addExp 500
         parent\finish!
 
       npc\addButton 4, "Bye", (parent) ->
