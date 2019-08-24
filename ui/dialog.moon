@@ -94,12 +94,17 @@ export class Dialog extends UIElement
     @x = Screen_Size.half_width - (@width / 2)
     @y = Screen_Size.height - (@height + 20)
 
-  goToPrev: =>
-    @idx -= 2
-    @goToNext!
+  gotoPrev: =>
+    @goto (@idx - 1)
 
-  goToNext: =>
-    @idx += 1
+  gotoNext: =>
+    @goto (@idx + 1)
+
+  finish: =>
+    @goto (#@boxes + 1)
+
+  goto: (idx) =>
+    @idx = idx
     @elapsed = 0
     @canClick = false
     if @idx > #@boxes
@@ -127,7 +132,7 @@ export class Dialog extends UIElement
       passThrough = true
       if @selected and (@isHovering x, y)
         if box.shouldGoNext
-          @goToNext!
+          @gotoNext!
           passThrough = false
       @selected = false
 

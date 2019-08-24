@@ -336,10 +336,9 @@ export class Driver
       }
 
       npc\addButton 2, "Yes", (parent) ->
-        parent\goToNext!
+        parent\goto 3
       npc\addButton 2, "No", (parent) ->
-        parent\goToNext!
-        parent\goToNext!
+        parent\goto 4
 
       npc\addButton 3, "Bye", (parent) ->
         timer = Timer 1, @, (() =>
@@ -348,11 +347,10 @@ export class Driver
         q = Quest QuestTypes.kill, (BasicEnemy), 2
         q.callback = () =>
           timer.done = true
-        parent\goToNext!
-        parent\goToNext!
+        parent\finish!
 
       npc\addButton 4, "Bye", (parent) ->
-        parent\goToNext!
+        parent\finish!
 
     updateHandlers: (dt) ->
       QuestHandler\update dt
