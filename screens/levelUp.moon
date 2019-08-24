@@ -153,8 +153,12 @@ export class LevelUp extends Screen
 
     Camera\unset!
 
-    setColor 50, 50, 50, 200
-    love.graphics.rectangle "fill", @x, @y, @width, @height
+    setColor 0, 0, 0, 200
+    love.graphics.rectangle "fill", @x, @y, @width, @height, 10, 10
+    love.graphics.setLineWidth 3
+    setColor 150, 150, 150, 255
+    love.graphics.rectangle "line", @x, @y, @width, @height, 10, 10
+    love.graphics.setLineWidth 1
 
     setColor 255, 255, 255, 255
     love.graphics.printf "Character", @x, @y + (@height * 0.02), @width, "center"
