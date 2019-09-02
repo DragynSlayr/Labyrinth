@@ -1,9 +1,11 @@
 class Door extends BackgroundObject
   new: (x, y, targetIdx, targetX, targetY) =>
-    sprite = Sprite "background/door.tga", 32, 32, 1, 2
     x = (x * 32) + 16
     y = (y * 32) + 16
-    super x, y, sprite
+
+    @openSprite = Sprite "background/doorOpen.tga", 32, 32, 0.5, 2
+    @closedSprite = Sprite "background/door.tga", 32, 32, 1, 2
+    super x, y, @openSprite
 
     @targetIdx = targetIdx
     @target = Vector (targetX * 32) + 16 + Screen_Size.half_width, (targetY * 32) + 16 + Screen_Size.half_height
@@ -16,15 +18,14 @@ class Door extends BackgroundObject
       Timer 2, @, (() =>
         MainPlayer.canTeleport = true
       ), false
+    super dt
 
   draw: =>
     if MainPlayer.canTeleport
-      super!
-    else if @isOnScreen!
-      old_color = @sprite.color
-      @sprite.color = {175, 175, 175, 150}
-      @sprite\draw @position.x, @position.y
-      @sprite.color = old_color
+      @sprite = @openSprite
+    else
+      @sprite = @closedSprite
+    super!
 
 export class TownDoor
   new: (door1, door2) =>
