@@ -133,6 +133,8 @@ export class Player extends GameObject
     @hearts = HeartContainer @
     @popup = nil
 
+    @canTeleport = true
+
     -- Timer 1, @, () =>
     --   if Driver.game_state == Game_State.playing
     --     @parent\addExp 20

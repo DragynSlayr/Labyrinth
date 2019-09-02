@@ -354,7 +354,9 @@ export class Driver
       npc\addButton 4, "Bye", (parent) ->
         parent\finish!
 
-      World\goto 2
+      World\goto 1
+
+      TownDoor {51, 1, 1}, {49, 97, 2}
 
     updateHandlers: (dt) ->
       QuestHandler\update dt
