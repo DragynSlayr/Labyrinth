@@ -112,7 +112,7 @@ export class Driver
     spawn: (typeof, layer, x = (math.random Screen_Size.width), y = (math.random Screen_Size.height), i = 0) ->
       enemy = typeof x, y
       touching = false
-      for k, o in pairs layer.objects
+      for k, o in pairs layer.objects[World.idx]
         object = o\getHitBox!
         e = enemy\getHitBox!
         if object\contains e
@@ -275,6 +275,7 @@ export class Driver
       export WallHandler = Handler!
       export NPCHandler = Handler!
       export World = WorldHandler!
+      World\createWalls!
 
     intializeDriverVars: =>
       Driver.game_state = Game_State.none
@@ -353,6 +354,8 @@ export class Driver
       npc\addButton 4, "Bye", (parent) ->
         parent\finish!
 
+      World\goto 2
+
     updateHandlers: (dt) ->
       QuestHandler\update dt
       TimerHandler\update dt
@@ -426,7 +429,7 @@ export class Driver
           "Bosses", "Walls", "NPCs"
         }
         for k, handler in pairs handlers
-          message = names[k] .. ": " .. #handler.objects
+          message = names[k] .. ": " .. #handler.objects[World.idx]
           Renderer\drawAlignedMessage message, y, "left", font, white_color
           y += 25
 
@@ -434,7 +437,7 @@ export class Driver
         camera_pos = format(Camera.position.x - Screen_Size.half_width) .. ", " .. format(Camera.position.y - Screen_Size.half_height)
         Renderer\drawAlignedMessage ("Camera: " .. camera_pos), y, "left", font, white_color
         y += 25
-        Renderer\drawAlignedMessage "Timers: " .. #TimerHandler.objects, y, "left", font, white_color
+        Renderer\drawAlignedMessage "Timers: " .. #TimerHandler.objects[World.idx], y, "left", font, white_color
 
         cursor_x, cursor_y = love.mouse.getPosition!
         cursor_pos = format(cursor_x + Camera.position.x - Screen_Size.width) .. ", " .. format(cursor_y + Camera.position.y - Screen_Size.height)

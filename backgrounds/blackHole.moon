@@ -8,19 +8,19 @@ export class BlackHole extends BackgroundObject
 
   kill: =>
     super!
-    for k, e in pairs EnemyHandler.objects
+    for k, e in pairs EnemyHandler.objects[World.idx]
       e.speed_override = false
-    for k, b in pairs BossHandler.objects
+    for k, b in pairs BossHandler.objects[World.idx]
       b.speed_override = false
 
   update: (dt) =>
     ratio = (7.5 - @life_time) / 7.5
     @sprite\setRotationSpeed (ratio * -2 * math.pi)
     super dt
-    for k, e in pairs EnemyHandler.objects
+    for k, e in pairs EnemyHandler.objects[World.idx]
       @applyPull e, dt
       @applyDamage e
-    for k, b in pairs BossHandler.objects
+    for k, b in pairs BossHandler.objects[World.idx]
       @applyPull b, dt
       @applyDamage b
     @life_time -= dt

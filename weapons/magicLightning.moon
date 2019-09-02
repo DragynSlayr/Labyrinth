@@ -32,7 +32,7 @@ export class MagicLightning extends Weapon
         dist = @max_dist
         closest = nil
         for k, filter in pairs @filter
-          for k2, o in pairs filter.objects
+          for k2, o in pairs filter.objects[World.idx]
             if o != @hit_target
               temp_dist = (Vector o.position.x - @hit_target.position.x, o.position.y - @hit_target.position.y)\getLength!
               if temp_dist < dist

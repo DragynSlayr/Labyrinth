@@ -14,6 +14,6 @@ export class Missile extends HomingProjectile
 
   findTarget: =>
     targets = {}
-    targets = concatTables targets, EnemyHandler.objects
-    targets = concatTables targets, BossHandler.objects
+    targets = concatTables targets, EnemyHandler.objects[World.idx]
+    targets = concatTables targets, BossHandler.objects[World.idx]
     return (pick targets)

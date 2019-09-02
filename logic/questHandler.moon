@@ -48,7 +48,7 @@ export class QuestDriver extends Handler
     @linePadding = 5
 
   onKill: (entity) =>
-    for k, v in pairs @objects
+    for k, v in pairs @objects[World.idx]
       v\onKill entity
 
   drawQuests: =>
@@ -56,13 +56,13 @@ export class QuestDriver extends Handler
     love.graphics.setFont (Renderer\newFont 30)
 
     width = 0
-    for k, v in pairs @objects
+    for k, v in pairs @objects[World.idx]
       w = love.graphics.getFont!\getWidth v\__tostring!
       if w > width
         width = w
 
     width += 2 * @padding
-    height = (2 * @padding) + ((#@objects - 1) * @linePadding) + (#@objects * love.graphics.getFont!\getHeight!)
+    height = (2 * @padding) + ((#@objects[World.idx] - 1) * @linePadding) + (#@objects[World.idx] * love.graphics.getFont!\getHeight!)
     x = Screen_Size.width - width - @padding
     y = @padding + 25
 
@@ -74,7 +74,7 @@ export class QuestDriver extends Handler
     love.graphics.setLineWidth 1
 
 
-    for k, v in pairs @objects
+    for k, v in pairs @objects[World.idx]
       love.graphics.printf (tostring v), x + @padding, y + @padding + ((k - 1) * (@linePadding + love.graphics.getFont!\getHeight!)), width, "left"
 
     love.graphics.setFont font
@@ -103,7 +103,7 @@ export class QuestDriver extends Handler
   draw: =>
     Camera\unset!
 
-    if #@objects > 0
+    if #@objects[World.idx] > 0
       @drawQuests!
     else
       @drawEmpty!

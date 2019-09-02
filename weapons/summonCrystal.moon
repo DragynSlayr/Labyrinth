@@ -33,7 +33,7 @@ export class SummonCrystal extends Weapon
         @sprite.color = @base_color
         filters = {EnemyHandler, BossHandler}
         for k, filter in pairs filters
-          for k2, o in pairs filter.objects
+          for k2, o in pairs filter.objects[World.idx]
             target = o\getHitBox!
             bullet = @getHitBox!
             bullet.radius *= 5

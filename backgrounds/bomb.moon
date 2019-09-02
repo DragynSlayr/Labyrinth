@@ -8,7 +8,7 @@ export class Bomb extends BackgroundObject
     @action_sprite = ActionSprite "background/bombAction.tga", 32, 32, 3, 2, @, () =>
       filters = {EnemyHandler, BossHandler}
       for k2, filter in pairs filters
-        for k, e in pairs filter.objects
+        for k, e in pairs filter.objects[World.idx]
           target = e\getHitBox!
           bomb = @parent\getHitBox!
           bomb.radius += @parent.attack_range

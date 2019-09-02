@@ -24,7 +24,7 @@ export class DeadEyeActive extends ActiveItem
   fire: =>
     filters = {EnemyHandler, BossHandler}
     for k2, filter in pairs filters
-      for k, v in pairs filter.objects
+      for k, v in pairs filter.objects[World.idx]
         if v\isOnScreen!
           v\onCollide @
     @effect_timer = 0
@@ -73,7 +73,7 @@ export class DeadEyeActive extends ActiveItem
 
       filters = {EnemyHandler, BossHandler}
       for k2, filter in pairs filters
-        for k, v in pairs filter.objects
+        for k, v in pairs filter.objects[World.idx]
           if v.health + v.armor <= @damage
             @effect_sprite\draw v.position.x, v.position.y
 

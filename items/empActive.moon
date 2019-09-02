@@ -7,7 +7,7 @@ export class EMPActive extends ActiveItem
     filters = {EnemyHandler, BossHandler}
     effect = (player) =>
       for k2, filter in pairs filters
-        for k, v in pairs filter.objects
+        for k, v in pairs filter.objects[World.idx]
           v.movement_disabled = true
     super sprite, cd, effect
     @name = "Enemies Must Pause"
@@ -15,7 +15,7 @@ export class EMPActive extends ActiveItem
     @effect_time = ({6, 7, 8, 9, 10})[@rarity]
     @onEnd = () ->
       for k2, filter in pairs filters
-        for k, v in pairs filter.objects
+        for k, v in pairs filter.objects[World.idx]
           v.movement_disabled = false
 
   getStats: =>

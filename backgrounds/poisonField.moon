@@ -15,7 +15,7 @@ export class PoisonField extends BackgroundObject
       @timer = 0
       filters = {EnemyHandler, BossHandler}
       for k2, filter in pairs filters
-        for k, e in pairs filter.objects
+        for k, e in pairs filter.objects[World.idx]
           target = e\getHitBox!
           poison = @getHitBox!
           if target\contains poison

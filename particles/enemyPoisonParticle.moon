@@ -8,7 +8,7 @@ export class EnemyPoisonParticle extends Particle
     if @alive
       filters = {EnemyHandler, BossHandler}
       for k2, filter in pairs filters
-        for k, v in pairs filter.objects
+        for k, v in pairs filter.objects[World.idx]
           other = v\getHitBox!
           this = @getHitBox!
           if other\contains this
