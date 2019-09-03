@@ -18,3 +18,4 @@ require "levels.level"
 --+------------------+--
 require "levels.levelHandler"
 require "levels.worldHandler"
+require "levels.worldCreator"

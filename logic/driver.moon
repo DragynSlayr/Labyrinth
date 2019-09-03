@@ -294,69 +294,22 @@ export class Driver
 
       ScreenCreator!
 
-      -- Create a player
+      -- Create player
       export MainPlayer = Player 1586, 2350
       MainPlayer\pickClass 0
       MainPlayer\updateStats true
 
-      -- positions = {
-      --   (Vector 450, 2340),
-      --   (Vector 350, 2230),
-      --   (Vector 450, 2080)
-      -- }
-      -- for i = 1, 3
-      --   item = ItemPool\getItem!
-      --   vec = positions[i]
-      --   ped = ItemPedestal vec.x, vec.y, item, item.rarity * 10
-      --   ped.refilling = true
+      love.mouse.setVisible false
+      @cursor_sprite = Sprite "ui/crosshair.tga", 24, 24, 1, 1.5
+      @cursor_sprite\setRotationSpeed (math.pi / 2)
+      @dialog = Dialog!
+
+      WorldCreator!
 
       -- y = 1600
       -- for i = 1, 10
       --   coin = Coin 1650, y, (i * 2)
       --   y += 75
-
-
-      love.mouse.setVisible false
-
-      @cursor_sprite = Sprite "ui/crosshair.tga", 24, 24, 1, 1.5
-      @cursor_sprite\setRotationSpeed (math.pi / 2)
-
-      item = BlackHoleActive 5
-      ped = ItemPedestal 1586, 2200, item
-
-      @dialog = Dialog!
-
-      text = {"Hello, welcome to the starting area of this game, click to continue", "Would you like to take a quest?", "Nice, go kill 2 of these basic enemies", "Come back later then"}
-      npc = NPC 2680, 2000, "Ted", text
-
-      npc\setPath {
-        {(Vector 100, 0), 2.5},
-        {(Vector 0, 100), 3},
-        {(Vector -100, 0), 2.5},
-        {(Vector 0, -100), 3}
-      }
-
-      npc\addButton 2, "Yes", (parent) ->
-        parent\goto 3
-      npc\addButton 2, "No", (parent) ->
-        parent\goto 4
-
-      npc\addButton 3, "Bye", (parent) ->
-        timer = Timer 1, @, (() =>
-          Driver.spawn (BasicEnemy), EnemyHandler
-        ), true
-        q = Quest QuestTypes.kill, (BasicEnemy), 2
-        q.callback = () =>
-          timer.done = true
-          MainPlayer\addExp 500
-        parent\finish!
-
-      npc\addButton 4, "Bye", (parent) ->
-        parent\finish!
-
-      World\goto 1
-
-      TownDoor {51, 1, 1}, {49, 97, 2}
 
     updateHandlers: (dt) ->
       QuestHandler\update dt
