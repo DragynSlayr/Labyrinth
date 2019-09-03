@@ -171,6 +171,9 @@ export class Player extends GameObject
     stats[2] = @max_speed
     return stats
 
+  addCoins: (amount) =>
+    @coins += amount
+
   addExp: (amount) =>
     @exp += amount
     while @exp >= @nextExp
