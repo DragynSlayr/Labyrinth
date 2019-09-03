@@ -43,6 +43,9 @@ export class ItemPedestal extends BackgroundObject
   draw: =>
     super!
 
+    oldFont = love.graphics.getFont!
+    love.graphics.setFont (Renderer\newFont 20)
+
     if @cost > 0
       if MainPlayer.coins >= @cost
         setColor 255, 215, 0, 255
@@ -52,10 +55,12 @@ export class ItemPedestal extends BackgroundObject
     if @refilling
       if @refill_started
         setColor 0, 255, 0, ((math.sin (@elapsed * 10)) + 1) * 127
-        love.graphics.printf "Restocking", @position.x - Screen_Size.half_width, @position.y + (@sprite.scaled_height * 0.7), Screen_Size.width, "center"
+        love.graphics.printf "Restocking", @position.x - Screen_Size.half_width, @position.y + (@sprite.scaled_height * 0.5) + love.graphics.getFont!\getHeight!, Screen_Size.width, "center"
       else
         setColor 0, 255, 0, 255
-        love.graphics.printf "Endless", @position.x - Screen_Size.half_width, @position.y + (@sprite.scaled_height * 0.7), Screen_Size.width, "center"
+        love.graphics.printf "Endless", @position.x - Screen_Size.half_width, @position.y + (@sprite.scaled_height * 0.5) + love.graphics.getFont!\getHeight!, Screen_Size.width, "center"
 
     if @item
       @item\draw!
+
+    love.graphics.setFont oldFont
