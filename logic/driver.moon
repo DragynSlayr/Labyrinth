@@ -306,11 +306,6 @@ export class Driver
 
       WorldCreator!
 
-      -- y = 1600
-      -- for i = 1, 10
-      --   coin = Coin 1650, y, (i * 2)
-      --   y += 75
-
     updateHandlers: (dt) ->
       QuestHandler\update dt
       TimerHandler\update dt
