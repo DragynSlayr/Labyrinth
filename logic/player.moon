@@ -206,6 +206,9 @@ export class Player extends GameObject
 
     QuestHandler\onKill entity
 
+    if entity.exp_given
+      @addExp entity.exp_given
+
   onCollide: (object) =>
     if not @alive return
 
@@ -313,7 +316,7 @@ export class Player extends GameObject
     @levelUp\update dt
     @weapons\update dt
 
-    @exp_chase += dt * (@nextExp / 20)
+    @exp_chase += 3 * dt * (@nextExp / 20)
     @exp_chase = clamp @exp_chase, 0, @exp
 
     for k, i in pairs @equipped_items
@@ -369,11 +372,14 @@ export class Player extends GameObject
     y = 57.5
     height = 10
     setColor 0, 0, 0, 255
-    love.graphics.rectangle "fill", x - 5, y - 5, @nextExp + 10, height + 10
+    width = clamp (@nextExp + 10), 0, Screen_Size.width * 0.7
+    love.graphics.rectangle "fill", x - 5, y - 5, width + 10, height + 10
     setColor 200, 200, 100, 255
-    love.graphics.rectangle "fill", x, y, @exp, height
+    exp = (@exp / @nextExp) * width
+    love.graphics.rectangle "fill", x, y, exp, height
     setColor 150, 150, 50, 255
-    love.graphics.rectangle "fill", x, y, @exp_chase, height
+    chase = (@exp_chase / @exp) * exp
+    love.graphics.rectangle "fill", x, y, chase, height
 
     if @popup
       @popup\draw!
