@@ -2,15 +2,16 @@ export class Timer
   new: (@delay, @parent, @action, @repeating = true) =>
     @elapsed = 0
     @done = false
+    @enabled = true
     TimerHandler\add @
 
   update: (dt) =>
+    if not @enabled return
     @elapsed += dt
-    while @elapsed >= @delay and not @done
-      @elapsed -= @delay
+    if @elapsed >= @delay and not @done
+      @elapsed = 0
       @action!
       if not @repeating
         @done = true
-        break
     if @done
       TimerHandler\remove @
