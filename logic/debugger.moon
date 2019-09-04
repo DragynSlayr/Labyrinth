@@ -67,6 +67,8 @@ export class DebugMenu
     @completer\update dt
 
   draw: =>
+    Camera\unset!
     for k, v in pairs @ui_objects
       v\draw!
     @completer\draw!
+    Camera\set!
