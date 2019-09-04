@@ -2,6 +2,7 @@
 --| No dependency |--
 --+---------------+--
 require "levels.wall"
+require "levels.spawner"
 
 --+-----------------+--
 --| Depends on wall |--

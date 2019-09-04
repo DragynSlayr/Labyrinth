@@ -39,6 +39,8 @@ export class WorldHandler
       path = "map/" .. tileInfo!
       if path == "map/tiles/wall.tga"
         @wallId = id + 1
+      else if path == "map/tiles/spawner.tga"
+        @spawnerId = id + 1
       @tiles[id + 1] = Sprite path, height, width
       lines!
 
@@ -65,6 +67,24 @@ export class WorldHandler
         for val in string.gmatch row, "(%d+)"
           table.insert line, (tonumber val)
         table.insert @map[k], line
+
+  findSpawners: =>
+    oldIdx = @idx
+    @spawners = {}
+
+    for k, map in pairs @map
+      @goto k
+      @spawners[k] = {}
+
+      for rowIdx, row in pairs map
+        for colIdx, cell in pairs row
+          if cell == @spawnerId
+            x = (colIdx - 1) * 32
+            y = (rowIdx - 1) * 32
+            table.insert @spawners[k], (Spawner x, y)
+            -- map[rowIdx][colIdx] = map[rowIdx][colIdx + 1]
+
+    @goto oldIdx
 
   createWalls: =>
     oldIdx = @idx
@@ -143,3 +163,5 @@ export class WorldHandler
           y = ((rowIdx - 1) * 32) + Screen_Size.half_height
           if Camera\isOnScreen x, y, 32, 32
             @tiles[val]\draw x, y
+    for k, spawner in pairs @spawners[@idx]
+      spawner\draw!

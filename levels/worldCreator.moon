@@ -3,6 +3,7 @@ export class WorldCreator
     @createWorld1!
 
     @createDoors!
+    @setupSpawners!
 
   createWorld1: =>
     World\goto 1
@@ -36,7 +37,6 @@ export class WorldCreator
     npc\addButton 4, "Bye", (parent) ->
       parent\finish!
 
-
     positions = {
       {550, 2090},
       {375, 2210},
@@ -50,3 +50,7 @@ export class WorldCreator
 
   createDoors: =>
     TownDoor {51, 1, 1}, {49, 97, 2}
+
+  setupSpawners: =>
+    World.spawners[1][1]\setup (BasicEnemy), 0.5, true
+    World.spawners[1][1].limit = 3

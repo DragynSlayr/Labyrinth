@@ -276,6 +276,7 @@ export class Driver
       export NPCHandler = Handler!
       export World = WorldHandler!
       World\createWalls!
+      World\findSpawners!
 
     intializeDriverVars: =>
       Driver.game_state = Game_State.none
