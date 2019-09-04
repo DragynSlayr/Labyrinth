@@ -27,18 +27,18 @@ export class CollisionChecker
               o.position = o.last_position\getCopy!
               -- o.position\add (o.speed\multiply (-dt * 3))
 
-    for k1, o1 in pairs EnemyHandler.objects[World.idx]
-      b1 = o1\getHitBox!
-      for k2, o2 in pairs EnemyHandler.objects[World.idx]
-        if o1 != o2
-          b2 = o2\getHitBox!
-          if b1\contains b2
-            if math.random! > 0.5
-              o1.position = o1.last_position\getCopy!
-              -- o1.position\add (o1.speed\multiply (-dt * 3))
-            else
-              o2.position = o2.last_position\getCopy!
-              -- o2.position\add (o2.speed\multiply (-dt * 3))
+    -- for k1, o1 in pairs EnemyHandler.objects[World.idx]
+    --   b1 = o1\getHitBox!
+    --   for k2, o2 in pairs EnemyHandler.objects[World.idx]
+    --     if o1 != o2
+    --       b2 = o2\getHitBox!
+    --       if b1\contains b2
+    --         if math.random! > 0.5
+    --           o1.position = o1.last_position\getCopy!
+    --           -- o1.position\add (o1.speed\multiply (-dt * 3))
+    --         else
+    --           o2.position = o2.last_position\getCopy!
+    --           -- o2.position\add (o2.speed\multiply (-dt * 3))
 
     if reset_player
       MainPlayer.position = MainPlayer.last_position\getCopy!
