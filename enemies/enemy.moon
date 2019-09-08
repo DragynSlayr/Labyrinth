@@ -31,7 +31,7 @@ export class Enemy extends GameObject
         @parent.target\onCollide @parent
         @parent.speed_multiplier = 0
         if @parent.target.health <= 0
-          @parent\findNearestTarget!
+          @parent.target = MainPlayer
 
     @death_sound = 0
 
@@ -46,7 +46,7 @@ export class Enemy extends GameObject
 
   update: (dt, search = false) =>
     if not @alive return
-    @findNearestTarget search
+    @target = MainPlayer
     if not @target return
     dist = @position\getDistanceBetween @target.position
     if dist < Screen_Size.width / 4 or not @corner_target
@@ -79,7 +79,6 @@ export class Enemy extends GameObject
       diff = math.abs x - y
       if diff <= 1.3 and diff >= 0.05
         copy = @speed\getAbsolute!
-        --print @speed\__tostring! .. ", " .. copy\__tostring!
         if copy.x > copy.y
           @speed = Vector @speed.x, 0
         elseif copy.x < copy.y
@@ -101,6 +100,3 @@ export class Enemy extends GameObject
     if DEBUGGING --or @sprite == @action_sprite
       @getHitBox!\draw!
     super!
-
-  findNearestTarget: (all = false) =>
-    @target = MainPlayer
