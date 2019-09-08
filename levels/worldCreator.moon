@@ -53,4 +53,4 @@ export class WorldCreator
 
   setupSpawners: =>
     World.spawners[1][1]\setup (BasicEnemy), 0.5, true
-    World.spawners[1][1].limit = 3
+    World.spawners[1][1].limit = 1
