@@ -12,6 +12,11 @@ export class Enemy extends GameObject
     @corner_target = true
     @item_drop_chance = 0.10
 
+    @start_position = @position\getCopy!
+    @roam_radius = 600 * Scale.diag
+    @aggro_radius = 200 * Scale.diag
+    @chase_radius = 1200 * Scale.diag
+
     sprite_copy = sprite\getCopy!
     sprite_copy\setColor {50, 50, 50, 255}
     @trail = nil--ParticleTrail x, y, sprite_copy, @
