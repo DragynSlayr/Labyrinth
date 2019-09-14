@@ -20,7 +20,6 @@ export class GameObject
     @last_position = Vector @position\getComponents!
 
     @contact_damage = false
-    @item_drop_chance = 0.00
 
     @speed_override = false
     @speed_add = Vector 0, 0

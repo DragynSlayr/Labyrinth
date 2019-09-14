@@ -2,8 +2,6 @@ export class CloudEnemy extends GameObject
   new: (x, y) =>
     sprite = Sprite "enemy/cloud.tga", 32, 32, 1, 1.25
     super x, y, sprite
-    @value = 1
-    @item_drop_chance = 0.10
     @solid = false
 
     @health = math.min 1000, 36 + (84.5 * Objectives\getScaling!)
@@ -58,7 +56,6 @@ export class CloudEnemy extends GameObject
           te = CloudEnemy @position.x, @position.y
           te.trail.position = te.position
           te.draw_health = false
-          te.item_drop_chance = 0
           te.update = (dt) =>
             @health = @max_health
             super dt

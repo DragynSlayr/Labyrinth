@@ -32,4 +32,3 @@ export class SpawnerEnemy extends Enemy
     for k, v in pairs positions
       enemy = PlayerEnemy @position.x + v[1], @position.y + v[2]
       enemy.solid = false
-      enemy.value = 0.25
