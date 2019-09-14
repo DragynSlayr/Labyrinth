@@ -1,43 +1,36 @@
 export class Enemy extends GameObject
-  new: (x, y, sprite, attack_delay, attack_speed, target = nil) =>
+  new: (x, y, sprite, attack_delay, attack_speed) =>
     super x, y, sprite
-    @target = target
     bounds = @sprite\getBounds 0, 0
     @attack_range = bounds.radius * 2
     @delay = attack_delay
     @max_speed = 150 * Scale.diag
-    @speed_multiplier = @max_speed
-    @value = 1
     @attacked_once = false
-    @corner_target = true
-    @item_drop_chance = 0.10
+    @trail = nil
+    @death_sound = 0
 
     @start_position = @position\getCopy!
-    @roam_radius = 600 * Scale.diag
+    @target = @start_position\getCopy!
+    @roam_radius = 300 * Scale.diag
     @aggro_radius = 200 * Scale.diag
-    @chase_radius = 1200 * Scale.diag
-    @ai_phase = 1
+    @chase_radius = 350 * Scale.diag
 
-    sprite_copy = sprite\getCopy!
-    sprite_copy\setColor {50, 50, 50, 255}
-    @trail = nil--ParticleTrail x, y, sprite_copy, @
+    @phases = {}
+    @phases.ROAMING = 1
+    @phases.CHASING = 2
+    @ai_phase = @phases.ROAMING
 
     splitted = split @normal_sprite.name, "."
     name = splitted[1] .. "Action." .. splitted[2]
     height, width, _, scale = @normal_sprite\getProperties!
 
     @action_sprite = ActionSprite name, height, width, attack_speed, scale, @, () =>
-      target = @parent.target\getHitBox!
+      target = MainPlayer\getHitBox!
       enemy = @parent\getHitBox!
       enemy.radius += @parent.attack_range
       if target\contains enemy
         @parent.elapsed = 0
-        @parent.target\onCollide @parent
-        @parent.speed_multiplier = 0
-        if @parent.target.health <= 0
-          @parent.target = MainPlayer
-
-    @death_sound = 0
+        MainPlayer\onCollide @parent
 
     EnemyHandler\add @
 
@@ -50,47 +43,35 @@ export class Enemy extends GameObject
 
   update: (dt, search = false) =>
     if not @alive return
-    @target = MainPlayer
-    if not @target return
-    dist = @position\getDistanceBetween @target.position
-    if dist < Screen_Size.width / 4 or not @corner_target
-      @speed = Vector @target.position.x - @position.x, @target.position.y - @position.y
-      @speed\toUnitVector!
-      @speed = @speed\multiply clamp @speed_multiplier, 0, @max_speed
-      @speed_multiplier += 1
-      super dt
-      vec = Vector 0, 0
-      @sprite.rotation = @speed\getAngleBetween vec
-      if not @target return
-      target = @target\getHitBox!
-      enemy = @getHitBox!
-      enemy.radius += @attack_range
-      can_attack = target\contains enemy
-      if can_attack
-        if @attacked_once
-          if @elapsed >= @delay
+    switch @ai_phase
+      when @phases.ROAMING
+        if (@position\getDistanceBetween @target) <= 10
+          @target = getRandomUnitStart @roam_radius
+          @target\add @start_position
+        @speed = Vector @target.x - @position.x, @target.y - @position.y, true
+        @speed = @speed\multiply (@max_speed * 0.75)
+        super dt
+        @sprite.rotation = @speed\getAngleBetween (Vector!)
+        if (MainPlayer.position\getDistanceBetween @position) <= (@aggro_radius + @getHitBox!.radius)
+          @ai_phase = @phases.CHASING
+      when @phases.CHASING
+        @target = MainPlayer.position
+        @speed = Vector @target.x - @position.x, @target.y - @position.y, true
+        @speed = @speed\multiply @max_speed
+        super dt
+        @sprite.rotation = @speed\getAngleBetween (Vector!)
+        enemy = @getHitBox!
+        enemy.radius += @attack_range
+        if (MainPlayer\getHitBox!\contains enemy)
+          if @attacked_once
+            if @elapsed >= @delay
+              @sprite = @action_sprite
+          else
             @sprite = @action_sprite
-        else
-          @sprite = @action_sprite
-          @attacked_once = true
-    else
-      @speed = Vector @target.position.x - @position.x, @target.position.y - @position.y
-      length = @speed\getLength!
-      x = @speed.x / length
-      y = @speed.y / length
-      diff = math.abs x - y
-      if diff <= 1.3 and diff >= 0.05
-        copy = @speed\getAbsolute!
-        if copy.x > copy.y
-          @speed = Vector @speed.x, 0
-        elseif copy.x < copy.y
-          @speed = Vector 0, @speed.y
-      @speed\toUnitVector!
-      @speed = @speed\multiply clamp @speed_multiplier, 0, @max_speed
-      @speed_multiplier += 1
-      super dt
-      vec = Vector 0, 0
-      @sprite.rotation = @speed\getAngleBetween vec
+            @attacked_once = true
+        if (@position\getDistanceBetween @start_position) >= (@roam_radius + @chase_radius)
+          @target = @start_position
+          @ai_phase = @phases.ROAMING
 
   draw: =>
     if not @alive return
@@ -99,6 +80,6 @@ export class Enemy extends GameObject
     if @sprite == @action_sprite
       alpha = map @action_sprite.current_frame, 1, @action_sprite.frames, 100, 255
       setColor 255, 0, 0, alpha
-    if DEBUGGING --or @sprite == @action_sprite
+    if DEBUGGING
       @getHitBox!\draw!
     super!
