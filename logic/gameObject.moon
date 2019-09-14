@@ -135,8 +135,6 @@ export class GameObject
       @position\add @speed\multiply dt
 
     radius = @getHitBox!.radius
-    if @getAttackHitBox
-      radius = @getAttackHitBox!.radius
 
     @health -= @health_drain_rate
 

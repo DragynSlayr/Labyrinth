@@ -19,8 +19,6 @@ export class LinearProjectile extends HomingProjectile
     super dt
 
     target = MainPlayer\getHitBox!
-    if MainPlayer.getAttackHitBox
-      target = MainPlayer\getAttackHitBox!
     bullet = @getHitBox!
     bullet.radius += @attack_range
     if target\contains bullet

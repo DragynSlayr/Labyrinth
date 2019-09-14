@@ -16,6 +16,7 @@ export class Enemy extends GameObject
     @roam_radius = 600 * Scale.diag
     @aggro_radius = 200 * Scale.diag
     @chase_radius = 1200 * Scale.diag
+    @ai_phase = 1
 
     sprite_copy = sprite\getCopy!
     sprite_copy\setColor {50, 50, 50, 255}
@@ -27,8 +28,6 @@ export class Enemy extends GameObject
 
     @action_sprite = ActionSprite name, height, width, attack_speed, scale, @, () =>
       target = @parent.target\getHitBox!
-      if @parent.target.getAttackHitBox
-        target = @parent.target\getAttackHitBox!
       enemy = @parent\getHitBox!
       enemy.radius += @parent.attack_range
       if target\contains enemy
@@ -64,8 +63,6 @@ export class Enemy extends GameObject
       @sprite.rotation = @speed\getAngleBetween vec
       if not @target return
       target = @target\getHitBox!
-      if @target.getAttackHitBox
-        target = @target\getAttackHitBox!
       enemy = @getHitBox!
       enemy.radius += @attack_range
       can_attack = target\contains enemy

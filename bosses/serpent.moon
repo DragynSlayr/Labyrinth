@@ -75,8 +75,6 @@ export class BossSerpent extends Boss
     boss.radius += @attack_range
     for k, part in pairs @allParts
       enemy = MainPlayer\getHitBox!
-      if MainPlayer.getAttackHitBox
-        enemy = MainPlayer\getAttackHitBox!
       boss.center = Point part.position\getComponents!
       if boss\contains enemy
         MainPlayer\onCollide @
