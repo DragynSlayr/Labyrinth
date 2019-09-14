@@ -41,37 +41,41 @@ export class Enemy extends GameObject
   __tostring: =>
     return "Enemy"
 
+  moveToTarget: (dt, speed_multiplier = 1.0) =>
+    @speed = Vector @target.x - @position.x, @target.y - @position.y, true
+    @speed = @speed\multiply (@max_speed * speed_multiplier)
+    super\update dt
+    @sprite.rotation = @speed\getAngleBetween (Vector!)
+
+  tryAttack: =>
+    enemy = @getHitBox!
+    enemy.radius += @attack_range
+    if (MainPlayer\getHitBox!\contains enemy)
+      if @attacked_once
+        if @elapsed >= @delay
+          @sprite = @action_sprite
+      else
+        @sprite = @action_sprite
+        @attacked_once = true
+
   update: (dt, search = false) =>
     if not @alive return
-    switch @ai_phase
-      when @phases.ROAMING
-        if (@position\getDistanceBetween @target) <= 10
-          @target = getRandomUnitStart @roam_radius
-          @target\add @start_position
-        @speed = Vector @target.x - @position.x, @target.y - @position.y, true
-        @speed = @speed\multiply (@max_speed * 0.75)
-        super dt
-        @sprite.rotation = @speed\getAngleBetween (Vector!)
-        if (MainPlayer.position\getDistanceBetween @position) <= (@aggro_radius + @getHitBox!.radius)
-          @ai_phase = @phases.CHASING
-      when @phases.CHASING
-        @target = MainPlayer.position
-        @speed = Vector @target.x - @position.x, @target.y - @position.y, true
-        @speed = @speed\multiply @max_speed
-        super dt
-        @sprite.rotation = @speed\getAngleBetween (Vector!)
-        enemy = @getHitBox!
-        enemy.radius += @attack_range
-        if (MainPlayer\getHitBox!\contains enemy)
-          if @attacked_once
-            if @elapsed >= @delay
-              @sprite = @action_sprite
-          else
-            @sprite = @action_sprite
-            @attacked_once = true
-        if (@position\getDistanceBetween @start_position) >= (@roam_radius + @chase_radius)
-          @target = @start_position
-          @ai_phase = @phases.ROAMING
+    if @ai_phase == @phases.CHASING or @sprite == @action_sprite
+      @target = MainPlayer.position
+      @moveToTarget dt
+      @tryAttack!
+      if (@position\getDistanceBetween @start_position) >= (@roam_radius + @chase_radius)
+        @target = @start_position
+        @ai_phase = @phases.ROAMING
+    else if @ai_phase == @phases.ROAMING
+      if (@position\getDistanceBetween @target) <= 10
+        @target = getRandomUnitStart @roam_radius
+        @target\add @start_position
+      @moveToTarget dt, 0.75
+      near_player = (MainPlayer.position\getDistanceBetween @position) <= (@aggro_radius + @getHitBox!.radius)
+      player_in = (MainPlayer.position\getDistanceBetween @start_position) <= @roam_radius
+      if near_player and player_in
+        @ai_phase = @phases.CHASING
 
   draw: =>
     if not @alive return
