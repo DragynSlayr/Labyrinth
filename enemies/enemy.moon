@@ -16,11 +16,13 @@ export class Enemy extends GameObject
     @aggro_radius = 200 * Scale.diag
     @chase_radius = 350 * Scale.diag
 
-    @phases = {}
-    @phases.ROAMING = 1
-    @phases.CHASING = 2
-    @ai_phase = @phases.ROAMING
+    @ai_phase = 1
 
+    @createActionSprite!
+
+    EnemyHandler\add @
+
+  createActionSprite: =>
     splitted = split @normal_sprite.name, "."
     name = splitted[1] .. "Action." .. splitted[2]
     height, width, _, scale = @normal_sprite\getProperties!
@@ -34,10 +36,10 @@ export class Enemy extends GameObject
         MainPlayer\onCollide @parent
         @parent.speed_multiplier = 0
 
-    EnemyHandler\add @
-
   kill: =>
     super!
+    if @trail
+      @trail.health = 0
     MusicPlayer\play @death_sound
 
   __tostring: =>
@@ -63,15 +65,7 @@ export class Enemy extends GameObject
         @attacked_once = true
 
   update: (dt, search = false) =>
-    if not @alive return
-    if @ai_phase == @phases.CHASING or @sprite == @action_sprite
-      @target = MainPlayer.position
-      @moveToTarget dt
-      @tryAttack!
-      if (@position\getDistanceBetween @start_position) >= (@roam_radius + @chase_radius)
-        @target = @start_position
-        @ai_phase = @phases.ROAMING
-    else if @ai_phase == @phases.ROAMING
+    if @ai_phase == 1
       if (@position\getDistanceBetween @target) <= 10
         @target = getRandomUnitStart @roam_radius
         @target\add @start_position
@@ -79,10 +73,16 @@ export class Enemy extends GameObject
       near_player = (MainPlayer.position\getDistanceBetween @position) <= (@aggro_radius + @getHitBox!.radius)
       player_in = (MainPlayer.position\getDistanceBetween @start_position) <= @roam_radius
       if near_player and player_in
-        @ai_phase = @phases.CHASING
+        @ai_phase = 2
+    else if @ai_phase == 2 or @sprite == @action_sprite
+      @target = MainPlayer.position
+      @moveToTarget dt
+      @tryAttack!
+      if (@position\getDistanceBetween @start_position) >= (@roam_radius + @chase_radius)
+        @target = @start_position
+        @ai_phase = 1
 
   draw: =>
-    if not @alive return
     if DEBUGGING
       setColor 255, 0, 255, 127
     if @sprite == @action_sprite
