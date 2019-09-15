@@ -6,7 +6,6 @@ export class ParticleEmitter extends GameObject
     @objects = {}
     @properties = {}
     @resetProperties!
-    @solid = false
     @emitting = true
     @delay = delay
     @life_time = life_time
@@ -75,6 +74,8 @@ export class ParticleEmitter extends GameObject
           particle.speed = particle.speed\multiply speed * Scale.diag
         else
           particle.speed = @velocity
+        if @damage
+          particle.damage = @damage
         particle\setShader @shader, true
         table.insert @objects, particle
 
