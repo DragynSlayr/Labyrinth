@@ -43,7 +43,7 @@ export class CloudEnemy extends GameObject
       @speed\toUnitVector!
       @speed = @speed\multiply @speed_multiplier
       @trail.position = Vector @position.x - Screen_Size.half_width, @position.y - Screen_Size.half_height
-      if @elapsed >= @wait_time and distance\getLength! <= (300 * Scale.diag)
+      if @elapsed >= @wait_time and distance\getLength! <= (300 * Scale.diag) and #@children < 3
         @ai_phase = 2
         @speed = Vector 0, 0
         @elapsed = 0
