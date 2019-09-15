@@ -33,16 +33,17 @@ export class CloudEnemy extends GameObject
     @trail.health = 0
     for k, v in pairs @children
       v.health = 0
+      v.update = (dt) =>
+        super dt
 
   update: (dt) =>
     if @ai_phase == 1
-      dist_x = @target.position.x - @position.x
-      dist_y = @target.position.y - @position.y
-      @speed = Vector dist_x, dist_y
+      distance = Vector @target.position.x - @position.x, @target.position.y - @position.y
+      @speed = distance\getCopy!
       @speed\toUnitVector!
       @speed = @speed\multiply @speed_multiplier
       @trail.position = Vector @position.x - Screen_Size.half_width, @position.y - Screen_Size.half_height
-      if @elapsed >= @wait_time and (Vector dist_x, dist_y)\getLength! <= (300 * Scale.diag)
+      if @elapsed >= @wait_time and distance\getLength! <= (300 * Scale.diag)
         @ai_phase = 2
         @speed = Vector 0, 0
         @elapsed = 0
