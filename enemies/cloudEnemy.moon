@@ -4,9 +4,9 @@ export class CloudEnemy extends GameObject
     super x, y, sprite
     @solid = false
 
-    @health = math.min 1000, 36 + (84.5 * Objectives\getScaling!)
+    @health = 36
     @max_health = @health
-    @max_speed = math.min 500 * Scale.diag, (175 + (54 * Objectives\getScaling!)) * Scale.diag
+    @max_speed = 175
     @speed_multiplier = @max_speed
 
     @target = MainPlayer
@@ -42,7 +42,7 @@ export class CloudEnemy extends GameObject
         dist_y = @target.position.y - @position.y
         @speed = Vector dist_x, dist_y
         @speed\toUnitVector!
-        @speed = @speed\multiply @speed_multiplier--clamp @speed_multiplier, 0, @max_speed
+        @speed = @speed\multiply @speed_multiplier
 
         @trail.position = @position
 
@@ -61,7 +61,6 @@ export class CloudEnemy extends GameObject
             super dt
           table.insert @children, te
           @ai_phase = 1
-    --@sprite.rotation = @target.position\getAngleBetween @position
     super dt
 
   draw: =>

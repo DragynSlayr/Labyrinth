@@ -2,14 +2,6 @@ export QuestTypes = {}
 
 QuestTypes.kill = "Kill"
 
-export EnemyTypes = {}
-
-EnemyTypes.player  = "PlayerEnemy"
-EnemyTypes.spawner = "SpawnerEnemy"
-EnemyTypes.strong  = "StrongEnemy"
-EnemyTypes.basic   = "BasicEnemy"
-EnemyTypes.capture = "CaptureEnemy"
-
 export ParticleTypes = {}
 
 ParticleTypes.normal       = "NormalParticle"
