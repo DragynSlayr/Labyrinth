@@ -19,12 +19,13 @@ export class SpawnerEnemy extends Enemy
     super!
 
     positions = {
-      {-10, 0},
-      {10, 0},
-      {0, -10},
-      {0, 10}
+      {-1, 0},
+      {1, 0},
+      {0, -1},
+      {0, 1}
     }
 
+    scale = 20
+
     for k, v in pairs positions
-      enemy = PlayerEnemy @position.x + v[1], @position.y + v[2]
-      enemy.solid = false
+      enemy = PlayerEnemy @position.x + (v[1] * scale) - Screen_Size.half_width, @position.y + (v[2] * scale) - Screen_Size.half_height
