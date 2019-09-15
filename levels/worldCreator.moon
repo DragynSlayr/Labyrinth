@@ -52,5 +52,5 @@ export class WorldCreator
     TownDoor {51, 1, 1}, {49, 97, 2}
 
   setupSpawners: =>
-    World.spawners[1][1]\setup (BasicEnemy), 0.5, true
+    World.spawners[1][1]\setup (CloudEnemy), 0.5, true
     World.spawners[1][1].limit = 1
