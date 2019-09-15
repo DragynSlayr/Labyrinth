@@ -5,6 +5,7 @@ export class Enemy extends GameObject
     @attack_range = bounds.radius * 2
     @delay = attack_delay
     @max_speed = 150 * Scale.diag
+    @speed_multiplier = @max_speed
     @attacked_once = false
     @trail = nil
     @death_sound = 0
@@ -31,6 +32,7 @@ export class Enemy extends GameObject
       if target\contains enemy
         @parent.elapsed = 0
         MainPlayer\onCollide @parent
+        @parent.speed_multiplier = 0
 
     EnemyHandler\add @
 
@@ -43,7 +45,9 @@ export class Enemy extends GameObject
 
   moveToTarget: (dt, speed_multiplier = 1.0) =>
     @speed = Vector @target.x - @position.x, @target.y - @position.y, true
-    @speed = @speed\multiply (@max_speed * speed_multiplier)
+    multiplier = clamp (speed_multiplier * @speed_multiplier), 0, @max_speed
+    @speed = @speed\multiply multiplier
+    @speed_multiplier += 1
     super\update dt
     @sprite.rotation = @speed\getAngleBetween (Vector!)
 
