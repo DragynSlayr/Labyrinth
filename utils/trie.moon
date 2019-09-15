@@ -26,7 +26,6 @@ export class Trie
     @head = Node "", false
 
   add: (word) =>
-    --print "Started adding " .. word
     length = string.len word
     s = ""
     current_node = @head

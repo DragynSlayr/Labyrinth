@@ -44,8 +44,6 @@ export class DeadEyeActive extends ActiveItem
       @charged = false
       @effect @player
       @used = true
-    else
-      print "On Cooldown: " .. math.floor (@charge_time - @timer)
 
   update2: (dt) =>
     if @used
